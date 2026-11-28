@@ -518,17 +518,21 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(ParentView.serializer(), text) }
     }
 
-    /** POST /api/v1/me/parent: gives the parent's address, changes it, or (the same address) sends the link again. */
-    suspend fun sendParent(email: String): ApiResult<ParentView> {
-        val req = request(url("api", "v1", "me", "parent")).post(buildJsonObject { put("email", email) }.toString().toRequestBody(JSON)).build()
+    /** POST /api/v1/me/parent: gives the parent's address, changes it, or (the same address) sends the link again. The mail is written in [lang]. */
+    suspend fun sendParent(email: String, lang: AppLang): ApiResult<ParentView> {
+        val body = buildJsonObject { put("email", email) }.toString()
+        val req = request(parentUrl(lang)).post(body.toRequestBody(JSON)).build()
         return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(ParentView.serializer(), text) }
     }
 
     /** POST /api/v1/me/parent/resend: the link to the current address again. */
-    suspend fun resendParent(): ApiResult<ParentView> {
-        val req = request(url("api", "v1", "me", "parent", "resend")).post("{}".toRequestBody(JSON)).build()
+    suspend fun resendParent(lang: AppLang): ApiResult<ParentView> {
+        val req = request(parentUrl(lang, "resend")).post("{}".toRequestBody(JSON)).build()
         return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(ParentView.serializer(), text) }
     }
+
+    private fun parentUrl(lang: AppLang, vararg more: String): HttpUrl =
+        url("api", "v1", "me", "parent", *more).newBuilder().addQueryParameter("lang", lang.tag).build()
 
     private suspend fun postAge(body: JsonObject): ApiResult<AgeStatus> {
         val req = request(url("api", "v1", "me", "age")).post(body.toString().toRequestBody(JSON)).build()

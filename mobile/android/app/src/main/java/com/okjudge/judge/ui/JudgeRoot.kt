@@ -955,6 +955,7 @@ private fun AgeOverlay(
             val accountState by account.state.collectAsStateWithLifecycle()
             val status = (accountState as? Account.State.SignedIn)?.me?.age?.parent ?: "pending"
             val view by parent.state.collectAsStateWithLifecycle()
+            val lang = LocalLang.current
             // The parent's yes lifts the cover by itself: read /me again every 30 seconds and on coming back.
             val lifecycle = LocalLifecycleOwner.current.lifecycle
             LaunchedEffect(Unit) {
@@ -971,8 +972,8 @@ private fun AgeOverlay(
                 view = view.view,
                 busy = busy || view.busy,
                 error = view.error,
-                onSend = { scope.launch { parent.send(it) } },
-                onResend = { scope.launch { parent.resend() } },
+                onSend = { scope.launch { parent.send(it, lang) } },
+                onResend = { scope.launch { parent.resend(lang) } },
                 onReload = { scope.launch { parent.load() } },
                 onSignOut = onSignOut,
                 onDelete = onDelete,
