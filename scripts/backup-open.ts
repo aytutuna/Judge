@@ -5,8 +5,13 @@
  *
  *   BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts <file> [out.sql]
  *   BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts <file> --drill
+ *   BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts <file> --sqlite <out.db>
  *
- * Get the file with: npx wrangler r2 object get judge-backups/db/<name> --remote --file <file>
+ * Get the file with:
+ *   npx wrangler r2 object get judge-backups/db/<name> --remote --jurisdiction eu --file <file>
+ * To put it back into D1, make a SQLite file with --sqlite and load that with
+ * scripts/d1-copy.ts: wrangler d1 execute --file cannot take a row over about
+ * 100 KB (a long verdict or a sealed original), and those only go in as bound values.
  */
 import { createClient } from "@libsql/client";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -67,6 +72,13 @@ async function main(): Promise<void> {
   }
   const sql = await openBackup(readFileSync(file), passphrase);
   if (second === "--drill") await drill(sql);
+  else if (second === "--sqlite") {
+    const out = process.argv[5];
+    if (!out) throw new Error("--sqlite needs an output path");
+    const db = createClient({ url: `file:${out.replaceAll("\\", "/")}` });
+    await db.executeMultiple(sql.replace(/^\s*(BEGIN TRANSACTION;|COMMIT;)\s*$/gm, ""));
+    db.close();
+  }
   else if (second) writeFileSync(second, sql);
   else process.stdout.write(sql);
 }
