@@ -4,6 +4,9 @@ import pkg from "./package.json";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // The Workers build sets proxy.ts aside (scripts/cf-build.mjs), which two
+  // tests import; types are checked by `npm run typecheck`, not by the build.
+  typescript: { ignoreBuildErrors: process.env.JUDGE_WORKERS_BUILD === "1" },
   // The account page now lives in Settings; the sign-in fallback still points
   // at /account.
   redirects: async () => [

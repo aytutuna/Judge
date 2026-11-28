@@ -56,3 +56,4 @@ removals.log
 /.open-next/
 /.wrangler/
 .dev.vars*
+/proxy.ts.off

@@ -11,6 +11,6 @@
     "isolatedModules": true,
     "paths": { "@/*": ["../*"] }
   },
-  "include": ["*.ts", "../lib/sliding-window.ts", "../lib/worker-env.ts"],
+  "include": ["*.ts", "../lib/sliding-window.ts", "../lib/worker-env.ts", "../lib/sentry.ts", "../lib/originals/removed.ts"],
   "exclude": ["env.ts"]
 }
