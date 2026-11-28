@@ -323,15 +323,15 @@ try {
     const varsFile = path.join(dir, "dev.vars");
     writeFileSync(varsFile, Object.entries(vars).map(([k, v]) => `${k}=${v}`).join("\n"));
     const persist = path.join(dir, "state");
-    const common = ["wrangler", "-e", "staging"];
-    const migrated = spawnSync("npx", [...common.slice(0, 1), "d1", "migrations", "apply", "DB", "--local", "-e", "staging", "--persist-to", persist], {
+    const common = ["wrangler", "-e", "smoke"];
+    const migrated = spawnSync("npx", [...common.slice(0, 1), "d1", "migrations", "apply", "DB", "--local", "-e", "smoke", "--persist-to", persist], {
       shell: true,
       stdio: "inherit",
     });
     if (migrated.status !== 0) throw new Error("migrations failed");
     dev = spawn(
       "npx",
-      ["wrangler", "dev", "-e", "staging", "--env-file", varsFile, "--persist-to", persist, "--port", String(PORT), "--ip", "127.0.0.1", "--test-scheduled", "--inspector-port", String(PORT + 1000)],
+      ["wrangler", "dev", "-e", "smoke", "--env-file", varsFile, "--persist-to", persist, "--port", String(PORT), "--ip", "127.0.0.1", "--test-scheduled", "--inspector-port", String(PORT + 1000)],
       { shell: true, stdio: ["ignore", "pipe", "pipe"], env: { ...process.env, WRANGLER_SEND_METRICS: "false" } },
     );
     const log = devLog;

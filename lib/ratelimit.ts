@@ -18,7 +18,7 @@ import { analyticsDb } from "./analytics/db";
 import { isDeviceId } from "./analytics/validate";
 import { rateLimitSubject } from "./client-ip";
 import { signal } from "./signals";
-import { workerEnv } from "./worker-env";
+import { placed, workerEnv } from "./worker-env";
 
 const MINUTE_MS = 60_000;
 const DAY_MS = 24 * 60 * MINUTE_MS;
@@ -113,7 +113,8 @@ async function checkDurable(
   windows: readonly { limit: number; windowMs: number }[],
 ): Promise<LimitDecision> {
   try {
-    const stub = namespace.get(namespace.idFromName(name));
+    const placedIn = placed(namespace);
+    const stub = placedIn.get(placedIn.idFromName(name));
     const answer = await withTimeout(stub.check(windows.map(({ limit, windowMs }) => ({ limit, windowMs }))), REDIS_TOTAL_TIMEOUT_MS);
     if (answer.ok) return { ok: true };
     return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(answer.resetAtMs, Date.now()) };

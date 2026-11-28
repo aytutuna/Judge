@@ -8,7 +8,7 @@
  * an eviction is failed and refunded by the stale-job sweep, as after a kill.
  */
 
-import { workerEnv } from "./worker-env";
+import { placed, workerEnv } from "./worker-env";
 
 export type JobSpec = { name: JobName; args: unknown[] };
 
@@ -34,6 +34,7 @@ export function backgroundWork(fn: () => Promise<void>, job?: JobSpec): () => Pr
   const runners = workerEnv()?.JOBS;
   if (!runners || !job) return fn;
   return async () => {
-    await runners.get(runners.idFromName(crypto.randomUUID())).enqueue(job);
+    const placedIn = placed(runners);
+    await placedIn.get(placedIn.idFromName(crypto.randomUUID())).enqueue(job);
   };
 }

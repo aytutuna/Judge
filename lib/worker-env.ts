@@ -28,3 +28,9 @@ export function runWithContext<T>(ctx: Waiter, fn: () => T): T {
 export function keepAlive(work: Promise<unknown>): void {
   requestContext.getStore()?.waitUntil(work);
 }
+
+/** The namespace to use for new objects: in the EU when DO_JURISDICTION=eu
+ * (wrangler.jsonc sets it; local workerd cannot do jurisdictions). */
+export function placed<T extends { jurisdiction(name: "eu"): T }>(namespace: T): T {
+  return process.env.DO_JURISDICTION === "eu" ? namespace.jurisdiction("eu") : namespace;
+}

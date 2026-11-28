@@ -22,7 +22,7 @@
   // only counts while code runs, not while it waits for the AI service.
   "limits": { "cpu_ms": 300000 },
   "observability": { "enabled": true, "logs": { "invocation_logs": false } },
-  "vars": { "CLOUDFLARE_PROXY": "1" },
+  "vars": { "CLOUDFLARE_PROXY": "1", "DO_JURISDICTION": "eu" },
 
   "env": {
     "staging": {
@@ -37,6 +37,24 @@
         ]
       },
       "triggers": { "crons": ["*/5 * * * *", "17 3 * * *", "22 3 * * *", "27 3 * * *", "32 3 * * *", "30 5 * * *"] },
+      "limits": { "cpu_ms": 300000 },
+      "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+      "vars": { "CLOUDFLARE_PROXY": "1", "DO_JURISDICTION": "eu" }
+    },
+    // Only for scripts/cf-smoke.mjs on this machine: local workerd cannot place
+    // Durable Objects in a jurisdiction. Never deployed.
+    "smoke": {
+      "name": "judge-smoke",
+      "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "judge-smoke" }],
+      "d1_databases": [{ "binding": "DB", "database_name": "judge-smoke", "migrations_dir": "migrations" }],
+      "r2_buckets": [{ "binding": "BACKUPS", "bucket_name": "judge-smoke-backups" }],
+      "durable_objects": {
+        "bindings": [
+          { "name": "RATE_LIMITER", "class_name": "RateLimiter" },
+          { "name": "JOBS", "class_name": "JobRunner" }
+        ]
+      },
+      "triggers": { "crons": ["*/5 * * * *"] },
       "limits": { "cpu_ms": 300000 },
       "observability": { "enabled": true, "logs": { "invocation_logs": false } },
       "vars": { "CLOUDFLARE_PROXY": "1" }

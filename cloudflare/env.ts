@@ -19,6 +19,11 @@ export type LimiterStub = {
 /** What the app calls on the JobRunner object (cloudflare/job-runner.ts). */
 export type RunnerNamespace = {
   idFromName(name: string): unknown;
+  jurisdiction(name: "eu"): RunnerNamespace;
   get(id: unknown): { enqueue(job: { name: string; args: unknown[] }): Promise<void> };
 };
-export type LimiterNamespace = { idFromName(name: string): unknown; get(id: unknown): LimiterStub };
+export type LimiterNamespace = {
+  idFromName(name: string): unknown;
+  get(id: unknown): LimiterStub;
+  jurisdiction(name: "eu"): LimiterNamespace;
+};

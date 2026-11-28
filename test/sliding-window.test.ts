@@ -75,7 +75,8 @@ describe("the retry time", () => {
 /** The RateLimiter object's behavior, one in-memory instance per name. */
 function fakeNamespace() {
   const state = new Map<string, Counter[]>();
-  return {
+  const namespace = {
+    jurisdiction: () => namespace,
     idFromName: (name: string) => name,
     get: (id: unknown) => ({
       check: async (windows: { limit: number; windowMs: number }[], now = Date.now()) => {
@@ -85,6 +86,7 @@ function fakeNamespace() {
       },
     }),
   };
+  return namespace;
 }
 
 describe("limits through the Durable Object", () => {
@@ -106,8 +108,28 @@ describe("limits through the Durable Object", () => {
   });
 
   it("refuses as unavailable when the object cannot be reached", async () => {
-    const broken = { idFromName: (n: string) => n, get: () => ({ check: async () => { throw new Error("down"); } }) };
+    const broken = { jurisdiction: () => broken, idFromName: (n: string) => n, get: () => ({ check: async () => { throw new Error("down"); } }) };
     setWorkerEnv({ RATE_LIMITER: broken } as unknown as WorkerEnv);
     expect(await checkUserLimits("user-3", "clarify")).toMatchObject({ ok: false, code: "unavailable" });
+  });
+});
+
+describe("Durable Object jurisdiction", () => {
+  afterEach(() => setWorkerEnv(undefined as unknown as WorkerEnv));
+
+  it("asks for objects in the EU when DO_JURISDICTION says so, and not otherwise", async () => {
+    const asked: string[] = [];
+    const ns = fakeNamespace();
+    const eu = { ...ns, jurisdiction: () => ns };
+    setWorkerEnv({ RATE_LIMITER: { ...ns, jurisdiction: (j: string) => (asked.push(j), eu) } } as unknown as WorkerEnv);
+    await checkUserLimits("user-a", "clarify");
+    expect(asked).toEqual([]);
+    process.env.DO_JURISDICTION = "eu";
+    try {
+      await checkUserLimits("user-eu", "clarify");
+    } finally {
+      delete process.env.DO_JURISDICTION;
+    }
+    expect(asked).toEqual(["eu"]);
   });
 });
