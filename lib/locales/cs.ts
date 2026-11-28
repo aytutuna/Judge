@@ -853,7 +853,7 @@ const cs: Locale = {
     "age.blocked": "Tento účet nemůže Judge používat, protože Judge je jen pro lidi od 13 let.",
     "age.blockedContact": "Myslíš, že je to chyba? Napiš na {email}.",
     "age.approvalTitle": "Je potřeba souhlas rodiče",
-    "age.approval": "Google Play čeká, až rodič nebo zákonný zástupce schválí změnu v Judge. Jakmile to udělá, zkontrolujte to znovu.",
+    "age.approval": "Google Play čeká, až rodič nebo zákonný zástupce schválí změnu v Judge. Jakmile to udělá, zkontroluj to znovu.",
     "error.password_wrong": "Toto heslo není správné.",
     "error.password_required": "Zadej své současné heslo.",
     "error.age_blocked": "Judge je jen pro lidi od 13 let.",

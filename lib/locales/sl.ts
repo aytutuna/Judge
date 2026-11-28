@@ -855,7 +855,7 @@ const sl: Locale = {
       "S tem računom ne moreš uporabljati Judgea, ker je Judge samo za osebe, stare 13 let ali več.",
     "age.blockedContact": "Misliš, da gre za napako? Piši na {email}.",
     "age.approvalTitle": "Potrebna je odobritev starša",
-    "age.approval": "Google Play čaka, da starš ali skrbnik odobri spremembo v aplikaciji Judge. Ko se to zgodi, preverite znova.",
+    "age.approval": "Google Play čaka, da starš ali skrbnik odobri spremembo v aplikaciji Judge. Ko se to zgodi, preveri znova.",
     "error.password_wrong": "To geslo ni pravilno.",
     "error.password_required": "Vnesite svoje trenutno geslo.",
     "error.age_blocked": "Judge je samo za osebe, stare 13 let ali več.",

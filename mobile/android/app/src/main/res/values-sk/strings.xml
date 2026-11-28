@@ -569,7 +569,7 @@
     <string name="age_blocked">Tento účet nemôže používať Judge, pretože Judge je len pre ľudí od 13 rokov.</string>
     <string name="age_blocked_contact">Myslíš si, že ide o chybu? Napíš na %1$s.</string>
     <string name="age_approval_title">Je potrebný súhlas rodiča</string>
-    <string name="age_approval">Google Play čaká, kým rodič alebo zákonný zástupca schváli zmenu v Judge. Keď to urobí, skontrolujte to znova.</string>
+    <string name="age_approval">Google Play čaká, kým rodič alebo zákonný zástupca schváli zmenu v Judge. Keď to urobí, skontroluj to znova.</string>
     <string name="error_password_wrong">Toto heslo nie je správne.</string>
     <string name="error_password_required">Zadajte svoje súčasné heslo.</string>
     <string name="error_reauth_required">Odhlás sa, znova sa prihlás a potom zruš účet.</string>

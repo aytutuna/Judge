@@ -6374,7 +6374,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google Play čeká, až rodič nebo zákonný zástupce schválí změnu v Judge. Jakmile to udělá, zkontrolujte to znovu."
+            "value" : "Google Play čeká, až rodič nebo zákonný zástupce schválí změnu v Judge. Jakmile to udělá, zkontroluj to znovu."
           }
         },
         "da" : {
@@ -6392,7 +6392,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το Google Play περιμένει έναν γονέα ή κηδεμόνα να εγκρίνει μια αλλαγή στο Judge. Όταν το κάνει, ελέγξτε ξανά."
+            "value" : "Το Google Play περιμένει έναν γονέα ή κηδεμόνα να εγκρίνει μια αλλαγή στο Judge. Όταν το κάνει, έλεγξε ξανά."
           }
         },
         "en" : {
@@ -6416,7 +6416,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google Play attend qu'un parent ou un tuteur approuve une modification de Judge. Une fois que c'est fait, vérifiez à nouveau."
+            "value" : "Google Play attend qu’un parent ou un tuteur approuve une modification de Judge. Une fois que c’est fait, vérifie à nouveau."
           }
         },
         "gu" : {
@@ -6440,7 +6440,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google Play čeka da roditelj ili skrbnik odobri promjenu u aplikaciji Judge. Kad to učini, provjerite ponovno."
+            "value" : "Google Play čeka da roditelj ili skrbnik odobri promjenu u aplikaciji Judge. Kad to učini, provjeri ponovno."
           }
         },
         "hu" : {
@@ -6536,7 +6536,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Google Play está à espera de que um encarregado de educação aprove uma alteração no Judge. Quando isso acontecer, volte a verificar."
+            "value" : "O Google Play está à espera de que um dos pais ou um tutor aprove uma alteração no Judge. Quando isso acontecer, volta a verificar."
           }
         },
         "ro" : {
@@ -6554,13 +6554,13 @@
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google Play čaká, kým rodič alebo zákonný zástupca schváli zmenu v Judge. Keď to urobí, skontrolujte to znova."
+            "value" : "Google Play čaká, kým rodič alebo zákonný zástupca schváli zmenu v Judge. Keď to urobí, skontroluj to znova."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google Play čaka, da starš ali skrbnik odobri spremembo v aplikaciji Judge. Ko se to zgodi, preverite znova."
+            "value" : "Google Play čaka, da starš ali skrbnik odobri spremembo v aplikaciji Judge. Ko se to zgodi, preveri znova."
           }
         },
         "sv" : {
@@ -6596,7 +6596,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Google Play чекає, поки один із батьків або опікун схвалить зміну в Judge. Коли це буде зроблено, перевірте ще раз."
+            "value" : "Google Play чекає, поки один із батьків або опікун схвалить зміну в Judge. Коли це буде зроблено, перевір ще раз."
           }
         },
         "ur" : {
@@ -6812,7 +6812,7 @@
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Um encarregado de educação tem de aprovar"
+            "value" : "Um dos pais tem de aprovar"
           }
         },
         "ro" : {
