@@ -77,6 +77,7 @@ class AccountAgeTest {
         token: String? = "session-1",
         platformTimeoutMs: Long = 10_000,
         hold: AgeHoldStore = AgeHoldStore.Memory(),
+        store: String? = null,
     ): Pair<Account, JudgeApi> {
         val tokens = MemoryTokenStore(token)
         lateinit var account: Account
@@ -87,7 +88,7 @@ class AccountAgeTest {
         )
         account = Account(
             api, tokens, FakeGoogle(GoogleIdResult.Cancelled), scope, io = Dispatchers.IO,
-            ageSignals = signals, platformTimeoutMs = platformTimeoutMs, ageHold = hold,
+            ageSignals = signals, platformTimeoutMs = platformTimeoutMs, ageHold = hold, storeCountry = { store },
         )
         return account to api
     }
@@ -119,6 +120,8 @@ class AccountAgeTest {
 
     private val needsDate get() = me(age(needsDob = true))
     private val finished get() = me(age(confirmed = true))
+    private val restricted get() = me("""{"confirmed":true,"blocked":false,"teen":true,"needsDob":false,"restricted":true}""")
+    private fun parentHeld(state: String) = me("""{"confirmed":true,"blocked":false,"teen":true,"needsDob":false,"parent":"$state"}""")
     private val finalBlock get() = me(age(blocked = true))
 
     private suspend fun Account.recheck() {
@@ -719,6 +722,121 @@ class AccountAgeTest {
         assertEquals("only the saved run's event goes, not the held one", listOf("app_open"), names)
         file.delete()
         Unit
+    }
+
+    @Test
+    fun restrictedAndParentStates_pickTheirScreens_andHoldPurchases() = runBlocking<Unit> {
+        routes.always(ME, restricted)
+        val (account, _) = account()
+        account.refresh()
+        account.awaitGate(AgeGate.RESTRICTED)
+        assertEquals(AgeCheck.BLOCKED, account.ageRefusal())
+        for (state in listOf("pending", "declined", "revoked")) {
+            routes.always(ME, parentHeld(state))
+            account.refresh()
+            account.awaitGate(AgeGate.PARENT)
+            assertEquals(state, (account.state.value as Account.State.SignedIn).me!!.age!!.parent)
+            assertEquals(AgeCheck.BLOCKED, account.ageRefusal())
+        }
+        routes.always(ME, finished)
+        account.refresh()
+        account.awaitGate(AgeGate.NONE)
+    }
+
+    @Test
+    fun parent403_fromAnyCall_refetchesIntoTheParentStep() = runBlocking {
+        routes.on(ME, finished)
+        routes.always(ME, parentHeld("pending"))
+        routes.on("GET /api/v1/me/history", json(403, """{"error":"A parent has to say yes first.","code":"age_parent_pending"}"""))
+        val (account, api) = account()
+        account.refresh()
+        api.history()
+        account.awaitGate(AgeGate.PARENT)
+        Unit
+    }
+
+    @Test
+    fun region403_fromAnyCall_refetchesIntoTheRefusal() = runBlocking {
+        routes.on(ME, finished)
+        routes.always(ME, restricted)
+        routes.on("GET /api/v1/me/history", json(403, """{"error":"x","code":"age_region"}"""))
+        val (account, api) = account()
+        account.refresh()
+        api.history()
+        account.awaitGate(AgeGate.RESTRICTED)
+        Unit
+    }
+
+    @Test
+    fun theDateGoesWithStoreCountryCountryAndQuebec() = runBlocking<Unit> {
+        routes.on(ME, needsDate)
+        routes.on(AGE, json(200, """{"confirmed":true,"blocked":false,"teen":true,"needsDob":false,"parent":"pending"}"""))
+        val (account, _) = account(store = "ca")
+        account.refresh()
+        account.submitDob(LocalDate.of(2013, 6, 1), "CA", true)
+        val body = ageBody(0)
+        assertEquals("2013-06-01", body["dob"]!!.jsonPrimitive.content)
+        assertEquals("ca", body["storeCountry"]!!.jsonPrimitive.content)
+        assertEquals("CA", body["country"]!!.jsonPrimitive.content)
+        assertEquals("true", body["quebec"]!!.jsonPrimitive.content)
+        // The first answer can already be the parent step.
+        account.awaitGate(AgeGate.PARENT)
+    }
+
+    @Test
+    fun theDateWithNoQuestionsAsked_sendsNoCountryOrQuebec() = runBlocking {
+        routes.on(ME, needsDate)
+        routes.on(AGE, json(200, age(confirmed = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.submitDob(LocalDate.of(1990, 5, 17))
+        assertEquals(setOf("dob"), ageBody(0).keys)
+    }
+
+    @Test
+    fun theBrazilRefusal_canBeTheFirstAnswerToTheDate() = runBlocking<Unit> {
+        routes.on(ME, needsDate)
+        routes.on(AGE, json(200, """{"confirmed":true,"blocked":false,"teen":true,"needsDob":false,"restricted":true}"""))
+        val (account, _) = account(store = "BR")
+        account.refresh()
+        account.submitDob(LocalDate.of(2010, 1, 1))
+        account.awaitGate(AgeGate.RESTRICTED)
+    }
+
+    @Test
+    fun theStoreCountry_goesOnEveryLaunchForAnAccountWithADate_once() = runBlocking {
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, """{"confirmed":true,"blocked":false,"teen":true,"needsDob":false,"parent":"pending"}"""))
+        val (account, _) = account(store = "DE")
+        account.refresh()
+        account.awaitGate(AgeGate.PARENT)
+        assertEquals("DE", ageBody(0)["storeCountry"]!!.jsonPrimitive.content)
+        account.settleStoreCountry()
+        assertEquals("once per launch", 1, routes.requestsTo(AGE).size)
+    }
+
+    @Test
+    fun theStoreCountry_isNotSentWithoutADateOrWithoutAnAnswerFromTheStore() = runBlocking {
+        routes.always(ME, needsDate)
+        val (noDate, _) = account(store = "DE")
+        noDate.refresh()
+        noDate.settleStoreCountry()
+        assertTrue(routes.requestsTo(AGE).isEmpty())
+        routes.always(ME, finished)
+        val (noStore, _) = account(store = null)
+        noStore.refresh()
+        noStore.settleStoreCountry()
+        assertTrue(routes.requestsTo(AGE).isEmpty())
+    }
+
+    @Test
+    fun theHint_isReadWithoutStoringAnything() = runBlocking {
+        routes.on("GET /api/v1/me/age", json(200, """{"country":"CA","quebec":true}"""))
+        val (account, _) = account()
+        val hint = account.ageHint()!!
+        assertEquals("CA", hint.country)
+        assertEquals(true, hint.quebec)
+        assertTrue(routes.requestsTo(AGE).isEmpty())
     }
 
     private companion object {

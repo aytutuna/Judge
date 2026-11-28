@@ -178,4 +178,63 @@ class AgeCheckTest {
         assertFalse(AgeCheck.isAgeError(other))
         assertNull(AgeCheck.errorCode(400, null, "age_blocked"))
     }
+
+    @Test
+    fun gate_regionRefusalAndParentStepComeBeforeTheDateStep() {
+        assertEquals(AgeGate.RESTRICTED, AgeCheck.gate(true, AgeStatus(confirmed = true, restricted = true)))
+        assertEquals(AgeGate.PARENT, AgeCheck.gate(true, AgeStatus(confirmed = true, teen = true, parent = "pending")))
+        assertEquals(AgeGate.PARENT, AgeCheck.gate(true, AgeStatus(confirmed = true, teen = true, parent = "declined")))
+        assertEquals(AgeGate.PARENT, AgeCheck.gate(true, AgeStatus(confirmed = true, teen = true, parent = "revoked")))
+        // A final block outranks both; the region refusal outranks the parent step.
+        assertEquals(AgeGate.BLOCKED, AgeCheck.gate(true, AgeStatus(blocked = true, restricted = true, parent = "pending")))
+        assertEquals(AgeGate.RESTRICTED, AgeCheck.gate(true, AgeStatus(restricted = true, parent = "pending")))
+        assertEquals(AgeGate.NONE, AgeCheck.gate(true, AgeStatus(confirmed = true, teen = true)))
+    }
+
+    @Test
+    fun heldAccounts_lockUsageStats() {
+        assertTrue(AgeCheck.usageStatsLocked(AgeStatus(restricted = true)))
+        assertTrue(AgeCheck.usageStatsLocked(AgeStatus(parent = "pending")))
+        assertFalse(AgeCheck.usageStatsLocked(done))
+    }
+
+    @Test
+    fun ageState_decodesTheNewFieldsAndTheirAbsence() {
+        val held = WireJson.json.decodeFromString(
+            MeResponse.serializer(),
+            """{"user":null,"age":{"confirmed":true,"blocked":false,"teen":true,"needsDob":false,"restricted":true,"parent":"pending"}}""",
+        )
+        assertTrue(held.age!!.restricted)
+        assertEquals("pending", held.age.parent)
+        val plain = WireJson.json.decodeFromString(MeResponse.serializer(), """{"user":null,"age":{"confirmed":true,"blocked":false,"teen":false,"needsDob":false}}""")
+        assertFalse(plain.age!!.restricted)
+        assertNull(plain.age.parent)
+    }
+
+    @Test
+    fun theDateAsksWhereFor13To15_andQuebecFor13InCanada() {
+        val now = at("2026-11-28T12:00:00Z")
+        val thirteen = LocalDate.of(2013, 6, 1)
+        val fifteen = LocalDate.of(2011, 6, 1)
+        val sixteen = LocalDate.of(2010, 6, 1)
+        val twelve = LocalDate.of(2014, 6, 1)
+        assertTrue(AgeCheck.asksCountry(thirteen, now))
+        assertTrue(AgeCheck.asksCountry(fifteen, now))
+        assertFalse(AgeCheck.asksCountry(sixteen, now))
+        assertFalse(AgeCheck.asksCountry(LocalDate.of(1990, 1, 1), now))
+        assertFalse("under 13 is the refusal, not a question", AgeCheck.asksCountry(twelve, now))
+        assertTrue(AgeCheck.asksQuebec(thirteen, "CA", now))
+        assertFalse(AgeCheck.asksQuebec(thirteen, "US", now))
+        assertFalse(AgeCheck.asksQuebec(thirteen, null, now))
+        assertFalse("14 and 15 are not asked about Quebec", AgeCheck.asksQuebec(fifteen, "CA", now))
+    }
+
+    @Test
+    fun regionAndParentRefusals_areAgeErrors() {
+        for (code in listOf("age_region", "age_parent_pending")) {
+            val err = JudgeApi.errorFor(403, """{"error":"x","code":"$code"}""", null) as UiError.Api
+            assertEquals(code, err.code)
+            assertTrue(AgeCheck.isAgeError(err))
+        }
+    }
 }

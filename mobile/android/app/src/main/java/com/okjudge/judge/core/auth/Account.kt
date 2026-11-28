@@ -5,6 +5,7 @@ import com.okjudge.judge.core.api.ApiResult
 import com.okjudge.judge.core.api.JudgeApi
 import com.okjudge.judge.core.api.TokenStore
 import com.okjudge.judge.core.display.UiError
+import com.okjudge.judge.core.model.AgeHint
 import com.okjudge.judge.core.model.EmailMethod
 import com.okjudge.judge.core.model.Entitlement
 import com.okjudge.judge.core.model.MeResponse
@@ -90,6 +91,8 @@ class Account(
     /** A phone that hasn't answered by then counts as unknown. */
     private val platformTimeoutMs: Long = 10_000,
     private val ageHold: AgeHoldStore = AgeHoldStore.Memory(),
+    /** The Play store's country (two letters), or null while the store has not said. */
+    private val storeCountry: suspend () -> String? = { null },
 ) {
     sealed interface State {
         /** The stored token is still being read off the main thread. */
@@ -191,6 +194,9 @@ class Account(
     /** The session whose store signal the server already has, so it is sent once per launch. */
     private var signalSentFor: String? = null
 
+    /** The session whose store country the server already has. */
+    private var storeCountrySentFor: String? = null
+
     val ageGate: StateFlow<AgeGate> = combine(_state, _held) { state, held ->
         AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age, if (held) PlatformAge.MINOR_UNAPPROVED else null)
     }.stateIn(scope, SharingStarted.Eagerly, AgeGate.NONE)
@@ -244,6 +250,7 @@ class Account(
                 if (_state.value is State.SignedIn) {
                     _state.value = State.SignedIn(res.value)
                     settleAge()
+                    settleStoreCountry()
                 }
             }
             is ApiResult.Err -> {
@@ -325,7 +332,7 @@ class Account(
     fun ageRefusal(): String? {
         val age = (_state.value as? State.SignedIn)?.me?.age ?: return null
         return when {
-            age.blocked || _held.value -> AgeCheck.BLOCKED
+            age.blocked || age.restricted || age.parent != null || _held.value -> AgeCheck.BLOCKED
             !age.confirmed -> AgeCheck.UNCONFIRMED
             askingPlatform || _agePosting.value -> AgeCheck.CHECKING
             else -> null
@@ -333,20 +340,22 @@ class Account(
     }
 
     /** Sends [dob]. The answer, or a refetch of /me when the account moved on, decides what shows next. */
-    suspend fun submitDob(dob: LocalDate) {
+    suspend fun submitDob(dob: LocalDate, country: String? = null, quebec: Boolean? = null) {
         if (!_agePosting.compareAndSet(expect = false, update = true)) return
         val asked = tokens.get()
         var refetch = false
         var liftedBlock = false
         try {
             _ageFailed.value = false
-            val res = api.submitDob(dob.toString())
+            val store = storeCountry()
+            val res = api.submitDob(dob.toString(), store, country, quebec)
             if (tokens.get() != asked) return
             val current = _state.value as? State.SignedIn ?: return
             val me = current.me ?: return
             when (res) {
                 is ApiResult.Ok -> {
                     liftedBlock = me.age?.blocked == true && !res.value.blocked
+                    if (store != null) storeCountrySentFor = asked
                     _state.value = current.copy(me = me.copy(age = res.value))
                 }
                 is ApiResult.Err -> {
@@ -370,6 +379,9 @@ class Account(
             settleLater()
         }
     }
+
+    /** The request IP's guess for the date step's country and Quebec questions; null when it could not be read. */
+    suspend fun ageHint(): AgeHint? = (api.ageHint() as? ApiResult.Ok)?.value
 
     /** The date step went back to the picker: the old failure no longer applies. */
     fun clearAgeFailed() {
@@ -411,10 +423,40 @@ class Account(
         settleLater()
     }
 
+    /**
+     * Tells the server the Play store's country once per launch, for an account with a date on file. It can
+     * only add the parent step or the Brazil refusal. The date step sends it itself.
+     */
+    suspend fun settleStoreCountry() {
+        val age = (_state.value as? State.SignedIn)?.me?.age ?: return
+        if (age.needsDob || (age.blocked && !age.needsDob)) return
+        val asked = tokens.get() ?: return
+        if (storeCountrySentFor == asked) return
+        val code = storeCountry() ?: return
+        if (!_agePosting.compareAndSet(expect = false, update = true)) {
+            ageResettle = true
+            return
+        }
+        try {
+            val res = api.reportStoreCountry(code)
+            if (tokens.get() != asked) return
+            val current = _state.value as? State.SignedIn ?: return
+            val me = current.me ?: return
+            if (res is ApiResult.Ok) {
+                storeCountrySentFor = asked
+                _state.value = current.copy(me = me.copy(age = res.value))
+            }
+        } finally {
+            _agePosting.value = false
+        }
+        settleLater()
+    }
+
     private suspend fun settleLater() {
         if (ageResettle) {
             ageResettle = false
             settleAge()
+            settleStoreCountry()
         }
     }
 

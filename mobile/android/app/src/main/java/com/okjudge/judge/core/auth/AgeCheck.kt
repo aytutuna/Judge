@@ -36,6 +36,12 @@ enum class AgeGate {
     /** A final block: Judge can't be used. */
     BLOCKED,
 
+    /** Brazil under 18: refused until the 18th birthday. */
+    RESTRICTED,
+
+    /** A parent has to say yes: the email step, the waiting page, or the declined and revoked pages. */
+    PARENT,
+
     /** The store holds the account until a parent approves: nothing past the age step. */
     APPROVAL,
 }
@@ -59,6 +65,11 @@ object AgeCheck {
 
     /** Not a refusal of the account: the phone check or a report is still running, so wait a moment. */
     const val CHECKING = "age_checking"
+    const val REGION = "age_region"
+    const val PARENT_PENDING = "age_parent_pending"
+
+    /** The 403 codes that put an age screen up. */
+    val REFUSALS = setOf(BLOCKED, UNCONFIRMED, REGION, PARENT_PENDING)
     const val AGE_SET = "age_set"
 
     private const val AHEAD_HOURS = 14L
@@ -109,14 +120,27 @@ object AgeCheck {
         else -> null
     }
 
-    /** Decided in this order: a final block, the date step, the store's pending approval, nothing. */
+    /** Decided in this order: a final block, the region refusal, the parent step, the date step, the store's pending approval, nothing. */
     fun gate(signedIn: Boolean, age: AgeStatus?, platform: PlatformAge? = null): AgeGate = when {
         !signedIn || age == null -> AgeGate.NONE
         age.blocked && !age.needsDob -> AgeGate.BLOCKED
+        age.restricted -> AgeGate.RESTRICTED
+        age.parent != null -> AgeGate.PARENT
         age.needsDob -> AgeGate.DATE
         platform == PlatformAge.MINOR_UNAPPROVED -> AgeGate.APPROVAL
         else -> AgeGate.NONE
     }
+
+    /** Whether the typed date also asks where the person lives: 13 to 15 on the latest date, as the website does. */
+    fun asksCountry(dob: LocalDate, nowMillis: Long): Boolean =
+        !underThirteen(dob, nowMillis) && youngerThan(dob, 16, nowMillis)
+
+    /** Whether the typed date and country also ask about Quebec: 13 in Canada. */
+    fun asksQuebec(dob: LocalDate, country: String?, nowMillis: Long): Boolean =
+        asksCountry(dob, nowMillis) && youngerThan(dob, 14, nowMillis) && country == "CA"
+
+    private fun youngerThan(dob: LocalDate, years: Long, nowMillis: Long): Boolean =
+        dob.isAfter(Instant.ofEpochMilli(nowMillis).atOffset(ZoneOffset.UTC).toLocalDate().minusYears(years))
 
     /** The latest calendar date anywhere on Earth (UTC+14). */
     fun latestDate(nowMillis: Long): LocalDate =
@@ -130,7 +154,7 @@ object AgeCheck {
     fun underThirteen(dob: LocalDate, nowMillis: Long): Boolean = dob.isAfter(latestDate(nowMillis).minusYears(13))
 
     /** Usage events go out only for an account whose age is known and 18 or more (as on the website). */
-    fun usageStatsLocked(age: AgeStatus?): Boolean = age != null && (age.teen || age.blocked || age.needsDob)
+    fun usageStatsLocked(age: AgeStatus?): Boolean = age != null && (age.teen || age.blocked || age.needsDob || age.restricted || age.parent != null)
 
     /**
      * What analytics may do: false (drop everything) when the setting is off or the account is locked,
@@ -146,11 +170,11 @@ object AgeCheck {
     fun showsConsentCard(ask: Boolean, teen: Boolean): Boolean = ask && !teen
 
     fun isAgeError(error: UiError?): Boolean =
-        error is UiError.Api && error.status == 403 && (error.code == BLOCKED || error.code == UNCONFIRMED)
+        error is UiError.Api && error.status == 403 && error.code in REFUSALS
 
     /** The age error of a 403, sent as `code` or as a bare `error`; null for anything else. */
     fun errorCode(status: Int, code: String?, error: String?): String? {
         if (status != 403) return null
-        return listOf(code, error).firstOrNull { it == BLOCKED || it == UNCONFIRMED }
+        return listOf(code, error).firstOrNull { it in REFUSALS }
     }
 }

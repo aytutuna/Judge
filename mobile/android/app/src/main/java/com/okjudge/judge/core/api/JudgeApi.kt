@@ -4,6 +4,7 @@ import com.okjudge.judge.core.analytics.Delivery
 import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.display.UiError
 import com.okjudge.judge.core.evidence.PreparedImage
+import com.okjudge.judge.core.model.AgeHint
 import com.okjudge.judge.core.model.AgeStatus
 import com.okjudge.judge.core.model.CaseListResponse
 import com.okjudge.judge.core.model.CaseRemovalResponse
@@ -22,6 +23,7 @@ import com.okjudge.judge.core.model.LiveCasesResponse
 import com.okjudge.judge.core.model.ClarifyResponse
 import com.okjudge.judge.core.model.EvidenceUploadResponse
 import com.okjudge.judge.core.model.HistoryPage
+import com.okjudge.judge.core.model.ParentView
 import com.okjudge.judge.core.model.MeResponse
 import com.okjudge.judge.core.model.MineVerdict
 import com.okjudge.judge.core.model.WrittenSides
@@ -88,7 +90,7 @@ sealed interface ApiResult<out T> {
  *
  * Every call carries `Authorization: Bearer` while [tokenStore] holds a
  * session; a 401 `signin_required` to such a call clears it and calls
- * [onSignedOut]. A 403 `age_blocked` or `age_unconfirmed` to any call is
+ * [onSignedOut]. A 403 `age_blocked`, `age_unconfirmed`, `age_region` or `age_parent_pending` to any call is
  * passed to [onAgeGate]. A 403 `agreement_required` to a signed-in call waits
  * for [askAgreement] and, when the person agreed, sends the same request once
  * more. Sign-in requests also carry [deviceId] as `Device-Id`.
@@ -486,8 +488,47 @@ class JudgeApi(
         },
     )
 
-    /** POST /api/v1/me/age with the date of birth, `YYYY-MM-DD`, accepted once. */
-    suspend fun submitDob(dob: String): ApiResult<AgeStatus> = postAge(buildJsonObject { put("dob", dob) })
+    /**
+     * POST /api/v1/me/age with the date of birth, `YYYY-MM-DD`, accepted once. [country] and [quebec]
+     * only for the questions the date calls for; [storeCountry] whenever the store says it.
+     */
+    suspend fun submitDob(dob: String, storeCountry: String? = null, country: String? = null, quebec: Boolean? = null): ApiResult<AgeStatus> =
+        postAge(
+            buildJsonObject {
+                put("dob", dob)
+                storeCountry?.let { put("storeCountry", it) }
+                country?.let { put("country", it) }
+                quebec?.let { put("quebec", it) }
+            },
+        )
+
+    /** POST /api/v1/me/age with only the store's country; it can add the parent step or the Brazil refusal, never lift one. */
+    suspend fun reportStoreCountry(storeCountry: String): ApiResult<AgeStatus> =
+        postAge(buildJsonObject { put("storeCountry", storeCountry) })
+
+    /** GET /api/v1/me/age: the guess from the request's IP for the date step's questions. */
+    suspend fun ageHint(): ApiResult<AgeHint> {
+        val req = request(url("api", "v1", "me", "age")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(AgeHint.serializer(), text) }
+    }
+
+    /** GET /api/v1/me/parent. */
+    suspend fun parent(): ApiResult<ParentView> {
+        val req = request(url("api", "v1", "me", "parent")).cacheControl(CacheControl.FORCE_NETWORK).get().build()
+        return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(ParentView.serializer(), text) }
+    }
+
+    /** POST /api/v1/me/parent: gives the parent's address, changes it, or (the same address) sends the link again. */
+    suspend fun sendParent(email: String): ApiResult<ParentView> {
+        val req = request(url("api", "v1", "me", "parent")).post(buildJsonObject { put("email", email) }.toString().toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(ParentView.serializer(), text) }
+    }
+
+    /** POST /api/v1/me/parent/resend: the link to the current address again. */
+    suspend fun resendParent(): ApiResult<ParentView> {
+        val req = request(url("api", "v1", "me", "parent", "resend")).post("{}".toRequestBody(JSON)).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(ParentView.serializer(), text) }
+    }
 
     private suspend fun postAge(body: JsonObject): ApiResult<AgeStatus> {
         val req = request(url("api", "v1", "me", "age")).post(body.toString().toRequestBody(JSON)).build()
@@ -665,7 +706,7 @@ class JudgeApi(
             tokenStore.clear()
             onSignedOut()
         }
-        val ageCode = error?.takeIf { it.status == 403 }?.code?.takeIf { it == AgeCheck.BLOCKED || it == AgeCheck.UNCONFIRMED }
+        val ageCode = error?.takeIf { it.status == 403 }?.code?.takeIf { it in AgeCheck.REFUSALS }
         if (stillCurrent && ageCode != null) onAgeGate(ageCode)
         return result
     }

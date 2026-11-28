@@ -54,6 +54,7 @@ object Errors {
         "case_closed", "case_expired", "appeal_used", "appeal_limit", "not_party", "own_case", "too_large",
         "unsupported_media", "too_many_files", "evidence_invalid", "anonymize_failed", "removed",
         "names_unavailable", "agreement_required", "age_set", "not_for_teens",
+        "age_region", "age_parent_pending", "parent_email", "parent_declined", "parent_wait", "parent_limit", "parent_conflict",
     )
 
     /** A server wait as a whole phrase, rounding up: minutes below 90, hours beyond. */

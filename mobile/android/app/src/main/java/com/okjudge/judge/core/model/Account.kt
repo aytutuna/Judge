@@ -100,7 +100,29 @@ data class AgeStatus(
     val blocked: Boolean = false,
     val teen: Boolean = false,
     val needsDob: Boolean = false,
+    /** Brazil under 18: the account is refused. */
+    val restricted: Boolean = false,
+    /** "pending", "declined" or "revoked" while a parent has to say yes; null otherwise. */
+    val parent: String? = null,
 )
+
+/** GET /api/v1/me/parent. The address is never sent, only [emailHint]. */
+@Serializable
+data class ParentView(
+    val status: String = "none",
+    val sent: Boolean = false,
+    val emailHint: String? = null,
+    val expiresAt: String? = null,
+    val expired: Boolean = false,
+    val resendsLeft: Int = 0,
+    val changesLeft: Int = 0,
+    val resendAt: String? = null,
+    val deleteAt: String? = null,
+)
+
+/** GET /api/v1/me/age: the request IP's guess for the date step's questions. */
+@Serializable
+data class AgeHint(val country: String? = null, val quebec: Boolean? = null)
 
 /**
  * GET /api/v1/me. Both null when the request carried no valid session; [age]
