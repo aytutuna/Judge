@@ -18,6 +18,7 @@ const CRON_TASKS: Record<string, string> = {
   "17 3 * * *": "events",
   "22 3 * * *": "erasure",
   "27 3 * * *": "cleanup",
+  "32 3 * * *": "backfill",
   "30 5 * * *": "backup",
 };
 

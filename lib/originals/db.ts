@@ -157,6 +157,20 @@ async function widenChecks(db: Db): Promise<void> {
   await rebuildTable(db, "verdict_meta", /'party_b'\s*,\s*'account_deleted'/, "'party_b','party_c','party_d','account_deleted'");
 }
 
+/** Gives verdicts from before the originals tables a metadata row, and sets
+ * names off for rows a teen's account made. Idempotent. The Node server runs
+ * it at startup; on Workers the daily backfill task does (lib/cron.ts). */
+export async function runBackfills(db: Db): Promise<void> {
+  await db.batch(backfillStatements(new Date().toISOString()), "write");
+  // Rows the backfill (or a fallback save) made for a teen start with names off.
+  await db
+    .execute(
+      `UPDATE verdict_meta SET names_visible = 0 WHERE names_visible = 1 AND names_confirmed_at IS NULL
+       AND owner_user_id IN (SELECT u.id FROM "user" u WHERE ${teenSql("u")})`,
+    )
+    .catch(() => undefined);
+}
+
 /** Creates the case tables (with their added columns), the originals
  * tables, and runs the backfills, once per process. Idempotent. */
 export async function ensureOriginalsTables(): Promise<void> {
@@ -170,16 +184,7 @@ export async function ensureOriginalsTables(): Promise<void> {
     .batch(SCHEMA, "write")
     .then(() => addMetaColumns(client))
     .then(() => widenChecks(client))
-    .then(() => client.batch(backfillStatements(new Date().toISOString()), "write"))
-    // Rows the backfill (or a fallback save) made for a teen start with names off.
-    .then(() =>
-      client
-        .execute(
-          `UPDATE verdict_meta SET names_visible = 0 WHERE names_visible = 1 AND names_confirmed_at IS NULL
-           AND owner_user_id IN (SELECT u.id FROM "user" u WHERE ${teenSql("u")})`,
-        )
-        .catch(() => undefined),
-    )
+    .then(() => runBackfills(client))
     .then(
       () => undefined,
       (e: unknown) => {

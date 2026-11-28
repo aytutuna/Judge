@@ -15,6 +15,8 @@ import { sweepErasures } from "@/lib/erasure";
 import { backupConfigured, runBackup, type BackupEnv } from "@/lib/backup";
 import { readRemovalBucket } from "@/lib/originals/removal-log";
 import { replayEntries } from "@/lib/originals/removal-replay";
+import { getDb } from "@/lib/db";
+import { runBackfills } from "@/lib/originals/db";
 import { sweepVerdictJobs } from "@/lib/verdict-jobs";
 import { workerEnv } from "@/lib/worker-env";
 
@@ -53,6 +55,8 @@ export const CRON_TASKS = {
     }),
   /** Daily: expired sign-in codes, old consent and removal-log records, blocked accounts. */
   cleanup: () => each({ cleanup: runCleanup }),
+  /** Daily: the data fixes the Node server makes at startup (metadata for old verdicts, names off for teens). */
+  backfill: async () => runBackfills(await getDb()),
   /** Nightly: the encrypted copy of the database in R2. Unset settings skip it, loudly. */
   backup: async () => {
     const env: Partial<BackupEnv> = { ...workerEnv(), ...process.env };

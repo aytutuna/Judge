@@ -45,7 +45,7 @@ describe("cron tasks", () => {
   });
 
   it("names the split daily tasks and refuses unknown ones", () => {
-    expect(Object.keys(CRON_TASKS)).toEqual(expect.arrayContaining(["sweep", "events", "erasure", "cleanup", "backup", "replay-removals"]));
+    expect(Object.keys(CRON_TASKS)).toEqual(expect.arrayContaining(["sweep", "events", "erasure", "cleanup", "backfill", "backup", "replay-removals"]));
     expect(isCronTask("daily")).toBe(false);
   });
 });
