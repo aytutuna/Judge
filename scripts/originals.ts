@@ -34,7 +34,7 @@ import { partyOriginals } from "../lib/originals/cases";
 import { aad, openOrNull, originalsKeyState } from "../lib/originals/crypto";
 import { ensureOriginalsTables, getOriginal, getVerdictMeta, subjects } from "../lib/originals/db";
 import { caseDisplayState, openVerdictDisplay } from "../lib/originals/display";
-import { operatorRemoveVerdict, removeCaseSide, replayRemoval } from "../lib/originals/removal";
+import { operatorRemoveVerdict, removeCaseSide } from "../lib/originals/removal";
 import { readRemovalLog, removalLogPath } from "../lib/originals/removal-log";
 
 export const USAGE =
@@ -186,34 +186,10 @@ async function replayRemovals(fileArg: string | null): Promise<number> {
     return 0;
   }
   if (log.skipped) console.error(`Warning: skipped ${log.skipped} malformed line(s) in ${file}.`);
-  let applied = 0;
-  let absent = 0;
-  let failed = 0;
-  for (const entry of log.entries) {
-    try {
-      const outcome = await replayRemoval(entry);
-      if (outcome === "absent") {
-        absent += 1;
-        continue;
-      }
-      if (entry.kind === "account") await deleteAccountRows(entry.id);
-      applied += 1;
-    } catch (e) {
-      failed += 1;
-      console.error(`FAILED to re-apply ${JSON.stringify(entry)}:`, e instanceof Error ? e.message : String(e));
-    }
-  }
-  print({ log: file, entries: log.entries.length, applied, notInThisDatabase: absent, failed });
-  return failed ? 1 : 0;
-}
-
-/** The rest of an account deletion (the me route's order): entitlements,
- * then sessions, sign-in accounts and the user row. Loaded only here. */
-async function deleteAccountRows(userId: string): Promise<void> {
-  const { deleteUserEntitlements } = await import("../lib/entitlements");
-  await deleteUserEntitlements(userId);
-  const { deleteAuthUser } = await import("../lib/auth");
-  await deleteAuthUser(userId);
+  const { replayEntries } = await import("../lib/originals/removal-replay");
+  const report = await replayEntries(log.entries);
+  print({ log: file, ...report });
+  return report.failed ? 1 : 0;
 }
 
 function print(v: unknown) {

@@ -7,12 +7,14 @@
  * applies every removal again. One JSON object per line: ids, party, reason
  * and time (and, for an account, the sign-in token revocation outcome), never
  * any text, names or tokens. Entries older than RETENTION_MS are dropped
- * daily (pruneRemovalLog). Server only.
+ * daily (pruneRemovalLog). On Workers each entry is its own object under
+ * removals/ in the BACKUPS R2 bucket, which a D1 restore never touches. Server only.
  */
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { appendFile, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { workerEnv } from "@/lib/worker-env";
 import type { RemovalReason } from "@/lib/originals-types";
 import type { SignInRevocation } from "@/lib/signin-tokens";
 
@@ -30,6 +32,11 @@ export type RemovalLogEntry =
     };
 
 export const RETENTION_MS = 90 * 24 * 60 * 60_000;
+
+const BUCKET_PREFIX = "removals/";
+
+/** Keys sort by time, so a listing is in log order. */
+const bucketKey = (at: string) => `${BUCKET_PREFIX}${at}-${crypto.randomUUID().slice(0, 8)}.json`;
 
 /** Appends and the daily rewrite take turns, so a removal logged while the
  * file is being rewritten is not lost. */
@@ -55,10 +62,23 @@ export function removalLogPath(env: NodeJS.ProcessEnv = process.env): string | n
 /** Appends one entry. Never throws: the removal itself is already done in
  * the database; a failed append is logged loudly so the operator can add it. */
 export async function appendRemovalLog(entry: RemovalLogEntry): Promise<void> {
+  const bucket = workerEnv()?.BACKUPS;
+  if (bucket) {
+    try {
+      await bucket.put(bucketKey(entry.at), JSON.stringify(entry));
+    } catch (e) {
+      console.error(
+        "[removal-log] could not record a removal in R2 (a restore would not re-apply it):",
+        JSON.stringify(entry),
+        e instanceof Error ? e.message : String(e),
+      );
+    }
+    return;
+  }
   const file = removalLogPath();
   if (!file) return;
   try {
-    await inTurn(() => appendFile(file, `${JSON.stringify(entry)}\n`, { encoding: "utf8", mode: 0o600 }));
+    await inTurn(() => appendFile(/* turbopackIgnore: true */ file, `${JSON.stringify(entry)}\n`, { encoding: "utf8", mode: 0o600 }));
   } catch (e) {
     console.error(
       `[removal-log] could not record a removal in ${file} (a database restore would not re-apply it):`,
@@ -98,12 +118,32 @@ export function parseRemovalLogLine(line: string): RemovalLogEntry | null {
   }
 }
 
+/** Every valid entry in time order from the R2 log, plus the count skipped. */
+export async function readRemovalBucket(): Promise<{ entries: RemovalLogEntry[]; skipped: number }> {
+  const bucket = workerEnv()?.BACKUPS;
+  const entries: RemovalLogEntry[] = [];
+  let skipped = 0;
+  if (!bucket) return { entries, skipped };
+  let cursor: string | undefined;
+  do {
+    const page = await bucket.list({ prefix: BUCKET_PREFIX, cursor });
+    const bodies = await Promise.all(page.objects.map(async (o) => (await bucket.get(o.key))?.text() ?? ""));
+    for (const line of bodies) {
+      const entry = parseRemovalLogLine(line);
+      if (entry) entries.push(entry);
+      else skipped += 1;
+    }
+    cursor = page.truncated ? page.cursor : undefined;
+  } while (cursor);
+  return { entries, skipped };
+}
+
 /** Every valid entry in file order, plus the count of lines skipped. A
  * missing file reads as empty. */
 export async function readRemovalLog(file: string): Promise<{ entries: RemovalLogEntry[]; skipped: number } | null> {
   let text: string;
   try {
-    text = await readFile(file, "utf8");
+    text = await readFile(/* turbopackIgnore: true */ file, "utf8");
   } catch (e) {
     if ((e as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw e;
@@ -123,13 +163,27 @@ export async function readRemovalLog(file: string): Promise<{ entries: RemovalLo
  * every line it cannot read as an entry. Returns how many it dropped. A
  * missing file or a disabled log drops nothing. */
 export async function pruneRemovalLog(now: Date = new Date()): Promise<number> {
+  const bucket = workerEnv()?.BACKUPS;
+  if (bucket) {
+    const oldest = `${BUCKET_PREFIX}${new Date(now.getTime() - RETENTION_MS).toISOString()}`;
+    let dropped = 0;
+    let cursor: string | undefined;
+    do {
+      const page = await bucket.list({ prefix: BUCKET_PREFIX, cursor });
+      const old = page.objects.filter((o) => o.key < oldest).map((o) => o.key);
+      if (old.length) await bucket.delete(old);
+      dropped += old.length;
+      cursor = page.truncated && old.length === page.objects.length ? page.cursor : undefined;
+    } while (cursor);
+    return dropped;
+  }
   const file = removalLogPath();
   if (!file) return 0;
   const cutoff = now.getTime() - RETENTION_MS;
   return inTurn(async () => {
     let raw: string;
     try {
-      raw = await readFile(file, "utf8");
+      raw = await readFile(/* turbopackIgnore: true */ file, "utf8");
     } catch (e) {
       if ((e as NodeJS.ErrnoException).code === "ENOENT") return 0;
       throw e;
@@ -141,8 +195,8 @@ export async function pruneRemovalLog(now: Date = new Date()): Promise<number> {
     });
     if (kept.length === lines.length) return 0;
     const tmp = `${file}.tmp`;
-    await writeFile(tmp, kept.map((l) => `${l}\n`).join(""), { encoding: "utf8", mode: 0o600 });
-    await rename(tmp, file);
+    await writeFile(/* turbopackIgnore: true */ tmp, kept.map((l) => `${l}\n`).join(""), { encoding: "utf8", mode: 0o600 });
+    await rename(/* turbopackIgnore: true */ tmp, file);
     return lines.length - kept.length;
   });
 }

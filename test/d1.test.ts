@@ -35,7 +35,7 @@ describe("d1Client", () => {
   it("runs statements with positional arguments and reads rows by name", async () => {
     const db = d1Client(fakeD1());
     await db.execute("CREATE TABLE t (id TEXT PRIMARY KEY, n INTEGER, flag INTEGER)");
-    const ins = await db.execute({ sql: "INSERT INTO t (id, n, flag) VALUES (?, ?, ?)", args: ["a", 5n, true] });
+    const ins = await db.execute({ sql: "INSERT INTO t (id, n, flag) VALUES (?, ?, ?)", args: ["a", BigInt(5), true] });
     expect(ins.rowsAffected).toBe(1);
     const rs = await db.execute({ sql: "SELECT id, n, flag FROM t WHERE id = ?", args: ["a"] });
     expect(rs.rows[0].id).toBe("a");
