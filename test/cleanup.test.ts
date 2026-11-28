@@ -41,7 +41,7 @@ async function all(sql: string, args: string[] = []) {
 
 describe("expired sign-in codes", () => {
   it("does nothing, and does not fail, before any sign-in created the table", async () => {
-    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0, blocked: 0, parentless: 0, parentRecords: 0 });
+    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0, blocked: 0, parentless: 0, parentRecords: 0, deviceClaims: 0 });
   });
 
   it("deletes the rows past their expiry and keeps the live ones", async () => {
@@ -143,5 +143,20 @@ describe("clearing dates of birth before the sign-in migration", () => {
     expect((await runCleanup(NOW)).adultDobs).toBe(0);
     expect(error).not.toHaveBeenCalled();
     error.mockRestore();
+  });
+});
+
+describe("free verdict device claims", () => {
+  it("drops rows older than two days and keeps recent ones", async () => {
+    const { ensureEntitlementTables } = await import("../lib/entitlements");
+    await ensureEntitlementTables();
+    const db = await getDb();
+    const row = (key: string, days: number) => ({
+      sql: "INSERT INTO free_device_claims (device_key, day, user_id, created_at, confirmed) VALUES (?, ?, 'u', ?, 1)",
+      args: [key, ago(days).slice(0, 10), ago(days)],
+    });
+    await db.batch([row("d-old", 5), row("d-3", 3), row("d-1", 1), row("d-today", 0)], "write");
+    expect((await runCleanup(NOW)).deviceClaims).toBe(2);
+    expect((await all("SELECT device_key FROM free_device_claims ORDER BY device_key")).map((r) => r.device_key)).toEqual(["d-1", "d-today"]);
   });
 });

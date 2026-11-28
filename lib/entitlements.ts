@@ -628,6 +628,15 @@ export async function claimFreeVerdictDay(userId: string, keys: string[], now: D
   return Number(results[results.length - 1].rows[0].n) === keys.length;
 }
 
+/** Daily clean-up: the check only ever looks at today's rows, so anything
+ * older than two days is dead weight. Returns the rows deleted. */
+export async function pruneFreeDeviceClaims(now: Date = new Date()): Promise<number> {
+  const db = await client();
+  const cutoff = iso(new Date(now.getTime() - 2 * 24 * 60 * 60_000)).slice(0, 10);
+  const rs = await db.execute({ sql: "DELETE FROM free_device_claims WHERE day < ?", args: [cutoff] });
+  return rs.rowsAffected;
+}
+
 /** No grant on the account but its welcome credit, for a user id column. */
 const welcomeOnly = (userIdSql: string) =>
   `NOT EXISTS (SELECT 1 FROM entitlement_grants g WHERE g.user_id = ${userIdSql}
