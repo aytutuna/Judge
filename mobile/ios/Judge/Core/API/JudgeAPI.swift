@@ -38,8 +38,9 @@ struct JudgeAPI: Sendable {
     let pollPolicy: PollPolicy
     /// Sent as `Device-Id` on sign-in requests.
     let deviceID: String?
-    /// Hears every 403 `age_blocked` / `age_unconfirmed` to the current
-    /// session (AccountModel shows the gate it calls for).
+    /// Hears every 403 age error (`age_blocked`, `age_unconfirmed`,
+    /// `age_region`, `age_parent_pending`) to the current session
+    /// (AccountModel shows the gate it calls for).
     let ageGate: AsyncStream<String>.Continuation?
     /// Asked on a 403 `agreement_required`; true once the person agreed, and
     /// then the request is sent again.
@@ -205,7 +206,7 @@ struct JudgeAPI: Sendable {
                 // A token that replaced the one sent (a new sign-in) stays.
                 tokenStore.clear()
             }
-            if http.statusCode == 403, let code = failure.code, code == AgeCheck.blockedCode || code == AgeCheck.unconfirmedCode,
+            if http.statusCode == 403, let code = failure.code, AgeCheck.gateCodes.contains(code),
                let sent = request.value(forHTTPHeaderField: "Authorization"),
                let current = tokenStore.token(), sent == "Bearer \(current)" {
                 ageGate?.yield(code)

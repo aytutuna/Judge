@@ -53,9 +53,59 @@ extension JudgeAPI {
         return try await postAge(body)
     }
 
-    /// POST /api/v1/me/age with the date of birth, `YYYY-MM-DD`.
-    func reportDob(_ dob: String) async throws -> AgeStatus {
-        try await postAge(["dob": dob])
+    /// POST /api/v1/me/age with the date of birth, `YYYY-MM-DD`, and what
+    /// applies of the store's country, the country a 13 to 15 year old gave
+    /// and the Quebec answer.
+    func reportDob(_ dob: String, storeCountry: String? = nil, country: String? = nil, quebec: Bool? = nil) async throws -> AgeStatus {
+        var body: [String: Any] = ["dob": dob]
+        if let storeCountry { body["storeCountry"] = storeCountry }
+        if let country { body["country"] = country }
+        if let quebec { body["quebec"] = quebec }
+        return try await postAge(body)
+    }
+
+    /// POST /api/v1/me/age with only the store's country; it can add a rule,
+    /// never lift one.
+    func reportStoreCountry(_ code: String) async throws -> AgeStatus {
+        try await postAge(["storeCountry": code])
+    }
+
+    /// GET /api/v1/me/age: the country (and Quebec) the request's IP says.
+    func ageHint() async throws -> AgeHint {
+        let request = makeRequest(url: endpoint("me/age"), method: "GET", timeout: AuthTimeout.call)
+        let data = try await send(request)
+        guard let hint = try? JSONDecoder().decode(AgeHint.self, from: data) else { throw APIError.malformed }
+        return hint
+    }
+
+    /// GET /api/v1/me/parent.
+    func parentView() async throws -> ParentView {
+        let request = makeRequest(url: endpoint("me/parent"), method: "GET", timeout: AuthTimeout.call)
+        return try await parentAnswer(request)
+    }
+
+    /// POST /api/v1/me/parent: gives, changes or resends to the address.
+    func sendParent(email: String) async throws -> ParentView {
+        var request = makeRequest(url: endpoint("me/parent"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try JSONSerialization.data(withJSONObject: ["email": email])
+        return try await parentAnswer(request)
+    }
+
+    /// POST /api/v1/me/parent/resend: mails the current address again.
+    func resendParent() async throws -> ParentView {
+        var request = makeRequest(url: endpoint("me/parent/resend"), method: "POST", timeout: AuthTimeout.call)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = Data("{}".utf8)
+        return try await parentAnswer(request)
+    }
+
+    private func parentAnswer(_ request: URLRequest) async throws -> ParentView {
+        let data = try await send(request)
+        guard (try? JSONSerialization.jsonObject(with: data)) is [String: Any],
+              let view = try? JSONDecoder().decode(ParentView.self, from: data)
+        else { throw APIError.malformed }
+        return view
     }
 
     private func postAge(_ body: [String: Any]) async throws -> AgeStatus {

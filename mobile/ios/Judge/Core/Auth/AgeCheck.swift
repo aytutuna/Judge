@@ -1,6 +1,7 @@
 #if DECLARED_AGE_RANGE
 import DeclaredAgeRange
 #endif
+import StoreKit
 import UIKit
 
 /// What the phone's own age signal says about the user.
@@ -15,6 +16,10 @@ enum AgeGate: Equatable {
     case date
     /// Closed for age for good: Judge can't be used.
     case blocked
+    /// Brazil under 18: closed until the 18th birthday.
+    case restricted
+    /// A parent has to say yes (or said no, or took it back).
+    case parent
 }
 
 /// The age decisions, kept pure so the account and the tests share the rules.
@@ -23,6 +28,10 @@ enum AgeCheck {
     static let blockedCode = "age_blocked"
     static let unconfirmedCode = "age_unconfirmed"
     static let setCode = "age_set"
+    static let regionCode = "age_region"
+    static let parentPendingCode = "age_parent_pending"
+    /// The 403s that put an age screen over the app.
+    static let gateCodes: Set = [blockedCode, unconfirmedCode, regionCode, parentPendingCode]
     static let earliestDob = "1900-01-01"
 
     /// POST /api/v1/me/age with the phone's answer.
@@ -73,13 +82,15 @@ enum AgeCheck {
     static func gate(signedIn: Bool, age: AgeStatus?) -> AgeGate {
         guard signedIn, let age else { return .none }
         if age.blocked && !age.needsDob { return .blocked }
+        if age.restricted { return .restricted }
+        if age.parent != nil { return .parent }
         return age.needsDob ? .date : .none
     }
 
     /// The age error of a 403, sent as `code` or as a bare `error`.
     static func errorCode(status: Int, body: ApiErrorBody?) -> String? {
         guard status == 403 else { return nil }
-        return [body?.code, body?.error].compactMap { $0 }.first { $0 == blockedCode || $0 == unconfirmedCode }
+        return [body?.code, body?.error].compactMap { $0 }.first { gateCodes.contains($0) }
     }
 
     // MARK: - Dates
@@ -129,6 +140,21 @@ enum AgeCheck {
         dob > yearsBefore(now.addingTimeInterval(14 * 3600), years: 13)
     }
 
+    /// Younger than `years` full years on `now`'s date.
+    static func youngerThan(_ dob: String, years: Int, now: Date = Date()) -> Bool {
+        dob > yearsBefore(now, years: years)
+    }
+
+    /// The date step asks where a 13 to 15 year old lives.
+    static func asksCountry(dob: String, now: Date = Date()) -> Bool {
+        !underThirteen(dob: dob, now: now) && youngerThan(dob, years: 16, now: now)
+    }
+
+    /// And, for a 13 year old in Canada, whether in Quebec.
+    static func asksQuebec(dob: String, country: String?, now: Date = Date()) -> Bool {
+        asksCountry(dob: dob, now: now) && youngerThan(dob, years: 14, now: now) && country == "CA"
+    }
+
     /// What the picker starts on.
     static func defaultDobDate(now: Date = Date(), calendar: Calendar = gregorian) -> Date {
         calendar.date(byAdding: .year, value: -18, to: now) ?? now
@@ -161,6 +187,15 @@ enum AgeCheck {
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter.string(from: date)
+    }
+}
+
+enum StoreCountry {
+    /// The App Store country as the two letters the server takes; StoreKit
+    /// names it with three. nil when the store doesn't say.
+    static func current() async -> String? {
+        guard let code = await Storefront.current?.countryCode else { return nil }
+        return Countries.alpha2(fromAlpha3: code)
     }
 }
 

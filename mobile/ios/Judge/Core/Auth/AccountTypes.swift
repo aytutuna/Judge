@@ -211,22 +211,33 @@ struct Entitlement: Decodable, Sendable, Equatable {
     var isPremium: Bool { credits > 0 || subscription != nil }
 }
 
-/// `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. `teen`
-/// and `needsDob` are false from a server that doesn't send them.
+/// Where a parent's yes stands: `age.parent` of the age state.
+enum ParentState: String, Decodable, Sendable {
+    case pending, declined, revoked
+}
+
+/// `age` of GET /api/v1/me and the answer of POST /api/v1/me/age. `teen`,
+/// `needsDob` and `restricted` are false, and `parent` nil, from a server
+/// that doesn't send them.
 struct AgeStatus: Decodable, Sendable, Equatable {
     var confirmed = false
     var blocked = false
     var teen = false
     var needsDob = false
+    /// Brazil under 18: every route is refused until the 18th birthday.
+    var restricted = false
+    var parent: ParentState?
 
-    init(confirmed: Bool = false, blocked: Bool = false, teen: Bool = false, needsDob: Bool = false) {
+    init(confirmed: Bool = false, blocked: Bool = false, teen: Bool = false, needsDob: Bool = false, restricted: Bool = false, parent: ParentState? = nil) {
         self.confirmed = confirmed
         self.blocked = blocked
         self.teen = teen
         self.needsDob = needsDob
+        self.restricted = restricted
+        self.parent = parent
     }
 
-    private enum CodingKeys: String, CodingKey { case confirmed, blocked, teen, needsDob }
+    private enum CodingKeys: String, CodingKey { case confirmed, blocked, teen, needsDob, restricted, parent }
 
     init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
@@ -234,6 +245,53 @@ struct AgeStatus: Decodable, Sendable, Equatable {
         blocked = (try? c.decodeIfPresent(Bool.self, forKey: .blocked)) == true
         teen = (try? c.decodeIfPresent(Bool.self, forKey: .teen)) == true
         needsDob = (try? c.decodeIfPresent(Bool.self, forKey: .needsDob)) == true
+        restricted = (try? c.decodeIfPresent(Bool.self, forKey: .restricted)) == true
+        parent = try? c.decodeIfPresent(ParentState.self, forKey: .parent)
+    }
+}
+
+/// GET /api/v1/me/age: where the request's IP says the person is.
+struct AgeHint: Decodable, Sendable, Equatable {
+    var country: String?
+    var quebec: Bool?
+
+    private enum CodingKeys: String, CodingKey { case country, quebec }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        country = try? c.decodeIfPresent(String.self, forKey: .country)
+        quebec = try? c.decodeIfPresent(Bool.self, forKey: .quebec)
+    }
+}
+
+/// GET and POST /api/v1/me/parent: where the parent step stands. The
+/// parent's address never comes back, only `emailHint`.
+struct ParentView: Decodable, Sendable, Equatable {
+    var status = "none"
+    var sent = false
+    var emailHint: String?
+    var expiresAt: String?
+    var expired = false
+    var resendsLeft = 0
+    var changesLeft = 0
+    var resendAt: String?
+    var deleteAt: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case status, sent, emailHint, expiresAt, expired, resendsLeft, changesLeft, resendAt, deleteAt
+    }
+
+    init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        status = (try? c.decodeIfPresent(String.self, forKey: .status)) ?? "none"
+        sent = (try? c.decodeIfPresent(Bool.self, forKey: .sent)) == true
+        emailHint = try? c.decodeIfPresent(String.self, forKey: .emailHint)
+        expiresAt = try? c.decodeIfPresent(String.self, forKey: .expiresAt)
+        expired = (try? c.decodeIfPresent(Bool.self, forKey: .expired)) == true
+        resendsLeft = (try? c.decodeIfPresent(Int.self, forKey: .resendsLeft)) ?? 0
+        changesLeft = (try? c.decodeIfPresent(Int.self, forKey: .changesLeft)) ?? 0
+        resendAt = try? c.decodeIfPresent(String.self, forKey: .resendAt)
+        deleteAt = try? c.decodeIfPresent(String.self, forKey: .deleteAt)
     }
 }
 
