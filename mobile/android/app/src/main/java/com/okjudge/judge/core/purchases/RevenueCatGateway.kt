@@ -16,6 +16,7 @@ import com.revenuecat.purchases.awaitLogOut
 import com.revenuecat.purchases.awaitOfferings
 import com.revenuecat.purchases.awaitPurchase
 import com.revenuecat.purchases.awaitRestore
+import com.revenuecat.purchases.awaitStorefrontCountryCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.cancellation.CancellationException
@@ -89,6 +90,10 @@ class RevenueCatGateway(context: Context, private val apiKey: String) : Purchase
     override suspend fun restore(): RestoreOutcome {
         val purchases = shared ?: return RestoreOutcome.Failed
         return attempt { RestoreOutcome.Restored(customer(purchases.awaitRestore())) } ?: RestoreOutcome.Failed
+    }
+
+    override suspend fun storeCountry(): String? = attempt {
+        shared?.awaitStorefrontCountryCode()?.trim()?.uppercase()?.takeIf { it.length == 2 }
     }
 
     private fun customer(info: CustomerInfo) = StoreCustomer(subscriptionActive = info.activeSubscriptions.isNotEmpty())

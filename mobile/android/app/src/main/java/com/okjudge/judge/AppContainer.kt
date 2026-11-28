@@ -10,6 +10,7 @@ import com.okjudge.judge.core.feedback.Consent
 import com.okjudge.judge.core.feedback.DataExport
 import com.okjudge.judge.core.auth.Account
 import com.okjudge.judge.core.auth.AgeHoldStore
+import com.okjudge.judge.core.auth.ParentConsent
 import com.okjudge.judge.core.auth.AgeCheck
 import com.okjudge.judge.core.cases.CaseNamesStore
 import com.okjudge.judge.core.cases.PrefsCaseNames
@@ -129,8 +130,11 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
 
     val account: Account by lazy {
         Account(api, tokenStore, CredentialManagerGoogle(config.googleServerClientId), appScope, ageSignals = PlayAgeSignals(appContext),
+            storeCountry = { purchaseGateway?.storeCountry() },
             ageHold = AgeHoldStore.Prefs(appContext.getSharedPreferences(AgeHoldStore.FILE, Context.MODE_PRIVATE)))
     }
+
+    val parentConsent: ParentConsent by lazy { ParentConsent(api) { account.refresh() } }
 
     private val db: HistoryDb by lazy { HistoryDb.create(appContext) }
 
@@ -174,6 +178,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
             onBought = { analytics.track("purchase_completed") },
             ageRefusal = { account.ageRefusal() },
             syncRestored = { account.syncPurchases() },
+            onStoreReady = { account.settleStoreCountry() },
         )
     }
 
@@ -181,6 +186,7 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     fun start() {
         account.onEndedByUser = {
             agreement.cancel()
+            parentConsent.clear()
             history.forgetAccounts()
             drafts.save(null)
             accountEnded.tryEmit(Unit)

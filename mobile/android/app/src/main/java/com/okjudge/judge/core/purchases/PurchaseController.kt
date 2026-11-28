@@ -39,6 +39,8 @@ class PurchaseController(
     private val ageRefusal: () -> String? = { null },
     /** Asks the server to read the store's plans after a restore (Account.syncPurchases). */
     private val syncRestored: suspend () -> Unit = {},
+    /** Told once the store is logged in, which is when it can name its country (Account.settleStoreCountry). */
+    private val onStoreReady: suspend () -> Unit = {},
 ) {
     /** The purchase message on the pricing screen. */
     enum class Notice {
@@ -144,6 +146,7 @@ class PurchaseController(
         val customer = gateway.logIn(userId) ?: return
         if (currentUserId != userId) return
         _state.update { it.copy(storeUserId = userId, subscriptionInStore = customer.subscriptionActive) }
+        scope.launch { onStoreReady() }
         loadOffersLocked(gateway, userId)
     }
 

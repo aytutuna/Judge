@@ -61,4 +61,7 @@ interface PurchaseGateway {
     suspend fun purchase(host: Context, productId: String): PurchaseOutcome
 
     suspend fun restore(): RestoreOutcome
+
+    /** The store's country, two letters (Play Billing's country code), or null while the store has not said. */
+    suspend fun storeCountry(): String? = null
 }
