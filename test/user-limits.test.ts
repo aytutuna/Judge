@@ -305,6 +305,10 @@ describe("one free verdict a day per device", () => {
     expect(await rl.checkPremiumSiteCap("gone-a", now, app())).toEqual({ ok: true });
     await ent.reservePremiumVerdict("gone-a", { now });
     await ent.deleteUserEntitlements("gone-a");
+    const { getDb } = await import("../lib/db");
+    const rows = (await (await getDb()).execute("SELECT user_id FROM free_device_claims")).rows.map((r) => r.user_id);
+    expect(rows).not.toContain("gone-a");
+    expect(rows).toContain("");
     expect(await rl.checkPremiumSiteCap("gone-b", new Date(now.getTime() + 3600_000), app())).toMatchObject({
       ok: false,
       code: "free_device",
