@@ -1,8 +1,8 @@
 import SwiftUI
 import UIKit
 
-/// Over the whole app for the age check: the date of birth step, or the
-/// refusal for an account closed for good.
+/// Over the whole app for the age check: the date of birth step, the
+/// refusals (closed for good, closed for the region), or the parent step.
 struct AgeGateView: View {
     @Environment(AppModel.self) private var app
     @State private var confirmDelete = false
@@ -23,6 +23,10 @@ struct AgeGateView: View {
                     }
                 case .blocked:
                     blocked(lang, account: account)
+                case .restricted:
+                    restricted(lang, account: account)
+                case .parent:
+                    parentStep(lang, account: account)
                 case .none:
                     EmptyView()
                 }
@@ -35,6 +39,12 @@ struct AgeGateView: View {
         .accessibilityAddTraits(.isModal)
         .environment(\.locale, lang.locale)
         .deleteAccountAlert(isPresented: $confirmDelete, app: app)
+        .task(id: gate) {
+            if gate == .parent { await watchParent(account) }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            if gate == .parent || gate == .restricted { Task { await account.refresh() } }
+        }
     }
 
     @ViewBuilder
@@ -54,6 +64,12 @@ struct AgeGateView: View {
             .accessibilityLabel(L10n.ageTitle(lang))
             .accessibilityHint(L10n.ageLead(lang))
             .disabled(busy)
+            if account.asksCountry {
+                countryQuestion(lang, account: account)
+            }
+            if account.asksQuebec {
+                quebecQuestion(lang, account: account)
+            }
             if account.ageError != nil {
                 ErrorBanner(message: L10n.ageFailed(lang))
             }
@@ -63,12 +79,51 @@ struct AgeGateView: View {
                 Text(L10n.ageContinue(lang))
             }
             .buttonStyle(PrimaryButtonStyle())
-            .disabled(busy || !account.dobPicked)
+            .disabled(busy || !account.canSubmitDob)
         }
         .padding(20)
         .paperSurface(radius: Radius.card)
         .cardShadow()
+        .task { await account.loadAgeHint() }
         signOutAndDelete(lang, account: account)
+    }
+
+    /// Where a 13 to 15 year old lives: it decides whether a parent has to say yes.
+    private func countryQuestion(_ lang: AppLang, account: AccountModel) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L10n.ageWhereWhy(lang))
+                .brandText(.lead)
+                .foregroundStyle(Brand.ink2)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Text(L10n.ageWhere(lang))
+                    .brandText(.slotTitle)
+                    .foregroundStyle(Brand.ink)
+                Spacer()
+                Picker(L10n.ageWhere(lang), selection: Binding(get: { account.dobCountry }, set: { account.pickCountry($0) })) {
+                    Text("-").tag(String?.none)
+                    ForEach(Countries.options(lang: lang)) { country in
+                        Text(country.name).tag(String?.some(country.code))
+                    }
+                }
+                .pickerStyle(.menu)
+                .tint(Brand.terraInk)
+            }
+        }
+    }
+
+    /// Asked of a 13 year old in Canada.
+    private func quebecQuestion(_ lang: AppLang, account: AccountModel) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(L10n.ageQuebec(lang))
+                .brandText(.slotTitle)
+                .foregroundStyle(Brand.ink)
+            Picker(L10n.ageQuebec(lang), selection: Binding(get: { account.dobQuebec }, set: { account.pickQuebec($0) })) {
+                Text(L10n.ageYes(lang)).tag(Bool?.some(true))
+                Text(L10n.ageNo(lang)).tag(Bool?.some(false))
+            }
+            .pickerStyle(.segmented)
+        }
     }
 
     @ViewBuilder
@@ -112,7 +167,7 @@ struct AgeGateView: View {
         signOutAndDelete(lang, account: account)
     }
 
-    private func signOutAndDelete(_ lang: AppLang, account: AccountModel) -> some View {
+    func signOutAndDelete(_ lang: AppLang, account: AccountModel) -> some View {
         VStack(spacing: 4) {
             Button(L10n.accountSignOut(lang)) {
                 Task { await account.signOut() }
@@ -127,7 +182,7 @@ struct AgeGateView: View {
     /// The account deletion from Settings, which a blocked or unconfirmed
     /// account can still reach.
     @ViewBuilder
-    private func deleteButton(_ lang: AppLang, account: AccountModel) -> some View {
+    func deleteButton(_ lang: AppLang, account: AccountModel) -> some View {
         if let failure = account.failure, AccountModel.deleteFailures.contains(failure) {
             ErrorBanner(message: failure.message(lang))
         }
@@ -145,7 +200,17 @@ struct AgeGateView: View {
 
     @ViewBuilder
     private func blocked(_ lang: AppLang, account: AccountModel) -> some View {
-        header(L10n.ageBlockedTitle(lang), lead: Text(Self.contactLine(lang)))
+        refusal(lang, account: account, title: L10n.ageBlockedTitle(lang), lead: Self.contactLine(lang))
+    }
+
+    @ViewBuilder
+    private func restricted(_ lang: AppLang, account: AccountModel) -> some View {
+        refusal(lang, account: account, title: L10n.ageRegionTitle(lang), lead: Self.regionLine(lang))
+    }
+
+    @ViewBuilder
+    private func refusal(_ lang: AppLang, account: AccountModel, title: String, lead: AttributedString) -> some View {
+        header(title, lead: Text(lead))
         if account.isSignedIn {
             Button {
                 Task { await account.signOut() }
@@ -164,7 +229,7 @@ struct AgeGateView: View {
         }
     }
 
-    private func header(_ title: String, lead: Text) -> some View {
+    func header(_ title: String, lead: Text) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .brandText(.display1)
@@ -180,7 +245,16 @@ struct AgeGateView: View {
 
     /// The support address as a mail link wherever the language put it.
     static func contactLine(_ lang: AppLang) -> AttributedString {
-        var text = AttributedString(L10n.ageBlocked(lang) + " " + L10n.ageBlockedContact(lang, email: AgeCheck.supportEmail))
+        mailLink(L10n.ageBlocked(lang) + " " + L10n.ageBlockedContact(lang, email: AgeCheck.supportEmail))
+    }
+
+    /// The refusal for a region, with the same mail link.
+    static func regionLine(_ lang: AppLang) -> AttributedString {
+        mailLink(L10n.ageRegion(lang) + " " + L10n.ageRegionContact(lang, email: AgeCheck.supportEmail))
+    }
+
+    private static func mailLink(_ line: String) -> AttributedString {
+        var text = AttributedString(line)
         if let range = text.range(of: AgeCheck.supportEmail) {
             text[range].link = URL(string: "mailto:\(AgeCheck.supportEmail)")
             text[range].foregroundColor = Brand.terraInk
