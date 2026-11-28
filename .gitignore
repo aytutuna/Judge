@@ -51,3 +51,8 @@ next-env.d.ts
 
 # removal log written beside the local database (lib/originals/removal-log.ts)
 removals.log
+
+# Cloudflare Workers build and local state
+/.open-next/
+/.wrangler/
+.dev.vars*
