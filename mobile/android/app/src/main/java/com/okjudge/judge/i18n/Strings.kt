@@ -600,11 +600,42 @@ class Strings(private val res: Resources) {
     val ageBlockedTitle: String get() = res.getString(R.string.age_blocked_title)
     val ageBlocked: String get() = res.getString(R.string.age_blocked)
     fun ageBlockedContact(email: String): String = res.getString(R.string.age_blocked_contact, email)
+    val ageWhere: String get() = res.getString(R.string.age_where)
+    val ageWhereWhy: String get() = res.getString(R.string.age_where_why)
+    val ageQuebec: String get() = res.getString(R.string.age_quebec)
+    val ageYes: String get() = res.getString(R.string.age_yes)
+    val ageNo: String get() = res.getString(R.string.age_no)
+    val ageParentTitle: String get() = res.getString(R.string.age_parent_title)
+    val ageParentLead: String get() = res.getString(R.string.age_parent_lead)
+    val ageParentEmail: String get() = res.getString(R.string.age_parent_email)
+    val ageParentSend: String get() = res.getString(R.string.age_parent_send)
+    val ageParentWaitTitle: String get() = res.getString(R.string.age_parent_wait_title)
+    fun ageParentSentTo(email: String): String = res.getString(R.string.age_parent_sent_to, email)
+    val ageParentExpired: String get() = res.getString(R.string.age_parent_expired)
+    val ageParentResend: String get() = res.getString(R.string.age_parent_resend)
+    val ageParentChange: String get() = res.getString(R.string.age_parent_change)
+    val ageParentCancel: String get() = res.getString(R.string.age_parent_cancel)
+    val ageParentDelete: String get() = res.getString(R.string.age_parent_delete)
+    val ageParentDeclinedTitle: String get() = res.getString(R.string.age_parent_declined_title)
+    val ageParentDeclined: String get() = res.getString(R.string.age_parent_declined)
+    val ageParentRevokedTitle: String get() = res.getString(R.string.age_parent_revoked_title)
+    val ageParentRevoked: String get() = res.getString(R.string.age_parent_revoked)
+    val ageRegionTitle: String get() = res.getString(R.string.age_region_title)
+    val ageRegion: String get() = res.getString(R.string.age_region)
+    fun ageRegionContact(email: String): String = res.getString(R.string.age_region_contact, email)
     val errorPasswordWrong: String get() = res.getString(R.string.error_password_wrong)
     val errorPasswordRequired: String get() = res.getString(R.string.error_password_required)
     val errorReauthRequired: String get() = res.getString(R.string.error_reauth_required)
     val errorAgeBlocked: String get() = res.getString(R.string.error_age_blocked)
     val errorAgeUnconfirmed: String get() = res.getString(R.string.error_age_unconfirmed)
+    val errorAgeRegion: String get() = res.getString(R.string.error_age_region)
+    val errorAgeParentPending: String get() = res.getString(R.string.error_age_parent_pending)
+    val errorParentEmail: String get() = res.getString(R.string.error_parent_email)
+    val errorParentDeclined: String get() = res.getString(R.string.error_parent_declined)
+    val errorParentWait: String get() = res.getString(R.string.error_parent_wait)
+    val errorParentLimit: String get() = res.getString(R.string.error_parent_limit)
+    val errorParentConflict: String get() = res.getString(R.string.error_parent_conflict)
+    val errorParentLink: String get() = res.getString(R.string.error_parent_link)
     val errorAgeSet: String get() = res.getString(R.string.error_age_set)
     val errorNotForTeens: String get() = res.getString(R.string.error_not_for_teens)
     val errorAgreementRequired: String get() = res.getString(R.string.error_agreement_required)
@@ -1225,11 +1256,40 @@ class Strings(private val res: Resources) {
             "age.failed" -> R.string.age_failed
             "age.blockedTitle" -> R.string.age_blocked_title
             "age.blocked" -> R.string.age_blocked
+            "age.where" -> R.string.age_where
+            "age.whereWhy" -> R.string.age_where_why
+            "age.quebec" -> R.string.age_quebec
+            "age.yes" -> R.string.age_yes
+            "age.no" -> R.string.age_no
+            "age.parentTitle" -> R.string.age_parent_title
+            "age.parentLead" -> R.string.age_parent_lead
+            "age.parentEmail" -> R.string.age_parent_email
+            "age.parentSend" -> R.string.age_parent_send
+            "age.parentWaitTitle" -> R.string.age_parent_wait_title
+            "age.parentExpired" -> R.string.age_parent_expired
+            "age.parentResend" -> R.string.age_parent_resend
+            "age.parentChange" -> R.string.age_parent_change
+            "age.parentCancel" -> R.string.age_parent_cancel
+            "age.parentDelete" -> R.string.age_parent_delete
+            "age.parentDeclinedTitle" -> R.string.age_parent_declined_title
+            "age.parentDeclined" -> R.string.age_parent_declined
+            "age.parentRevokedTitle" -> R.string.age_parent_revoked_title
+            "age.parentRevoked" -> R.string.age_parent_revoked
+            "age.regionTitle" -> R.string.age_region_title
+            "age.region" -> R.string.age_region
             "error.password_wrong" -> R.string.error_password_wrong
             "error.password_required" -> R.string.error_password_required
             "error.reauth_required" -> R.string.error_reauth_required
             "error.age_blocked" -> R.string.error_age_blocked
             "error.age_unconfirmed" -> R.string.error_age_unconfirmed
+            "error.age_region" -> R.string.error_age_region
+            "error.age_parent_pending" -> R.string.error_age_parent_pending
+            "error.parent_email" -> R.string.error_parent_email
+            "error.parent_declined" -> R.string.error_parent_declined
+            "error.parent_wait" -> R.string.error_parent_wait
+            "error.parent_limit" -> R.string.error_parent_limit
+            "error.parent_conflict" -> R.string.error_parent_conflict
+            "error.parent_link" -> R.string.error_parent_link
             "error.age_set" -> R.string.error_age_set
             "error.not_for_teens" -> R.string.error_not_for_teens
             "error.agreement_required" -> R.string.error_agreement_required
