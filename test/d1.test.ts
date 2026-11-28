@@ -43,3 +43,47 @@ describe("d1Client", () => {
     await expect(db.execute({ sql: `SELECT ${args.map(() => "?").join("+")}`, args })).rejects.toThrow(/too many/);
   });
 });
+
+describe("d1Client retries", () => {
+  /** A D1 whose first `fails` calls throw `message`. */
+  function flaky(message: string, fails: number) {
+    let calls = 0;
+    const base = fakeD1();
+    return {
+      get calls() {
+        return calls;
+      },
+      db: base.then((real) => ({
+        prepare: (sql: string) => {
+          const stmt = real.prepare(sql);
+          return { ...stmt, bind: (...a: unknown[]) => ({ all: async () => { if (++calls <= fails) throw new Error(message); return real.prepare(sql).bind(...a).all(); } }) };
+        },
+        batch: async (stmts: never) => {
+          if (++calls <= fails) throw new Error(message);
+          return real.batch(stmts);
+        },
+      })),
+    };
+  }
+
+  it("runs a read again after a passing error", async () => {
+    const f = flaky("D1_ERROR: Network connection lost", 2);
+    const db = d1Client((await f.db) as never);
+    expect((await db.execute({ sql: "SELECT 1 AS one WHERE ? = 1", args: [1] })).rows[0].one).toBe(1);
+    expect(f.calls).toBe(3);
+  });
+
+  it("does not run a write again when it may already have committed", async () => {
+    const f = flaky("D1_ERROR: Network connection lost", 1);
+    const db = d1Client((await f.db) as never);
+    await expect(db.batch([{ sql: "CREATE TABLE t (id TEXT)", args: [] }], "write")).rejects.toThrow(/lost/);
+    expect(f.calls).toBe(1);
+  });
+
+  it("runs a write again when D1 says it did not run it", async () => {
+    const f = flaky("D1_ERROR: D1 DB is overloaded", 1);
+    const db = d1Client((await f.db) as never);
+    await db.batch([{ sql: "CREATE TABLE t (id TEXT)", args: [] }], "write");
+    expect(f.calls).toBe(2);
+  });
+});
