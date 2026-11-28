@@ -6,8 +6,13 @@ import type { WorkerEnv } from "./env";
 // @ts-expect-error: written by `opennextjs-cloudflare build`
 import openNext from "../.open-next/worker.js";
 
-export { JobRunner } from "./job-runner";
-export { RateLimiter } from "./rate-limiter";
+import { JobRunner as JobRunnerBase } from "./job-runner";
+import { RateLimiter as RateLimiterBase } from "./rate-limiter";
+
+// Durable Objects are not covered by withSentry below.
+const objectOptions = (env: { SENTRY_DSN?: string }) => ({ ...sentryOptions, dsn: env.SENTRY_DSN || undefined });
+export const JobRunner = Sentry.instrumentDurableObjectWithSentry(objectOptions, JobRunnerBase);
+export const RateLimiter = Sentry.instrumentDurableObjectWithSentry(objectOptions, RateLimiterBase);
 
 /** The longest request body an /api route takes (an evidence upload is 16 MB). */
 const MAX_API_BODY = 17 * 1024 * 1024;

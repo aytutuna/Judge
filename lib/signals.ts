@@ -1,3 +1,5 @@
+import { alertSentry } from "./alert";
+
 /**
  * One warning line per event the server's watcher counts
  * (deploy/aws-lightsail/watch.sh), e.g. `[signal:rate_limited] bucket=ip:verdict_poll`.
@@ -25,4 +27,5 @@ export type Signal =
 
 export function signal(name: Signal, detail?: string): void {
   console.warn(detail ? `[signal:${name}] ${detail}` : `[signal:${name}]`);
+  alertSentry("signal", name, detail);
 }

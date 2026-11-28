@@ -1,6 +1,7 @@
+import * as Sentry from "@sentry/cloudflare";
 import { DurableObject } from "cloudflare:workers";
 
-type Env = { WORKER_SELF_REFERENCE: Fetcher; JOB_SECRET: string };
+export type Env = { WORKER_SELF_REFERENCE: Fetcher; JOB_SECRET: string; SENTRY_DSN?: string };
 type Job = { name: string; args: unknown[] };
 
 /**
@@ -31,10 +32,13 @@ export class JobRunner extends DurableObject<Env> {
         headers: { "content-type": "application/json", "x-internal-secret": this.env.JOB_SECRET },
         body: JSON.stringify(job),
       });
-      if (!res.ok) console.error(`[job-runner] ${job.name} answered HTTP ${res.status}`);
-      else console.info(`[job-runner] ${job.name} finished in ${Date.now() - started} ms`);
+      if (!res.ok) {
+        console.error(`[job-runner] ${job.name} answered HTTP ${res.status}`);
+        Sentry.captureMessage(`job ${job.name} answered HTTP ${res.status}`, "error");
+      } else console.info(`[job-runner] ${job.name} finished in ${Date.now() - started} ms`);
     } catch (e) {
       console.error(`[job-runner] ${job.name} failed:`, e instanceof Error ? e.message : String(e));
+      Sentry.captureException(e);
     }
   }
 }

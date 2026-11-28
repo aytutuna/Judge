@@ -6,6 +6,7 @@
 
 import { AsyncLocalStorage } from "node:async_hooks";
 import Anthropic from "@anthropic-ai/sdk";
+import { alertSentry } from "./alert";
 import { signal } from "./signals";
 
 export const JUDGE_MODEL = process.env.CLAUDE_MODEL ?? "claude-haiku-5-5";
@@ -257,6 +258,7 @@ function reportFailure(error: string): string {
     if (now - (lastAlert.get(kind) ?? -Infinity) >= ALERT_EVERY_MS) {
       lastAlert.set(kind, now);
       console.error(`[alert:${kind}] ${error}`);
+      alertSentry("alert", kind, error);
     }
   }
   return error;

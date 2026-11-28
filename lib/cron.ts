@@ -12,6 +12,7 @@ import { sweepCases } from "@/lib/cases/sweep";
 import { runCleanup } from "@/lib/cleanup";
 import { sweepStaleReservations } from "@/lib/entitlements";
 import { sweepErasures } from "@/lib/erasure";
+import { alertSentry } from "@/lib/alert";
 import { backupConfigured, runBackup, type BackupEnv } from "@/lib/backup";
 import { readRemovalBucket } from "@/lib/originals/removal-log";
 import { replayEntries } from "@/lib/originals/removal-replay";
@@ -61,7 +62,9 @@ export const CRON_TASKS = {
   backup: async () => {
     const env: Partial<BackupEnv> = { ...workerEnv(), ...process.env };
     if (!backupConfigured(env)) {
-      console.error("[alert:backup] no off-platform copy: BACKUPS, CLOUDFLARE_ACCOUNT_ID, D1_DATABASE_ID, CLOUDFLARE_API_TOKEN or BACKUP_PASSPHRASE is not set");
+      const why = "no off-platform copy: BACKUPS, CLOUDFLARE_ACCOUNT_ID, D1_DATABASE_ID, CLOUDFLARE_API_TOKEN or BACKUP_PASSPHRASE is not set";
+      console.error(`[alert:backup] ${why}`);
+      alertSentry("alert", "backup", why);
       return;
     }
     const done = await runBackup(env);
