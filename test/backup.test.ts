@@ -137,6 +137,14 @@ describe("backups", { timeout: 60_000 }, () => {
     expect(PBKDF2_ROUNDS).toBeLessThanOrEqual(100_000);
   });
 
+  it("still drops old copies when tonight's backup fails, but never the newest one", async () => {
+    const bucket = fakeBucket();
+    for (const day of ["2026-10-01", "2026-10-02"]) bucket.objects.set(`db/judge-${day}T03-30-00-000Z.sql.gz.jbk`, new Uint8Array(1));
+    const broken = { execute: async () => { throw new Error("D1 is down"); }, batch: async () => [] };
+    await expect(runBackup(env(bucket), broken as never, new Date("2026-12-01T03:30:00Z"))).rejects.toThrow(/down/);
+    expect([...bucket.objects.keys()]).toEqual(["db/judge-2026-10-02T03-30-00-000Z.sql.gz.jbk"]);
+  });
+
   it("deletes copies older than the keep period and no others", async () => {
     const bucket = fakeBucket();
     for (const day of ["2026-11-01", "2026-11-20", "2026-11-30"]) bucket.objects.set(`db/judge-${day}T03-30-00-000Z.sql.gz.jbk`, new Uint8Array(1));

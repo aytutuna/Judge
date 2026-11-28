@@ -132,25 +132,33 @@ export async function runBackup(
   db: Db,
   now: Date = new Date(),
 ): Promise<{ key: string; bytes: number; deleted: number }> {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const key = await backupKey(env.BACKUP_PASSPHRASE, salt);
-  const gzipped = dumpStream(db).pipeThrough(new CompressionStream("gzip") as unknown as ReadableWritablePair<Uint8Array, Uint8Array>);
   const name = `${BACKUP_PREFIX}judge-${stamp(now)}.sql.gz.jbk`;
-  const bytes = await putStream(env.BACKUPS, name, sealStream(gzipped, key, salt));
-  return { key: name, bytes, deleted: await pruneBackups(env.BACKUPS, now, Number(env.BACKUP_KEEP_DAYS) || KEEP_DAYS) };
+  let deleted = 0;
+  try {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const key = await backupKey(env.BACKUP_PASSPHRASE, salt);
+    const gzipped = dumpStream(db).pipeThrough(new CompressionStream("gzip") as unknown as ReadableWritablePair<Uint8Array, Uint8Array>);
+    const bytes = await putStream(env.BACKUPS, name, sealStream(gzipped, key, salt));
+    return { key: name, bytes, deleted };
+  } finally {
+    // Old copies go even when tonight's failed, so a broken backup never keeps
+    // data past its retention; the newest copy is always kept.
+    deleted = await pruneBackups(env.BACKUPS, now, Number(env.BACKUP_KEEP_DAYS) || KEEP_DAYS).catch(() => 0);
+  }
 }
 
-/** Deletes copies older than `days` (their names sort by time). */
+/** Deletes copies older than `days` (their names sort by time), except the newest one. */
 export async function pruneBackups(bucket: R2Bucket, now: Date, days: number): Promise<number> {
   const oldest = `${BACKUP_PREFIX}judge-${stamp(new Date(now.getTime() - days * 86_400_000))}`;
-  let dropped = 0;
+  const keys: string[] = [];
   let cursor: string | undefined;
   do {
     const page = await bucket.list({ prefix: BACKUP_PREFIX, cursor });
-    const old = page.objects.filter((o) => o.key < oldest).map((o) => o.key);
-    if (old.length) await bucket.delete(old);
-    dropped += old.length;
-    cursor = page.truncated && old.length === page.objects.length ? page.cursor : undefined;
+    keys.push(...page.objects.map((o) => o.key));
+    cursor = page.truncated ? page.cursor : undefined;
   } while (cursor);
-  return dropped;
+  const newest = keys.reduce((a, b) => (b > a ? b : a), "");
+  const old = keys.filter((k) => k < oldest && k !== newest);
+  for (let i = 0; i < old.length; i += 1000) await bucket.delete(old.slice(i, i + 1000));
+  return old.length;
 }
