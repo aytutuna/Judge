@@ -186,13 +186,15 @@ class AppContainer(context: Context, val config: AppConfig = AppConfig.fromBuild
     fun start() {
         account.onEndedByUser = {
             agreement.cancel()
-            parentConsent.clear()
             history.forgetAccounts()
             drafts.save(null)
             accountEnded.tryEmit(Unit)
         }
         account.onDeleted = { lastSignIn.clear() }
-        account.onLeaving = { analytics.dropHeld() }
+        account.onLeaving = {
+            analytics.dropHeld()
+            parentConsent.clear()
+        }
         account.onSignedIn = { analytics.track("sign_in_completed") }
         appScope.launch { account.ageChecking.collect { if (!it) purchases.ageHoldEnded() } }
         appScope.launch { combine(settings.usageStats, account.statsLocked, AgeCheck::usageStatsOn).collect { analytics.allowed = it } }
