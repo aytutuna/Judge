@@ -121,7 +121,8 @@ final class AppModel {
         caseNames: (any CaseNamesStore)? = nil,
         purchaseGateway: (any PurchaseGateway)? = nil,
         analyticsFile: URL? = nil,
-        sendsUsageEvents: Bool = true
+        sendsUsageEvents: Bool = true,
+        storeCountry: (@Sendable () async -> String?)? = nil
     ) {
         self.config = config
         self.persistsDraft = persistsDraft
@@ -157,7 +158,7 @@ final class AppModel {
         )
         history = HistoryStore(container: container)
         home = HomeModel(defaults: defaults)
-        account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker(), defaults: defaults)
+        account = AccountModel(api: self.api, ageRange: DeclaredAgeRangeAsker(), storeCountry: storeCountry ?? { nil }, defaults: defaults)
         consent = ConsentModel(api: self.api)
         let agreeAPI = self.api
         agreement.send = { lang in try await agreeAPI.agreeToSensitive(lang: lang) }

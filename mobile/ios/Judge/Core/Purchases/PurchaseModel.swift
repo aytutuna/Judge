@@ -22,6 +22,10 @@ final class PurchaseModel {
         case ageRequired
         /// Refused before the store: under 18, or the account is blocked.
         case ageBlocked
+        /// Refused before the store: closed for the person's region.
+        case ageRegion
+        /// Refused before the store: a parent has to say yes first.
+        case ageParent
         /// The phone's age check is still running; clears when it ends.
         case checking
     }
@@ -330,6 +334,8 @@ final class PurchaseModel {
     /// again in a moment.
     static func refusal(_ age: String?, holding: Bool = false) -> Message {
         if age == AgeCheck.blockedCode { return .ageBlocked }
+        if age == AgeCheck.regionCode { return .ageRegion }
+        if age == AgeCheck.parentPendingCode { return .ageParent }
         if age == AgeCheck.unconfirmedCode { return holding ? .checking : .ageRequired }
         return .failed
     }

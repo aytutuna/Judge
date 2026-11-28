@@ -104,6 +104,12 @@ final class AccountModel {
     private(set) var agePosting = false
     /// Why the date didn't go through; the date step shows it.
     private(set) var ageError: APIError?
+    /// "Where do you live?", asked of a 13 to 15 year old, and the Quebec
+    /// answer of a 13 year old in Canada. nil until answered.
+    private(set) var dobCountry: String?
+    private(set) var dobQuebec: Bool?
+    /// The parent step of a teen whose account waits for a yes.
+    let parent: ParentModel
     /// The phone's own prompt may be on screen: the age window waits for it.
     private(set) var platformPrompting = false
 
@@ -123,6 +129,10 @@ final class AccountModel {
     @ObservationIgnored private var reportingPlatform = false
     /// The phone's answer last sent, so a refresh doesn't send it again.
     @ObservationIgnored private var lastReport: AgeCheck.Report?
+    @ObservationIgnored private let readStoreCountry: @Sendable () async -> String?
+    /// The store's country goes to the server once per launch and sign-in.
+    @ObservationIgnored private var storeCountrySent = false
+    @ObservationIgnored private var hintLoaded = false
     /// The language of the app, for what the server writes in it.
     @ObservationIgnored var language: () -> AppLang = { .en }
     /// Told when the account turns into (or stops being) one under 18.
@@ -160,9 +170,12 @@ final class AccountModel {
         google: (any GoogleAuthorizing)? = nil,
         ageRange: (any AgeRangeAsking)? = nil,
         appleCodes: (any TokenStore)? = nil,
+        storeCountry: @escaping @Sendable () async -> String? = { nil },
         defaults: UserDefaults = .standard
     ) {
         self.api = api
+        readStoreCountry = storeCountry
+        parent = ParentModel(api: api)
         self.defaults = defaults
         lastMethod = defaults.string(forKey: Self.lastMethodKey).flatMap(LastMethod.init)
         email = defaults.string(forKey: Self.lastEmailKey) ?? ""
@@ -171,6 +184,7 @@ final class AccountModel {
         self.ageRange = ageRange ?? NoAgeRange()
         self.appleCodes = appleCodes ?? KeychainTokenStore(service: "com.okjudge.judge.apple-code", account: "pending")
         isSignedIn = api.tokenStore.token()?.isEmpty == false
+        parent.onChanged = { [weak self] in await self?.refresh() }
     }
 
     var user: Viewer? { info?.user }
@@ -257,6 +271,7 @@ final class AccountModel {
                 if failure == .loadFailed { failure = nil }
                 if let id = fresh.user?.id { onUserKnown?(id) }
                 await settleAge()
+                await settleStoreCountry()
                 runAfterAgeIfCleared()
                 await retryAppleCode()
             }
@@ -280,17 +295,18 @@ final class AccountModel {
         AgeCheck.gate(signedIn: isSignedIn, age: info?.age)
     }
 
-    /// Teen accounts, and blocked ones, get the under-18 defaults.
+    /// Teen accounts, and blocked, restricted or waiting ones, get the
+    /// under-18 defaults.
     var underEighteen: Bool {
         guard isSignedIn, let age = info?.age else { return false }
-        return age.teen || age.blocked
+        return age.teen || age.blocked || age.restricted || age.parent != nil
     }
 
     /// No usage events while the account is under 18 or its age is unknown,
     /// as on the website.
     var statsLocked: Bool {
         guard isSignedIn, let age = info?.age else { return false }
-        return age.teen || age.blocked || age.needsDob
+        return age.teen || age.blocked || age.restricted || age.parent != nil || age.needsDob
     }
 
     static let statsLockedKey = "age.statsLocked"
@@ -298,6 +314,7 @@ final class AccountModel {
     private func ageChanged() {
         // Kept so the next launch holds events until /me has answered.
         defaults.set(statsLocked, forKey: Self.statsLockedKey)
+        if info?.age?.parent == nil { parent.reset() }
         onUnderEighteen?(statsLocked)
     }
 
@@ -307,6 +324,8 @@ final class AccountModel {
     var ageRefusal: String? {
         guard let age = info?.age else { return nil }
         if age.blocked { return AgeCheck.blockedCode }
+        if age.restricted { return AgeCheck.regionCode }
+        if age.parent != nil { return AgeCheck.parentPendingCode }
         // The phone's check and its report hold things back too; nothing is
         // decided from the signal itself.
         if askingPlatform || reportingPlatform || agePosting { return AgeCheck.unconfirmedCode }
@@ -318,7 +337,7 @@ final class AccountModel {
     /// Only the phone's check, its report or the date post is in the way, for
     /// an account /me already says is confirmed: it passes by itself.
     var ageHolding: Bool {
-        guard let age = info?.age, age.confirmed, !age.blocked else { return false }
+        guard let age = info?.age, age.confirmed, !age.blocked, !age.restricted, age.parent == nil else { return false }
         return askingPlatform || reportingPlatform || agePosting
     }
 
@@ -389,7 +408,12 @@ final class AccountModel {
     func ageGateHit(_ code: String) async {
         guard isSignedIn, var current = info, current.user != nil else { return }
         var age = current.age ?? AgeStatus()
-        if code == AgeCheck.blockedCode { age.blocked = true } else { age.confirmed = false }
+        switch code {
+        case AgeCheck.blockedCode: age.blocked = true
+        case AgeCheck.regionCode: age.restricted = true
+        case AgeCheck.parentPendingCode: age.parent = age.parent ?? .pending
+        default: age.confirmed = false
+        }
         current.age = age
         info = current
         ageChanged()
@@ -427,6 +451,24 @@ final class AccountModel {
         runAfterAgeIfCleared()
     }
 
+    /// Tells the server the App Store's country once per launch. It can only
+    /// add a rule (the parent step, the Brazil refusal), never lift one.
+    private func settleStoreCountry() async {
+        guard !storeCountrySent, isSignedIn, usesNetwork, let age = info?.age, !age.needsDob, !age.blocked else { return }
+        storeCountrySent = true
+        guard let code = await readStoreCountry() else { return }
+        let asked = api.tokenStore.token()
+        do {
+            let fresh = try await api.reportStoreCountry(code)
+            guard isSignedIn, api.tokenStore.token() == asked, var current = info else { return }
+            current.age = fresh
+            info = current
+            ageChanged()
+        } catch {
+            storeCountrySent = false
+        }
+    }
+
     // MARK: - The date step
 
     func pickDob(_ date: Date) {
@@ -434,12 +476,43 @@ final class AccountModel {
         dobPicked = true
     }
 
+    func pickCountry(_ code: String?) {
+        dobCountry = code
+        if code != "CA" { dobQuebec = nil }
+    }
+
+    func pickQuebec(_ answer: Bool?) {
+        dobQuebec = answer
+    }
+
+    var asksCountry: Bool { dobPicked && AgeCheck.asksCountry(dob: dob) }
+    var asksQuebec: Bool { dobPicked && AgeCheck.asksQuebec(dob: dob, country: dobCountry) }
+
+    /// Continue waits for a day and for the questions that day calls for.
+    var canSubmitDob: Bool {
+        dobPicked && (!asksCountry || dobCountry != nil) && (!asksQuebec || dobQuebec != nil)
+    }
+
+    /// Fills the country question with a first guess, once: the App Store's
+    /// country, else where the request's IP says. The person can change it.
+    func loadAgeHint() async {
+        guard !hintLoaded, usesNetwork else { return }
+        hintLoaded = true
+        let store = await readStoreCountry()
+        let hint = try? await api.ageHint()
+        guard dobCountry == nil else { return }
+        let guess = [store, hint?.country].compactMap { $0 }.first { Countries.codes.contains($0) }
+        guard let guess else { return }
+        dobCountry = guess
+        if guess == hint?.country, let quebec = hint?.quebec { dobQuebec = quebec }
+    }
+
     /// The picked day as `YYYY-MM-DD`.
     var dob: String { AgeCheck.dobString(from: dobDate, calendar: AgeCheck.gregorian) }
 
     /// "Continue": an under-13 date waits for a second look first.
     func submitDob() async {
-        guard dobPicked, !agePosting else { return }
+        guard canSubmitDob, !agePosting else { return }
         if !dobConfirming, AgeCheck.underThirteen(dob: dob) {
             dobConfirming = true
             ageError = nil
@@ -460,7 +533,14 @@ final class AccountModel {
         defer { agePosting = false }
         let asked = api.tokenStore.token()
         do {
-            let age = try await api.reportDob(dob)
+            let store = await readStoreCountry()
+            let age = try await api.reportDob(
+                dob,
+                storeCountry: store,
+                country: asksCountry ? dobCountry : nil,
+                quebec: asksQuebec ? dobQuebec : nil
+            )
+            if store != nil { storeCountrySent = true }
             guard isSignedIn, api.tokenStore.token() == asked, var current = info else { return }
             let wasBlocked = current.age?.blocked == true
             current.age = age
@@ -1069,6 +1149,11 @@ final class AccountModel {
         dobConfirming = false
         dobDate = AgeCheck.defaultDobDate()
         dobPicked = false
+        dobCountry = nil
+        dobQuebec = nil
+        hintLoaded = false
+        storeCountrySent = false
+        parent.reset()
         afterAge = nil
         failure = nil
         step = .choose

@@ -26,7 +26,7 @@ struct JudgeApp: App {
         if !testing { CrashReporting.start(config) }
         let container = HistoryContainer.make()
         self.container = container
-        _app = State(initialValue: AppModel(config: config, container: container, analyticsFile: Analytics.defaultFile, sendsUsageEvents: !testing))
+        _app = State(initialValue: AppModel(config: config, container: container, analyticsFile: Analytics.defaultFile, sendsUsageEvents: !testing, storeCountry: testing ? nil : StoreCountry.current))
         sceneLive = true
     }
 
