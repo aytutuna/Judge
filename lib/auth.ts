@@ -380,6 +380,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         ageSource: { type: "string", required: false, input: false, fieldName: "age_source" },
         ageBlockedAt: { type: "date", required: false, input: false, fieldName: "age_blocked_at" },
         ageBlockFinal: { type: "string", required: false, input: false, fieldName: "age_block_final" },
+        ageBlockFinalAt: { type: "date", required: false, input: false, fieldName: "age_block_final_at" },
         ageDob: { type: "string", required: false, input: false, fieldName: "age_dob" },
         ageDobAt: { type: "date", required: false, input: false, fieldName: "age_dob_at" },
         ageSignal: { type: "string", required: false, input: false, fieldName: "age_signal" },
@@ -532,7 +533,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
             const claim = welcomeClaim(user.email);
             const kept = claim && (await keptBlock(claim, legacyWelcomeClaim(user.email)));
             return kept
-              ? { data: { ...user, ageBlockedAt: new Date(kept.at), ...(kept.final && { ageBlockFinal: "1" }) } }
+              ? { data: { ...user, ageBlockedAt: new Date(kept.at), ...(kept.final && { ageBlockFinal: "1", ageBlockFinalAt: new Date() }) } }
               : undefined;
           },
           after: async (user) => {

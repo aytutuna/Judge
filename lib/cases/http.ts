@@ -24,6 +24,7 @@
 
 import { NextResponse } from "next/server";
 import type { Entitlement, PremiumBlock } from "@/lib/account-types";
+import { caseHasTeen, caseTeenExists, withEffectiveNames } from "@/lib/age";
 import { track } from "@/lib/analytics/track";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, premiumEnabled, type ViewerSession } from "@/lib/auth";
@@ -320,7 +321,8 @@ async function viewerRatings(userId: string, bundle: Awaited<ReturnType<typeof l
   return ratingsFor(userId, bundle.verdicts.map((v) => v.verdictId)).catch(() => undefined);
 }
 
-async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new Date()): Promise<CaseView> {
+async function ownerView(stored: CaseRow, req: Request, viewerId: string, now = new Date()): Promise<CaseView> {
+  const row = await withEffectiveNames(stored);
   const bundle = await loadCaseBundle(row);
   const open = effectiveStatus(row, now) === "awaiting_respondent" && !row.removedAt;
   const token = open ? await currentInviteToken(row) : null;
@@ -337,11 +339,12 @@ async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new
 
 /** The case page for the side `party` (B unless the link is for C or D). */
 async function respondentView(
-  row: CaseRow,
+  stored: CaseRow,
   party: PartyLetter,
   viewerId: string | null,
   now = new Date(),
 ): Promise<CaseView> {
+  const row = await withEffectiveNames(stored);
   const bundle = await loadCaseBundle(row);
   const who = respondentOf(row, bundle.invites, party);
   return buildCaseView(bundle, {
@@ -1225,19 +1228,24 @@ async function updateCaseDisplay(
     sets.push(`display_${party}_sealed = ?`, "display_key_id = COALESCE(?, display_key_id)");
     args.push(sealed?.sealed ?? null, sealed?.kid ?? null);
   }
+  // Real names never go on the share page while anyone on the case is under 18.
+  const namesOn = patchBody.namesVisible === true;
   if (patchBody.namesVisible !== undefined) {
     sets.push("names_visible = ?");
-    args.push(patchBody.namesVisible ? 1 : 0);
+    args.push(namesOn ? 1 : 0);
   }
   if (sets.length === 0) return null;
   await caseDb();
   const rs = await entitlementWriteBatch([
     {
-      sql: `UPDATE cases SET ${sets.join(", ")}, updated_at = ? WHERE id = ? AND removed_at IS NULL`,
-      args: [...args, new Date().toISOString(), row.id],
+      sql: `UPDATE cases SET ${sets.join(", ")}, updated_at = ? WHERE id = ? AND removed_at IS NULL${
+        namesOn ? ` AND NOT ${caseTeenExists("?")}` : ""
+      }`,
+      args: [...args, new Date().toISOString(), row.id, ...(namesOn ? [row.id, row.id, row.id, row.id] : [])],
     },
   ]);
-  return rs[0].rowsAffected === 1 ? null : fail("removed");
+  if (rs[0].rowsAffected === 1) return null;
+  return namesOn && (await caseHasTeen(row.id)) ? fail("not_for_teens", "Names stay off while anyone on the case is under 18.") : fail("removed");
 }
 
 /** PATCH /api/v1/cases/{id}/display { namesVisible?, displayName? } */

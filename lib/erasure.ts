@@ -3,7 +3,8 @@
  * later this also blanks the anonymized text the judges read and the verdict
  * text, keeping the outcome (verdict, confidence, winner, votes, evidence
  * counts and the other numbers and enums) and the dates, and stamps
- * `erased_at`. No row is deleted.
+ * `erased_at`. No row is deleted, except a case's signed-out answer ticks
+ * (case_side_attest), which go with it.
  *
  * - A one-sided verdict (and the verdicts of its rounds of added context):
  *   30 days after it was removed.
@@ -76,7 +77,7 @@ export function blankResult(json: string): string {
 }
 
 /** The statements that erase these verdicts' text (and their translations). */
-async function eraseVerdictStatements(ids: string[], nowIso: string): Promise<InStatement[]> {
+export async function eraseVerdictStatements(ids: string[], nowIso: string): Promise<InStatement[]> {
   const db = await getDb();
   const marks = ids.map(() => "?").join(", ");
   const [verdicts, translations] = await Promise.all([
@@ -117,18 +118,20 @@ async function eraseVerdicts(cutoff: string, nowIso: string): Promise<number> {
   });
   const ids = rs.rows.map((r) => String(r.id));
   if (ids.length === 0) return 0;
-  const marks = ids.map(() => "?").join(", ");
-  await entitlementWriteBatch([
-    ...(await eraseVerdictStatements(ids, nowIso)),
-    {
-      // A failed round has no verdict row of its own, so it is found through its root.
-      sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ?
-            WHERE id IN (${marks})
-               OR (verdict_id IN (${marks}) AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
-      args: [nowIso, ...ids, ...ids],
-    },
-  ]);
+  await entitlementWriteBatch([...(await eraseVerdictStatements(ids, nowIso)), blankRoundsStatement(ids, nowIso)]);
   return ids.length;
+}
+
+/** The text of these verdicts' rounds of added context. */
+export function blankRoundsStatement(ids: string[], nowIso: string): InStatement {
+  const marks = ids.map(() => "?").join(", ");
+  return {
+    // A failed round has no verdict row of its own, so it is found through its root.
+    sql: `UPDATE verdict_appeals SET text = '', evidence = '[]', updated_at = ?
+          WHERE id IN (${marks})
+             OR (verdict_id IN (${marks}) AND NOT EXISTS (SELECT 1 FROM verdicts WHERE id = verdict_appeals.id))`,
+    args: [nowIso, ...ids, ...ids],
+  };
 }
 
 /** Cases every party removed, the last of them before `cutoff`. */
@@ -159,6 +162,7 @@ async function eraseCases(cutoff: string, nowIso: string): Promise<number> {
         sql: "UPDATE case_people SET name_key = 'erased:' || lower(hex(randomblob(8))), label = '' WHERE case_id = ?",
         args: [id],
       },
+      { sql: "DELETE FROM case_side_attest WHERE case_id = ?", args: [id] },
       { sql: "UPDATE cases SET erased_at = ? WHERE id = ? AND erased_at IS NULL", args: [nowIso, id] },
     ]);
   }

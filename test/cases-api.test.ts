@@ -69,7 +69,7 @@ const http = await import("../lib/cases/http");
 const ent = await import("../lib/entitlements");
 const { getDb, saveTranslation } = await import("../lib/db");
 // The real table comes from Better Auth, which these tests do not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
 const { sweepCases } = await import("../lib/cases");
 const { removeUserData } = await import("../lib/originals/removal");
 const publicVerdict = await import("../app/api/v1/verdicts/[id]/route");
@@ -1390,6 +1390,43 @@ describe("originals, display names and removal of a side", () => {
     expect((await patchB({ namesVisible: true })).status).toBe(403);
     expect((await patchB({ displayName: "X" }, uid("stranger"))).status).toBe(403);
     expect((await patchB({ displayName: "X" }, "")).status).toBe(401);
+  });
+
+  it("real names stay off the share page and cannot be turned on while anyone on the case is under 18", async () => {
+    const { o, id, r, token } = await judged();
+    const db = await getDb();
+    const vid = (await getOwner(o, id)).verdicts[0].id;
+    const shown = async () =>
+      (await body<{ display: unknown }>(
+        await publicVerdict.GET(new Request(`${ORIGIN}/api/v1/verdicts/${vid}`), { params: Promise.resolve({ id: vid }) } as never),
+      )).display;
+    const patch = (b: unknown) => http.caseDisplayHandler(req("PATCH", `/api/v1/cases/${id}/display`, { user: o, body: b }), id);
+    const teenOn = (dob: string) => db.execute({ sql: 'INSERT OR REPLACE INTO "user" (id, age_dob) VALUES (?, ?)', args: [r, dob] });
+    const stored = async () => Number((await db.execute({ sql: "SELECT names_visible FROM cases WHERE id = ?", args: [id] })).rows[0].names_visible);
+
+    expect(await shown()).toEqual({ a: "Aytu", b: "Deniz", others: {} });
+    // A teen who joined after the names were switched on: the page ignores the switch.
+    await teenOn("2030-01-01");
+    expect(await shown()).toBeNull();
+    expect(await stored()).toBe(1);
+    // The views say names are off, not what is stored.
+    expect((await getOwner(o, id)).display.namesVisible).toBe(false);
+    expect((await getRespondent(token, r)).view!.display.namesVisible).toBe(false);
+    // Turning names off is fine; turning them on again is refused whatever is stored.
+    expect((await patch({ namesVisible: false })).status).toBe(200);
+    const refused = await patch({ namesVisible: true });
+    expect(refused.status).toBe(403);
+    expect((await body<{ code: string }>(refused)).code).toBe("not_for_teens");
+    expect((await patch({ namesVisible: true, displayName: "Ayt" })).status).toBe(403);
+    expect(await stored()).toBe(0);
+    // A blocked account (no date on file) counts as well.
+    await db.execute({ sql: 'INSERT OR REPLACE INTO "user" (id, age_blocked_at) VALUES (?, ?)', args: [r, "2026-10-01T00:00:00.000Z"] });
+    expect((await patch({ namesVisible: true })).status).toBe(403);
+    expect(await shown()).toBeNull();
+    // The teen turns 18: the owner's switch counts again.
+    await teenOn("1990-01-01");
+    expect((await patch({ namesVisible: true })).status).toBe(200);
+    expect(await shown()).toEqual({ a: "Aytu", b: "Deniz", others: {} });
   });
 
   it("the respondent removes their side: every link closes, the owner keeps their original, no row is deleted", async () => {

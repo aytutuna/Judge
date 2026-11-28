@@ -8,12 +8,13 @@
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
 import { cache } from "react";
+import { caseHasTeen } from "@/lib/age";
 import { getCase, type CaseRow } from "@/lib/cases/db";
 import { getVerdict, type StoredVerdict } from "@/lib/db";
 import { EMPTY_DISPLAY, normalizeDisplay, type DisplayNames, type DisplayState } from "@/lib/originals-types";
 import { aad, openOrNull } from "./crypto";
 import { getVerdictMeta, type VerdictMeta } from "./db";
-import { roundRoot } from "./removed";
+import { onBlockedAccount, roundRoot } from "./removed";
 
 /** A one-sided verdict's display names as stored (ignores the switch). */
 export function openVerdictDisplay(meta: VerdictMeta): DisplayNames {
@@ -68,19 +69,22 @@ async function loadPublicVerdict(id: string): Promise<PublicVerdict | null> {
     const message = e instanceof Error ? e.message : String(e);
     if (!/no such (table|column)/i.test(message)) throw e;
   }
+  // The page of an account with a final block answers as removed, ahead of the deletion.
+  const gone = await onBlockedAccount(id);
   const root = await roundRoot(id);
   if (root) {
     // A round's verdict shows what the writer set on the first one: its
     // names (or none) and its removal, whatever the round's own row says.
     const first = await loadPublicVerdict(root);
-    const removed = Boolean(meta?.removedAt || first?.removed);
+    const removed = Boolean(meta?.removedAt || first?.removed || gone);
     return { stored, meta, display: removed ? null : (first?.display ?? null), removed };
   }
-  if (!meta) return { stored, meta: null, display: null, removed: false };
+  if (!meta) return { stored, meta: null, display: null, removed: gone };
   if (meta.kind === "case" && meta.caseId) {
     const row = await getCase(meta.caseId);
-    const removed = Boolean(meta.removedAt || row?.removedAt);
-    if (!row || removed || !row.namesVisible) return { stored, meta, display: null, removed };
+    const removed = Boolean(meta.removedAt || row?.removedAt || gone);
+    // Real names never show while anyone on the case is under 18.
+    if (!row || removed || !row.namesVisible || (await caseHasTeen(row.id))) return { stored, meta, display: null, removed };
     const display: DisplayNames = {
       a: openCaseDisplayName(row, "a"),
       b: openCaseDisplayName(row, "b"),
@@ -89,7 +93,7 @@ async function loadPublicVerdict(id: string): Promise<PublicVerdict | null> {
     };
     return { stored, meta, display: hasAny(display) ? display : null, removed: false };
   }
-  if (meta.removedAt) return { stored, meta, display: null, removed: true };
+  if (meta.removedAt || gone) return { stored, meta, display: null, removed: true };
   if (!meta.namesVisible || !meta.displaySealed) return { stored, meta, display: null, removed: false };
   const display = openVerdictDisplay(meta);
   return { stored, meta, display: hasAny(display) ? display : null, removed: false };

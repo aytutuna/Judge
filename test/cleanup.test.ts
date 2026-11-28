@@ -13,7 +13,7 @@ process.env.REMOVAL_LOG = LOG;
 const { runCleanup } = await import("../lib/cleanup");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which this test does not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
 const { removeUserData } = await import("../lib/originals/removal");
 const { ensureOriginalsTables } = await import("../lib/originals/db");
 const { appendRemovalLog, pruneRemovalLog } = await import("../lib/originals/removal-log");
@@ -41,7 +41,7 @@ async function all(sql: string, args: string[] = []) {
 
 describe("expired sign-in codes", () => {
   it("does nothing, and does not fail, before any sign-in created the table", async () => {
-    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0 });
+    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0, blocked: 0 });
   });
 
   it("deletes the rows past their expiry and keeps the live ones", async () => {
@@ -110,6 +110,28 @@ describe("the removal log", () => {
     expect(ids).not.toContain("old");
     expect(ids).toContain("keep");
     expect(ids.filter((i) => i.startsWith("late"))).toHaveLength(20);
+  });
+});
+
+describe("answer ticks of signed-out writers", () => {
+  const tick = async (caseId: string, party: string, years: number) => {
+    const at = new Date(NOW);
+    at.setUTCFullYear(at.getUTCFullYear() - years);
+    if (caseId === "t-edge") at.setTime(at.getTime() + DAY);
+    await (await getDb()).execute({
+      sql: "INSERT INTO case_side_attest (case_id, party, adult_confirmed_at, sensitive_agreed_at) VALUES (?, ?, ?, ?)",
+      args: [caseId, party, at.toISOString(), at.toISOString()],
+    });
+  };
+
+  it("are deleted six years after they were given, not before", async () => {
+    await runCleanup(NOW);
+    await tick("t-old", "b", 7);
+    await tick("t-edge", "b", 6);
+    await tick("t-new", "b", 0);
+    expect((await runCleanup(NOW)).attests).toBe(1);
+    expect((await all("SELECT case_id FROM case_side_attest ORDER BY case_id")).map((r) => r.case_id)).toEqual(["t-edge", "t-new"]);
+    expect((await runCleanup(NOW)).attests).toBe(0);
   });
 });
 

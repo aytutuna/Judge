@@ -42,6 +42,7 @@ import {
 } from "@/lib/originals-types";
 import { checkIpLimits, checkUserLimits, type LimitDecision } from "@/lib/ratelimit";
 import { aad, openOrNull, originalsKeyState, ownerTokenMatches, sealJson } from "./crypto";
+import { withEffectiveNames } from "@/lib/age";
 import { caseDisplayNames, partyOriginals } from "./cases";
 import { getOriginal, getVerdictMeta, listOwnerVerdicts, originalsDb, subjects, type VerdictMeta } from "./db";
 import { openVerdictDisplay } from "./display";
@@ -200,13 +201,14 @@ export function mineHandler(req: Request, id: string): Promise<NextResponse> {
     if (hidesFrom(req, stored.result)) return fail("update_required", VERDICT_UPDATE);
     if (caseParty) {
       const own = await partyOriginals(caseParty.row, caseParty.party);
+      const shown = await withEffectiveNames(caseParty.row);
       const body: MineResponse = {
         ...base,
         result: stored.result,
         original: own.side.original,
         originalStatus: own.side.status,
         nameMap: own.names ?? [],
-        display: { ...caseDisplayNames(caseParty.row, caseParty.party, true), others: {}, namesVisible: caseParty.row.namesVisible },
+        display: { ...caseDisplayNames(shown, caseParty.party, true), others: {}, namesVisible: shown.namesVisible },
         removed: null,
         otherSides: await otherSides(caseParty.row, caseParty.party),
       };

@@ -19,7 +19,7 @@ const { getCase } = await import("../lib/cases/db");
 const { blankResult, sweepErasures, ERASE_AFTER_MS } = await import("../lib/erasure");
 const { getDb, getVerdict, saveTranslation, getTranslation } = await import("../lib/db");
 // The real table comes from Better Auth, which these tests do not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
 const { getPublicVerdict } = await import("../lib/originals/display");
 import { VerdictResult } from "../lib/types";
 
@@ -342,6 +342,22 @@ describe("cases", () => {
     expect(JSON.parse(String(verdict.result))).toMatchObject({ verdict: "side_b", confidence: 4, headline: "" });
     expect(String((await one("SELECT result_json FROM verdict_translations WHERE id = ?", [`${id}-v`])).result_json)).not.toContain("Party B");
     expect(await getPublicVerdict(`${id}-v`)).toMatchObject({ removed: true });
+  });
+
+  it("deletes the answer ticks of a signed-out writer with the case, and only then", async () => {
+    const id = "case-ticks";
+    await makeCase(id, ["a", "b"]);
+    const d = await db();
+    for (const p of ["a", "b"]) {
+      await d.execute({ sql: "INSERT INTO case_side_attest (case_id, party, adult_confirmed_at, sensitive_agreed_at) VALUES (?, ?, ?, ?)", args: [id, p, ago(90), ago(90)] });
+    }
+    const ticks = async () => Number((await one("SELECT count(*) AS n FROM case_side_attest WHERE case_id = ?", [id])).n);
+    await removeParty(id, "a", 80);
+    await removeParty(id, "b", 20);
+    await sweepErasures(NOW);
+    expect(await ticks()).toBe(2);
+    await sweepErasures(new Date(NOW.getTime() + 11 * DAY));
+    expect(await ticks()).toBe(0);
   });
 
   it("a party that never wrote a side does not hold the wipe back", async () => {

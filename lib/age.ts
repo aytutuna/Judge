@@ -3,8 +3,9 @@
  * a date of birth of 13 or more, an app-store age signal that allows it, or
  * (old app builds only) the "I'm 18 or older" tick. It is blocked when the
  * date says under 13, or the store says so outright (under13: true). Such a
- * block is final: only the owner can clear it, by hand. Nothing is deleted
- * on a block.
+ * block is final: only the owner can clear it, by hand. Its share pages
+ * close at once and the account's data is deleted 7 days later
+ * (lib/minor-deletion.ts).
  *
  * Blocks made before the 13+ rule (age_blocked_at without age_block_final)
  * were made by the old under-18 rule, so the person may give a date once:
@@ -132,8 +133,8 @@ export function teenSql(alias: string): string {
 }
 
 /** SQL: some account on the case (owner, respondent, a seat or an invite)
- * is under 18. `id` is the SQL for the case id and appears four times. */
-export const caseTeenExists = (id: string) => `EXISTS (SELECT 1 FROM "user" tu WHERE ${teenSql("tu")} AND tu.id IN (
+ * is under 18, or blocked by the age check (a blocked account stores no date). `id` is the SQL for the case id and appears four times. */
+export const caseTeenExists = (id: string) => `EXISTS (SELECT 1 FROM "user" tu WHERE (${teenSql("tu")} OR tu.age_blocked_at IS NOT NULL) AND tu.id IN (
     SELECT owner_id FROM cases WHERE id = ${id} UNION SELECT respondent_user_id FROM cases WHERE id = ${id}
     UNION SELECT user_id FROM case_seats WHERE case_id = ${id} UNION SELECT user_id FROM case_invites WHERE case_id = ${id}))`;
 
@@ -150,7 +151,7 @@ export async function verdictHasTeen(verdictId: string): Promise<boolean> {
   const db = await getDb();
   const rs = await db.execute({
     sql: `SELECT EXISTS (SELECT 1 FROM verdict_meta m JOIN "user" u ON u.id = m.owner_user_id
-                         WHERE m.verdict_id = ? AND ${teenSql("u")})
+                         WHERE m.verdict_id = ? AND (${teenSql("u")} OR u.age_blocked_at IS NOT NULL))
                OR EXISTS (SELECT 1 FROM verdict_meta m WHERE m.verdict_id = ? AND m.case_id IS NOT NULL
                           AND ${caseTeenExists("m.case_id")}) AS teen`,
     args: [verdictId, verdictId],
@@ -220,7 +221,9 @@ export async function confirmAdult(userId: string, source: "checkbox" | "platfor
   return readAge(userId, now);
 }
 
-/** Blocks the account for good, which also makes an old block final.
+/** Blocks the account for good, which also makes an old block final; the 7
+ * days before the account's data goes (lib/minor-deletion.ts) count from
+ * age_block_final_at, the moment it became final.
  * Signals only the first time. Null when a date landed first and nothing
  * changed, unless `overDate`: the store's under-13 signal blocks whatever
  * date is on file. */
@@ -231,9 +234,10 @@ export async function blockMinor(userId: string, now = new Date(), overDate = fa
   // A date that landed after the caller read the state wins, unless overDate.
   const [done] = await entitlementWriteBatch([
     {
-      sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?), age_block_final = '1'
+      sql: `UPDATE "user" SET age_blocked_at = COALESCE(age_blocked_at, ?),
+              age_block_final_at = CASE WHEN age_block_final IS NULL THEN ? ELSE age_block_final_at END, age_block_final = '1'
             WHERE id = ?${overDate ? "" : " AND age_dob_at IS NULL"}`,
-      args: [now.toISOString(), userId],
+      args: [now.toISOString(), now.toISOString(), userId],
     },
     ...withGuard(eventDeletes(userId), { sql: `EXISTS (SELECT 1 FROM "user" WHERE id = ? AND age_block_final = '1')`, args: [userId] }),
   ]);
@@ -453,4 +457,10 @@ export async function keptBlock(claim: string, legacy?: string | null): Promise<
   });
   const at = rs.rows[0]?.at;
   return at == null ? null : { at: String(at), final: rs.rows[0].final != null };
+}
+
+/** The case row as its viewers may be told: names are off, whatever is stored,
+ * while anyone on the case is under 18. */
+export async function withEffectiveNames<T extends { id: string; namesVisible: boolean }>(row: T): Promise<T> {
+  return row.namesVisible && (await caseHasTeen(row.id)) ? { ...row, namesVisible: false } : row;
 }
