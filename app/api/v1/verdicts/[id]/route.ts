@@ -11,6 +11,7 @@ import type { StoredVerdictResponse } from "@/lib/types";
 import { getVerdictJob, failVerdictJob, isStale, maybeSweepVerdictJobs, type VerdictJob } from "@/lib/verdict-jobs";
 import { POLL_AFTER_MS, type VerdictOwnerState, type VerdictPollResponse } from "@/lib/verdict-poll";
 import { trialCompat } from "@/lib/trial-compat";
+import { keepAlive } from "@/lib/worker-env";
 
 export const runtime = "nodejs";
 
@@ -61,7 +62,7 @@ async function jobAnswer(req: Request, job: VerdictJob): Promise<NextResponse> {
     await failVerdictJob(job.id, "unavailable", job.reservationId);
     state = (await getVerdictJob(job.id)) ?? { status: "failed", errorCode: "unavailable" };
   }
-  void maybeSweepVerdictJobs();
+  keepAlive(maybeSweepVerdictJobs());
   if (state.status === "judging") {
     const body: VerdictPollResponse = { id: job.id, status: "judging", pollAfterMs: POLL_AFTER_MS };
     return NextResponse.json(body, {

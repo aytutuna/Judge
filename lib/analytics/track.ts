@@ -31,6 +31,7 @@
 
 import { eventsOff } from "@/lib/age";
 import { analyticsEnabled } from "@/lib/features";
+import { keepAlive } from "@/lib/worker-env";
 import { insertEvents, type Platform } from "./db";
 import { propsProblem, type Props, type ServerEvent } from "./validate";
 
@@ -44,7 +45,13 @@ type TrackOptions = {
 
 /** Records one event. Never throws: losing an event must not fail the flow
  * that sent it. */
-export async function track(name: ServerEvent, opts: TrackOptions): Promise<void> {
+export function track(name: ServerEvent, opts: TrackOptions): Promise<void> {
+  const done = record(name, opts);
+  keepAlive(done);
+  return done;
+}
+
+async function record(name: ServerEvent, opts: TrackOptions): Promise<void> {
   if (!analyticsEnabled()) return;
   try {
     if (opts.userId && (await eventsOff(opts.userId))) return;
