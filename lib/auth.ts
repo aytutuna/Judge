@@ -523,8 +523,9 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
     },
     advanced: {
       cookiePrefix: "verdict",
-      // Caddy (and Vercel) overwrite this header with the real peer address.
-      ipAddress: { ipAddressHeaders: ["x-forwarded-for"] },
+      // Caddy (and Vercel) overwrite this header with the real peer address;
+      // on Workers only CF-Connecting-IP can be trusted (see lib/client-ip.ts).
+      ipAddress: { ipAddressHeaders: [workerEnv() ? "cf-connecting-ip" : "x-forwarded-for"] },
     },
     databaseHooks: {
       // Only on creation, so accounts that existed before the welcome
