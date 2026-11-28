@@ -33,7 +33,7 @@ Set each with `npx wrangler secret put NAME -e staging` (or `secret bulk`).
     GOOGLE_CLIENT_SECRET  APPLE_PRIVATE_KEY_BASE64  TURNSTILE_SECRET_KEY
     REVIEW_ACCOUNT_CODE  SENTRY_DSN
     JOB_SECRET  METRICS_TOKEN                 (32+ characters, new for Workers)
-    BACKUP_PASSPHRASE  CLOUDFLARE_API_TOKEN   (the token may only edit D1)
+    BACKUP_PASSPHRASE  CLOUDFLARE_API_TOKEN   (D1 permission only; see below)
 
 Plain variables (not secret): `BETTER_AUTH_URL`, `NEXT_PUBLIC_SITE_URL`,
 `EMAIL_FROM`, `CONTACT_EMAIL`, `GOOGLE_CLIENT_ID`, `GOOGLE_IOS_CLIENT_ID`,
@@ -44,6 +44,12 @@ Plain variables (not secret): `BETTER_AUTH_URL`, `NEXT_PUBLIC_SITE_URL`,
 `/etc/verdict/verdict.env`. `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SENTRY_DSN` and
 `CONTACT_EMAIL` are also read when the bundle is built, so set them for
 `npm run cf:build` too.
+
+Cloudflare cannot limit a D1 token to one database: the token covers every D1
+database in its account. If the account also holds another app's D1, make the
+token in a separate account or accept that reach. Plain variables must be
+listed in `wrangler.jsonc` (per environment); a deploy removes any that are
+only set in the dashboard.
 
 `IMPORT_ENABLED=1` opens `/api/internal/import` for the data copy; remove it
 afterwards.
