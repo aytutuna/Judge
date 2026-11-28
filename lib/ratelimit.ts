@@ -2,8 +2,9 @@
  * Abuse and cost limits, checked before any model call: per account and per
  * IP sliding windows, and the site-wide premium cap (PREMIUM_DAILY_CAP).
  *
- * Backed by Upstash Redis when UPSTASH_REDIS_REST_URL/TOKEN are set, so the
- * limits hold across every serverless instance. Without them an in-memory
+ * Backed by a Durable Object per subject on Workers (cloudflare/rate-limiter.ts),
+ * by Upstash Redis when UPSTASH_REDIS_REST_URL/TOKEN are set, so the limits
+ * hold across every serverless instance. Without any of them an in-memory
  * store is used, per process only.
  *
  * Fails closed: if Redis errors or is slow, the request is refused as
@@ -17,6 +18,7 @@ import { analyticsDb } from "./analytics/db";
 import { isDeviceId } from "./analytics/validate";
 import { rateLimitSubject } from "./client-ip";
 import { signal } from "./signals";
+import { workerEnv } from "./worker-env";
 
 const MINUTE_MS = 60_000;
 const DAY_MS = 24 * 60 * MINUTE_MS;
@@ -102,6 +104,26 @@ export class WindowLimiter {
   }
 }
 
+/** The Durable Object limiter on Workers: every window of the bucket for one
+ * subject is checked and recorded in one call, so the limit holds across
+ * isolates. Fails closed like the Redis path. */
+async function checkDurable(
+  namespace: NonNullable<ReturnType<typeof workerEnv>>["RATE_LIMITER"],
+  name: string,
+  windows: readonly { limit: number; windowMs: number }[],
+): Promise<LimitDecision> {
+  try {
+    const stub = namespace.get(namespace.idFromName(name));
+    const answer = await withTimeout(stub.check(windows.map(({ limit, windowMs }) => ({ limit, windowMs }))), REDIS_TOTAL_TIMEOUT_MS);
+    if (answer.ok) return { ok: true };
+    return { ok: false, code: "rate_limited", retryAfterSec: retryAfterSec(answer.resetAtMs, Date.now()) };
+  } catch (e) {
+    const error = e instanceof Error ? e.message : String(e);
+    console.error("[ratelimit] limiter check failed, refusing request:", error);
+    return { ok: false, code: "unavailable", error };
+  }
+}
+
 const globalForTranslateLimits = globalThis as unknown as {
   __verdictTranslateLimiter?: WindowLimiter;
   __verdictTranslateRedis?: Ratelimit;
@@ -115,6 +137,13 @@ const globalForTranslateLimits = globalThis as unknown as {
  */
 export async function checkTranslateLimits(ip: string): Promise<LimitDecision> {
   const visitor = visitorKey(ip);
+  const durable = workerEnv()?.RATE_LIMITER;
+  if (durable) {
+    return noteLimited(
+      "translate",
+      await checkDurable(durable, `translate|${visitor}`, [{ limit: TRANSLATE_LIMIT, windowMs: TRANSLATE_WINDOW_MS }]),
+    );
+  }
   if (!redisConfigured()) {
     globalForTranslateLimits.__verdictTranslateLimiter ??= new WindowLimiter(
       TRANSLATE_LIMIT,
@@ -406,6 +435,8 @@ async function checkWindows(
   subject: string,
   windows: readonly UserWindow[],
 ): Promise<LimitDecision> {
+  const durable = workerEnv()?.RATE_LIMITER;
+  if (durable) return checkDurable(durable, `${cacheKey}|${subject}`, windows);
   if (!redisConfigured()) {
     const limiters = (globalForUserLimits.__verdictUserLimiters ??= {});
     const limiter = (limiters[cacheKey] ??= new MultiWindowLimiter(windows));

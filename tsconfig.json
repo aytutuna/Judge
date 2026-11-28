@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "mobile/android/**/build"]
+  "exclude": ["node_modules", "mobile/android/**/build", "cloudflare/tsconfig.json", "cloudflare/rate-limiter.ts", "cloudflare/job-runner.ts", "cloudflare/worker.ts"]
 }
