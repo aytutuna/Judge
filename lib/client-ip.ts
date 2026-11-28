@@ -1,4 +1,5 @@
 import { isIP } from "node:net";
+import { workerEnv } from "./worker-env";
 
 /** Longest identifier kept; anything longer is not a real address. */
 const MAX_IP_LENGTH = 64;
@@ -7,9 +8,12 @@ const MAX_IP_LENGTH = 64;
  * The visitor's IP for rate limiting: the first x-forwarded-for entry (on
  * Vercel the platform overwrites this header, so it cannot be spoofed there),
  * else x-real-ip, else "unknown". Without a proxy in front the headers are
- * client-controlled, so this is only trustworthy behind one.
+ * client-controlled, so this is only trustworthy behind one. On Workers
+ * Cloudflare sets CF-Connecting-IP itself and appends to x-forwarded-for, so
+ * that header's first entry is the visitor's own and only CF-Connecting-IP counts.
  */
 export function clientIp(headers: Headers): string {
+  if (workerEnv()) return (headers.get("cf-connecting-ip")?.trim() || "unknown").slice(0, MAX_IP_LENGTH);
   const forwarded = headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const ip = forwarded || headers.get("x-real-ip")?.trim() || "unknown";
   return ip.slice(0, MAX_IP_LENGTH);

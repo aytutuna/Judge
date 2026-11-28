@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { afterEach } from "vitest";
+import type { WorkerEnv } from "../cloudflare/env";
 import { clientIp, rateLimitSubject } from "../lib/client-ip";
+import { setWorkerEnv } from "../lib/worker-env";
 
 describe("clientIp", () => {
   it("takes the first x-forwarded-for entry", () => {
@@ -21,6 +24,17 @@ describe("clientIp", () => {
   it("keeps IPv6 addresses intact and caps absurd lengths", () => {
     expect(clientIp(new Headers({ "x-forwarded-for": "2001:db8::1" }))).toBe("2001:db8::1");
     expect(clientIp(new Headers({ "x-forwarded-for": "x".repeat(500) }))).toHaveLength(64);
+  });
+});
+
+describe("clientIp on Workers", () => {
+  afterEach(() => setWorkerEnv(undefined as unknown as WorkerEnv));
+
+  it("trusts only CF-Connecting-IP, never a forwarded header the visitor may have set", () => {
+    setWorkerEnv({} as WorkerEnv);
+    const h = new Headers({ "cf-connecting-ip": "203.0.113.7", "x-forwarded-for": "198.51.100.1, 203.0.113.7" });
+    expect(clientIp(h)).toBe("203.0.113.7");
+    expect(clientIp(new Headers({ "x-forwarded-for": "198.51.100.1" }))).toBe("unknown");
   });
 });
 
