@@ -41,7 +41,7 @@ const consentRoute = await import("../app/api/v1/me/consent/route");
 const publicRoute = await import("../app/api/v1/verdicts/[id]/route");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which these tests do not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
 const { POLICY_VERSION } = await import("../lib/policy");
 const { EN } = await import("../lib/i18n");
 import type { VerdictResult } from "../lib/types";

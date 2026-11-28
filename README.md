@@ -671,8 +671,12 @@ taken out of the text; the same request can be retried, e.g. with initials), plu
   its one-sided verdicts, its sides in cases and the case verdicts nobody
   else wrote in (rows stay; other people's sides stay theirs). Only the
   scrambled email that keeps the block and the consent ledger rows the law
-  needs remain. A block of the old 18+ rule that a date of birth under 13
-  makes final starts its 7 days then. The 13th birthday is judged on the
+  needs remain. The 7 days count from `user.age_block_final_at`, set when the
+  block becomes final (a block of the old 18+ rule that a date of birth under
+  13 makes final starts its 7 days then; rows already final get it at the
+  first cleanup after the deploy). Held verdicts and cases (`legal_hold`) are
+  left whole. A case with a blocked account on it counts as a case with
+  someone under 18 for names. The 13th birthday is judged on the
   latest calendar date anywhere (UTC+14), so nobody is closed out on the day.
   The daily cleanup clears a teen's `age_dob` once they are 18; `age_dob_at`
   stays and says a date was given. A

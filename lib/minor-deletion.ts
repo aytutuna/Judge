@@ -1,12 +1,14 @@
 /**
  * What follows a final under-13 block (lib/age.ts). The share pages close at
- * once (lib/originals/removed.ts); 7 days after the block the daily cleanup
+ * once (lib/originals/removed.ts); 7 days after it became final
+ * (age_block_final_at) the daily cleanup
  * deletes the account the way the owner's own deletion does, after first
  * wiping the text it wrote: its one-sided verdicts and their rounds, its
  * side, appeals and evidence in cases, and the verdicts of a case nobody else
  * wrote in. The rows stay, as in any removal. Other people's sides of a
  * shared case are theirs and are not touched. The scrambled email that keeps
  * the block (welcome_claims) and the consent ledger rows the law needs stay.
+ * Anything under a legal hold stays whole, as in lib/erasure.
  * Server only.
  */
 
@@ -28,14 +30,21 @@ const MINE = `SELECT id AS case_id, 'a' AS party FROM cases WHERE owner_id = ?1
   UNION SELECT id, 'b' FROM cases WHERE respondent_user_id = ?1
   UNION SELECT case_id, party FROM case_invites WHERE user_id = ?1`;
 
+/** Those of them in cases with no legal hold on the case or on any of its verdicts. */
+const MINE_OPEN = `SELECT case_id, party FROM (${MINE}) WHERE case_id NOT IN (SELECT id FROM cases WHERE legal_hold = 1)
+  AND case_id NOT IN (SELECT cv.case_id FROM case_verdicts cv JOIN verdicts v ON v.id = cv.verdict_id WHERE v.legal_hold = 1)`;
+
 async function wipeText(userId: string, nowIso: string): Promise<void> {
   await entitlementWriteBatch(userBackfillStatements(userId, nowIso));
   const db = await getDb();
   const [own, alone] = await Promise.all([
-    db.execute({ sql: "SELECT verdict_id FROM verdict_meta WHERE owner_user_id = ? AND kind <> 'case'", args: [userId] }),
+    db.execute({ sql: `SELECT m.verdict_id FROM verdict_meta m JOIN verdicts v ON v.id = m.verdict_id
+            WHERE m.owner_user_id = ? AND m.kind <> 'case' AND v.legal_hold = 0`,
+      args: [userId],
+    }),
     db.execute({
       sql: `SELECT cv.verdict_id FROM case_verdicts cv
-            WHERE cv.case_id IN (SELECT case_id FROM (${MINE}))
+            WHERE cv.case_id IN (SELECT case_id FROM (${MINE_OPEN}))
               AND NOT EXISTS (SELECT 1 FROM case_sides s WHERE s.case_id = cv.case_id
                               AND (s.case_id, s.party) NOT IN (${MINE}))`,
       args: [userId],
@@ -47,7 +56,7 @@ async function wipeText(userId: string, nowIso: string): Promise<void> {
     : { rows: [] };
   const verdicts = [...roots, ...rounds.rows.map((r) => String(r.id)), ...alone.rows.map((r) => String(r.verdict_id))];
   const mine = (table: string, column: string): InStatement => ({
-    sql: `UPDATE ${table} SET ${column} = '' WHERE (case_id, party) IN (${MINE})`,
+    sql: `UPDATE ${table} SET ${column} = '' WHERE (case_id, party) IN (${MINE_OPEN})`,
     args: [userId],
   });
   await entitlementWriteBatch([
@@ -81,8 +90,14 @@ export async function deleteBlockedAccounts(now: Date = new Date()): Promise<num
   const db = await getDb();
   let due;
   try {
+    // A block made final before age_block_final_at existed has no time yet:
+    // its 7 days start with the first cleanup that sees it.
+    await db.execute({
+      sql: `UPDATE "user" SET age_block_final_at = ? WHERE age_block_final IS NOT NULL AND age_block_final_at IS NULL`,
+      args: [now.toISOString()],
+    });
     due = await db.execute({
-      sql: `SELECT id, email FROM "user" WHERE age_blocked_at IS NOT NULL AND age_block_final IS NOT NULL AND age_blocked_at <= ?`,
+      sql: `SELECT id, email FROM "user" WHERE age_block_final IS NOT NULL AND age_block_final_at <= ?`,
       args: [new Date(now.getTime() - BLOCK_GRACE_MS).toISOString()],
     });
   } catch (e) {

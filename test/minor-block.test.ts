@@ -24,9 +24,9 @@ vi.mock("../lib/auth", async () => {
 
 const { getDb } = await import("../lib/db");
 await (await getDb()).execute(
-  'CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, email TEXT, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)',
+  'CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, email TEXT, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)',
 );
-const { blockMinor, keptBlock } = await import("../lib/age");
+const { blockMinor, keptBlock, caseHasTeen } = await import("../lib/age");
 const { runCleanup } = await import("../lib/cleanup");
 const { saveVerdictWithOriginals } = await import("../lib/originals/save");
 const { getPublicVerdict } = await import("../lib/originals/display");
@@ -80,8 +80,14 @@ const one = async (sql: string, args: (string | number)[] = []) => (await all(sq
 
 async function user(id: string, blockedDaysAgo: number | null, final = true) {
   await (await getDb()).execute({
-    sql: 'INSERT INTO "user" (id, email, age_blocked_at, age_block_final) VALUES (?, ?, ?, ?)',
-    args: [id, `${id}@example.test`, blockedDaysAgo === null ? null : ago(blockedDaysAgo), blockedDaysAgo !== null && final ? "1" : null],
+    sql: 'INSERT INTO "user" (id, email, age_blocked_at, age_block_final, age_block_final_at) VALUES (?, ?, ?, ?, ?)',
+    args: [
+      id,
+      `${id}@example.test`,
+      blockedDaysAgo === null ? null : ago(blockedDaysAgo),
+      blockedDaysAgo !== null && final ? "1" : null,
+      blockedDaysAgo !== null && final ? ago(blockedDaysAgo) : null,
+    ],
   });
 }
 
@@ -181,16 +187,29 @@ describe("share pages of a final block", () => {
   });
 });
 
-describe("the final block restarts the 7 days", () => {
-  it("when it replaces a block of the former rule, but never moves a final one", async () => {
+describe("the final block is timed from when it became final", () => {
+  it("sets age_block_final_at when an old block turns final, and never moves it", async () => {
     await user("flip", 40, false);
     expect(await blockMinor("flip", NOW)).toMatchObject({ blocked: true });
-    expect(await one('SELECT age_blocked_at, age_block_final FROM "user" WHERE id = ?', ["flip"])).toEqual({
-      age_blocked_at: NOW.toISOString(),
+    expect(await one('SELECT age_blocked_at, age_block_final, age_block_final_at FROM "user" WHERE id = ?', ["flip"])).toEqual({
+      age_blocked_at: ago(40),
       age_block_final: "1",
+      age_block_final_at: NOW.toISOString(),
     });
     await blockMinor("flip", new Date(NOW.getTime() + DAY));
-    expect((await one('SELECT age_blocked_at FROM "user" WHERE id = ?', ["flip"])).age_blocked_at).toBe(NOW.toISOString());
+    expect((await one('SELECT age_block_final_at FROM "user" WHERE id = ?', ["flip"])).age_block_final_at).toBe(NOW.toISOString());
+    await (await getDb()).execute({ sql: 'DELETE FROM "user" WHERE id = ?', args: ["flip"] });
+  });
+});
+
+describe("a case holding a blocked account", () => {
+  it("counts as a case with someone under 18, whichever rule blocked it", async () => {
+    expect(await caseHasTeen("case-kid-c")).toBe(true);
+    expect(await caseHasTeen("case-kid-a")).toBe(true);
+    await user("oldseat", 30, false);
+    await makeCase("case-oldseat", "adult", "oldseat");
+    expect(await caseHasTeen("case-oldseat")).toBe(true);
+    expect(await caseHasTeen("case-others")).toBe(false);
   });
 });
 
@@ -247,5 +266,55 @@ describe("the deletion after 7 days", () => {
     expect((await runCleanup(new Date(NOW.getTime() + 5 * DAY))).blocked).toBe(2);
     expect(await one('SELECT id FROM "user" WHERE id = ?', ["young"])).toBeUndefined();
     expect(await one('SELECT id FROM "user" WHERE id = ?', ["old"])).toEqual({ id: "old" });
+  });
+});
+
+describe("legal hold", () => {
+  it("keeps held verdicts and held cases whole, with the child's sides in them", async () => {
+    await user("held", 9);
+    const d = await getDb();
+    const heldVerdict = await verdict("held-v1", "held");
+    const freeVerdict = await verdict("held-v2", "held");
+    await d.execute({ sql: "UPDATE verdicts SET legal_hold = 1 WHERE id = ?", args: [heldVerdict] });
+    await d.execute({
+      sql: "INSERT INTO verdict_appeals (id, verdict_id, text, base_id, created_at, updated_at) VALUES ('held-r1', ?, 'round text', ?, ?, ?)",
+      args: [heldVerdict, heldVerdict, ago(1), ago(1)],
+    });
+    const caseHeld = await makeCase("case-held", "held", "pal");
+    await d.execute("UPDATE cases SET legal_hold = 1 WHERE id = 'case-held'");
+    const caseVerdictHeld = await makeCase("case-vheld", "held", "pal");
+    await d.execute({ sql: "UPDATE verdicts SET legal_hold = 1 WHERE id = ?", args: [`case-vheld-v`] });
+
+    expect((await runCleanup(NOW)).blocked).toBe(1);
+
+    expect(await one('SELECT id FROM "user" WHERE id = ?', ["held"])).toBeUndefined();
+    expect((await one("SELECT input FROM verdicts WHERE id = ?", [heldVerdict])).input).toBe("held-v1 says Party A owes him");
+    expect((await one("SELECT text FROM verdict_appeals WHERE id = 'held-r1'")).text).toBe("round text");
+    expect((await one("SELECT input FROM verdicts WHERE id = ?", [freeVerdict])).input).toBe("");
+    for (const id of ["case-held", "case-vheld"]) {
+      expect(await one("SELECT text FROM case_sides WHERE case_id = ? AND party = 'a'", [id])).toEqual({ text: `${id} side a` });
+      expect(await one("SELECT transcript FROM case_evidence WHERE case_id = ? AND party = 'a'", [id])).toEqual({ transcript: `${id} proof a` });
+      expect(await one("SELECT text FROM case_appeals WHERE case_id = ?", [id])).toEqual({ text: `${id} appeal a` });
+    }
+    expect((await one("SELECT input FROM verdicts WHERE id = ?", [caseHeld])).input).toBe("case-held both sides read");
+    expect((await one("SELECT input FROM verdicts WHERE id = ?", [caseVerdictHeld])).input).toBe("case-vheld both sides read");
+  });
+});
+
+describe("a block made final before age_block_final_at existed", () => {
+  it("still gets its 7 days, counted from the first cleanup that sees it", async () => {
+    const d = await getDb();
+    await d.execute({
+      sql: `INSERT INTO "user" (id, email, age_blocked_at, age_block_final) VALUES ('legacy', 'legacy@example.test', ?, '1')`,
+      args: [ago(60)],
+    });
+    const T = new Date(NOW.getTime() + 20 * DAY);
+    const at = (days: number) => new Date(T.getTime() + days * DAY);
+    expect((await runCleanup(T)).blocked).toBe(0);
+    expect((await one('SELECT age_block_final_at FROM "user" WHERE id = ?', ["legacy"])).age_block_final_at).toBe(T.toISOString());
+    expect((await runCleanup(at(6))).blocked).toBe(0);
+    expect(await one('SELECT id FROM "user" WHERE id = ?', ["legacy"])).toEqual({ id: "legacy" });
+    expect((await runCleanup(at(8))).blocked).toBe(1);
+    expect(await one('SELECT id FROM "user" WHERE id = ?', ["legacy"])).toBeUndefined();
   });
 });
