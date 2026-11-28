@@ -24,7 +24,7 @@
 
 import { NextResponse } from "next/server";
 import type { Entitlement, PremiumBlock } from "@/lib/account-types";
-import { caseHasTeen, caseTeenExists } from "@/lib/age";
+import { caseHasTeen, caseTeenExists, withEffectiveNames } from "@/lib/age";
 import { track } from "@/lib/analytics/track";
 import { API_ERROR_STATUS, apiErrorBody, type ApiErrorBody, type ApiErrorCode } from "@/lib/api-errors";
 import { isSameOrigin, premiumEnabled, type ViewerSession } from "@/lib/auth";
@@ -321,7 +321,8 @@ async function viewerRatings(userId: string, bundle: Awaited<ReturnType<typeof l
   return ratingsFor(userId, bundle.verdicts.map((v) => v.verdictId)).catch(() => undefined);
 }
 
-async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new Date()): Promise<CaseView> {
+async function ownerView(stored: CaseRow, req: Request, viewerId: string, now = new Date()): Promise<CaseView> {
+  const row = await withEffectiveNames(stored);
   const bundle = await loadCaseBundle(row);
   const open = effectiveStatus(row, now) === "awaiting_respondent" && !row.removedAt;
   const token = open ? await currentInviteToken(row) : null;
@@ -338,11 +339,12 @@ async function ownerView(row: CaseRow, req: Request, viewerId: string, now = new
 
 /** The case page for the side `party` (B unless the link is for C or D). */
 async function respondentView(
-  row: CaseRow,
+  stored: CaseRow,
   party: PartyLetter,
   viewerId: string | null,
   now = new Date(),
 ): Promise<CaseView> {
+  const row = await withEffectiveNames(stored);
   const bundle = await loadCaseBundle(row);
   const who = respondentOf(row, bundle.invites, party);
   return buildCaseView(bundle, {
