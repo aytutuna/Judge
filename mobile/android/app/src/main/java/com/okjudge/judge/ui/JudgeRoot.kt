@@ -55,6 +55,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.okjudge.judge.AppContainer
@@ -70,6 +71,10 @@ import com.okjudge.judge.core.display.Errors
 import com.okjudge.judge.ui.age.AgeApprovalScreen
 import com.okjudge.judge.ui.age.AgeBlockedScreen
 import com.okjudge.judge.ui.age.AgeDateScreen
+import com.okjudge.judge.ui.age.AgeParentScreen
+import com.okjudge.judge.ui.age.AgeRegionScreen
+import com.okjudge.judge.core.auth.ParentConsent
+import com.okjudge.judge.core.model.AgeHint
 import com.okjudge.judge.core.data.Appearance
 import com.okjudge.judge.core.session.VerdictFlow
 import com.okjudge.judge.i18n.LangPref
@@ -875,7 +880,9 @@ fun JudgeRoot(
                     onSignOut = { container.appScope.launch { account.signOut() } },
                     onDelete = { password -> container.appScope.launch { account.deleteAccount(password) } },
                     delete = deleteUi(account, accountNow) { container.appScope.launch { account.signOut() } },
-                    onSubmitDob = { container.appScope.launch { account.submitDob(it) } },
+                    parent = container.parentConsent,
+                    scope = container.appScope,
+                    onSubmitDob = { dob, country, quebec -> container.appScope.launch { account.submitDob(dob, country, quebec) } },
                     onContact = { sendEmail(context, AgeCheck.SUPPORT_EMAIL) },
                 )
                 }
@@ -884,6 +891,7 @@ fun JudgeRoot(
     }
 }
 
+private const val PARENT_POLL_MS = 30_000L
 private const val HELD_NONE = 0
 private const val HELD_SUBMIT = 1
 private const val HELD_LINK = 2
@@ -910,7 +918,9 @@ private fun AgeOverlay(
     onSignOut: () -> Unit,
     onDelete: (String?) -> Unit,
     delete: DeleteUi,
-    onSubmitDob: (LocalDate) -> Unit,
+    parent: ParentConsent,
+    scope: CoroutineScope,
+    onSubmitDob: (LocalDate, String?, Boolean?) -> Unit,
     onContact: () -> Unit,
 ) {
     if (gate == AgeGate.NONE) return
@@ -922,11 +932,48 @@ private fun AgeOverlay(
         AgeGate.DATE -> {
             val posting by account.agePosting.collectAsStateWithLifecycle()
             val failed by account.ageFailed.collectAsStateWithLifecycle()
+            var hint by remember { mutableStateOf<AgeHint?>(null) }
+            LaunchedEffect(Unit) { hint = account.ageHint() }
             AgeDateScreen(
                 busy = busy || posting,
                 failed = failed,
                 onSubmit = onSubmitDob,
                 onEdit = account::clearAgeFailed,
+                hint = hint,
+                onSignOut = onSignOut,
+                onDelete = onDelete,
+                delete = delete,
+            )
+        }
+        AgeGate.RESTRICTED -> {
+            // Nothing to retry: it lifts on the birthday, so /me is read again on foreground.
+            val lifecycle = LocalLifecycleOwner.current.lifecycle
+            LaunchedEffect(Unit) { lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) { account.refresh() } }
+            AgeRegionScreen(busy = busy, onSignOut = onSignOut, onDelete = onDelete, onContact = onContact, delete = delete)
+        }
+        AgeGate.PARENT -> {
+            val accountState by account.state.collectAsStateWithLifecycle()
+            val status = (accountState as? Account.State.SignedIn)?.me?.age?.parent ?: "pending"
+            val view by parent.state.collectAsStateWithLifecycle()
+            // The parent's yes lifts the cover by itself: read /me again every 30 seconds and on coming back.
+            val lifecycle = LocalLifecycleOwner.current.lifecycle
+            LaunchedEffect(Unit) {
+                lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    while (true) {
+                        parent.load()
+                        account.refresh()
+                        delay(PARENT_POLL_MS)
+                    }
+                }
+            }
+            AgeParentScreen(
+                status = status,
+                view = view.view,
+                busy = busy || view.busy,
+                error = view.error,
+                onSend = { scope.launch { parent.send(it) } },
+                onResend = { scope.launch { parent.resend() } },
+                onReload = { scope.launch { parent.load() } },
                 onSignOut = onSignOut,
                 onDelete = onDelete,
                 delete = delete,

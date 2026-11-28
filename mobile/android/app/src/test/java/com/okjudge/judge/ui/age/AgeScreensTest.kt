@@ -51,7 +51,7 @@ class AgeScreensTest {
         now: () -> Long = farFuture,
     ): @androidx.compose.runtime.Composable () -> Unit = {
         Themed(AppLang.EN) {
-            AgeDateScreen(busy, failed, { submitted += it }, onSignOut = {}, onDelete = {}, nowMillis = now)
+            AgeDateScreen(busy, failed, { d, _, _ -> submitted += d }, onSignOut = {}, onDelete = {}, nowMillis = now)
         }
     }
 
@@ -70,7 +70,7 @@ class AgeScreensTest {
     fun dateStep_pickerTextsAndPatternFollowTheAppLanguage() {
         compose.setContent {
             Themed(AppLang.TR) {
-                AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {})
+                AgeDateScreen(busy = false, failed = false, onSubmit = { _, _, _ -> }, onSignOut = {}, onDelete = {})
             }
         }
         // Material's own label and the day-first pattern come from the app's language, not the phone's.
@@ -87,7 +87,7 @@ class AgeScreensTest {
         var edits = 0
         compose.setContent {
             Themed(AppLang.EN) {
-                AgeDateScreen(false, true, {}, {}, {}, onEdit = { edits++ }, nowMillis = System::currentTimeMillis)
+                AgeDateScreen(false, true, { _, _, _ -> }, {}, {}, onEdit = { edits++ }, nowMillis = System::currentTimeMillis)
             }
         }
         enterBirthDate(compose, CHILD)

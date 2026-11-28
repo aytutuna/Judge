@@ -366,7 +366,7 @@ class ScreenshotsTest {
 
     private fun ageDate(dark: Boolean, confirm: Boolean = false) = @androidx.compose.runtime.Composable {
         Themed(AppLang.EN, dark = dark) {
-            AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {}, nowMillis = System::currentTimeMillis)
+            AgeDateScreen(busy = false, failed = false, onSubmit = { _, _, _ -> }, onSignOut = {}, onDelete = {}, nowMillis = System::currentTimeMillis)
         }
     }
 
@@ -379,7 +379,7 @@ class ScreenshotsTest {
     @Test
     fun age_date_tr() = capture("age_date_tr") {
         Themed(AppLang.TR) {
-            AgeDateScreen(busy = false, failed = false, onSubmit = {}, onSignOut = {}, onDelete = {}, nowMillis = System::currentTimeMillis)
+            AgeDateScreen(busy = false, failed = false, onSubmit = { _, _, _ -> }, onSignOut = {}, onDelete = {}, nowMillis = System::currentTimeMillis)
         }
     }
 
@@ -425,6 +425,30 @@ class ScreenshotsTest {
     fun age_blocked_en_tablet() = capture("age_blocked_en_tablet", tablet = true) {
         Themed(AppLang.EN) { AgeBlockedScreen(signedIn = true, busy = false, onSignOut = {}, onDelete = {}, onContact = {}) }
     }
+
+    @Test
+    fun age_region_en() = capture("age_region_en") {
+        Themed(AppLang.EN) { com.okjudge.judge.ui.age.AgeRegionScreen(busy = false, onSignOut = {}, onDelete = {}, onContact = {}) }
+    }
+
+    private fun parentView(sent: Boolean) = com.okjudge.judge.core.model.ParentView(
+        status = "pending", sent = sent, emailHint = "m***@example.com", resendsLeft = 3, changesLeft = 3, deleteAt = "2026-12-28T12:00:00.000Z",
+    )
+
+    private fun parentScreen(status: String, sent: Boolean) = @androidx.compose.runtime.Composable {
+        Themed(AppLang.EN) {
+            com.okjudge.judge.ui.age.AgeParentScreen(status, parentView(sent), busy = false, error = null, onSend = {}, onResend = {}, onReload = {}, onSignOut = {}, onDelete = {})
+        }
+    }
+
+    @Test
+    fun age_parent_email_en() = capture("age_parent_email_en", content = parentScreen("pending", sent = false))
+
+    @Test
+    fun age_parent_wait_en() = capture("age_parent_wait_en", content = parentScreen("pending", sent = true))
+
+    @Test
+    fun age_parent_declined_en() = capture("age_parent_declined_en", content = parentScreen("declined", sent = true))
 
     @Test
     fun settings_teen_en() = capture("settings_teen_en") {
