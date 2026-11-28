@@ -121,3 +121,12 @@ export function countryOf(headers: Headers, env: Record<string, string | undefin
   const code = headers.get("cf-ipcountry")?.trim().toUpperCase() ?? "";
   return /^[A-Z]{2}$/.test(code) && code !== "XX" ? code : null;
 }
+
+/** The visitor's region code from Cloudflare (CF-Region-Code, needs the
+ * "Add visitor location headers" transform), under the same CLOUDFLARE_PROXY
+ * rule as countryOf. Only the Canadian provinces are read. */
+export function regionOf(headers: Headers, env: Record<string, string | undefined> = process.env): string | null {
+  if (env.CLOUDFLARE_PROXY?.trim() !== "1" || countryOf(headers, env) !== "CA") return null;
+  const code = headers.get("cf-region-code")?.trim().toUpperCase() ?? "";
+  return /^[A-Z]{2}$/.test(code) ? code : null;
+}

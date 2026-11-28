@@ -33,3 +33,8 @@ export function underThirteen(dob: string, now = new Date()): boolean {
 export function underEighteen(dob: string, now = new Date()): boolean {
   return dob > yearsBefore(now, 18);
 }
+
+/** Younger than `years` full years on `now`'s calendar date. */
+export function youngerThan(dob: string, years: number, now = new Date()): boolean {
+  return dob > yearsBefore(now, years);
+}
