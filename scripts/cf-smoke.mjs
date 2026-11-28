@@ -136,6 +136,28 @@ async function run() {
   check("health answers", health.status === 200 && health.json?.ok === true);
   check("security headers are set", health.headers.get("x-frame-options") === "DENY");
 
+  // The cutover copy: an old SQLite file, one row over D1's 100 KB statement limit, posted through the import route.
+  const { createClient } = await import("@libsql/client");
+  const { readFileSync } = await import("node:fs");
+  const copyDir = mkdtempSync(path.join(tmpdir(), "judge-copy-"));
+  const source = path.join(copyDir, "old.db");
+  const old = createClient({ url: `file:${source.replaceAll(String.fromCharCode(92), "/")}` });
+  await old.executeMultiple(readFileSync(new URL("../migrations/0001_schema.sql", import.meta.url), "utf8"));
+  await old.execute({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, '{}', '{}')", args: ["copy-big", "x".repeat(300_000)] });
+  await old.execute({ sql: "INSERT INTO verdicts (id, input, framework, result) VALUES (?, ?, '{}', '{}')", args: ["copy-small", "short"] });
+  old.close();
+  const closed = await api("POST", "/api/internal/import", { body: { table: "verdicts", columns: ["id"], rows: [] } });
+  check("the import route is closed without the secret", closed.status === 404, `${closed.status}`);
+  const copied = spawnSync("npx", ["tsx", "scripts/d1-copy.ts", source, BASE], {
+    shell: true,
+    encoding: "utf8",
+    env: { ...process.env, JOB_SECRET: secrets.JOB_SECRET },
+  });
+  check("the old database copies into the empty D1 and the counts match", copied.status === 0 && copied.stdout.includes("row counts match"), `${copied.stdout}${copied.stderr}`.slice(-300));
+  try {
+    rmSync(copyDir, { recursive: true, force: true });
+  } catch {}
+
   // Sign in with an emailed code.
   const email = `smoke-${hex(4)}@example.test`;
   const send = await api("POST", "/api/auth/email-otp/send-verification-otp", { body: { email, type: "sign-in" } });
@@ -257,6 +279,7 @@ try {
       ORIGINALS_KEY: randomBytes(32).toString("base64"),
       RATE_LIMIT_SALT: hex(24),
       ALLOW_SANDBOX_PURCHASES: "1",
+      IMPORT_ENABLED: "1",
       ...secrets,
     };
     const varsFile = path.join(dir, "dev.vars");
