@@ -57,7 +57,10 @@ class ParentConsent(private val api: JudgeApi, private val refreshAccount: suspe
                 _state.value = _state.value.copy(busy = false, error = res.error)
                 // The request moved under us: show what it is now.
                 if ((res.error as? UiError.Api)?.code in MOVED) {
+                    val mine = changes
                     load()
+                    // The reload may have outlived the session or been overtaken by a newer action.
+                    if (asked != epoch || mine != changes) return
                     _state.value = _state.value.copy(error = res.error)
                     refreshAccount()
                 }

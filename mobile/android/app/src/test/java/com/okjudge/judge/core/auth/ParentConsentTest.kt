@@ -138,6 +138,20 @@ class ParentConsentTest {
     }
 
     @Test
+    fun aClearDuringTheReloadAfterAMovedError_leavesTheNextStateClean() = runBlocking {
+        routes.on("POST /api/v1/me/parent", json(409, """{"error":"x","code":"parent_declined"}"""))
+        routes.on("GET /api/v1/me/parent", MockResponse.Builder().code(200).addHeader("Content-Type", "application/json").body(view()).headersDelay(400, TimeUnit.MILLISECONDS).build())
+        val c = consent()
+        val call = async { c.send("mum@example.com", AppLang.EN) }
+        delay(200)
+        c.clear()
+        call.await()
+        assertNull(c.state.value.error)
+        assertNull(c.state.value.view)
+        assertEquals(0, refreshed)
+    }
+
+    @Test
     fun aConflict_reloadsTheView() = runBlocking {
         routes.on("POST /api/v1/me/parent", json(409, """{"error":"x","code":"parent_conflict"}"""))
         routes.on("GET /api/v1/me/parent", json(200, view(changes = 1)))
