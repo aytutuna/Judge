@@ -1169,7 +1169,8 @@ final class AccountTests: XCTestCase {
         let store = MemoryTokenStore(token: "t0k")
         let account = model(store)
         await account.deleteAccount()
-        XCTAssertEqual(StubURLProtocol.requests.map { $0.httpMethod ?? "" }, ["DELETE", "GET"])
+        let own = StubURLProtocol.requests.filter { $0.url?.path == "/api/v1/me" }
+        XCTAssertEqual(own.map { $0.httpMethod ?? "" }, ["DELETE", "GET"])
         XCTAssertNil(store.token())
         XCTAssertFalse(account.isSignedIn)
         XCTAssertEqual(account.notice, .deleted)

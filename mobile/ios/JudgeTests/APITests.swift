@@ -10,8 +10,23 @@ final class StubURLProtocol: URLProtocol {
         var error: URLError?
     }
 
-    nonisolated(unsafe) static var handler: (@Sendable (URLRequest) -> Reply)?
-    nonisolated(unsafe) static var requests: [URLRequest] = []
+    private static let lock = NSLock()
+    nonisolated(unsafe) private static var storedHandler: (@Sendable (URLRequest) -> Reply)?
+    nonisolated(unsafe) private static var storedRequests: [URLRequest] = []
+
+    static var handler: (@Sendable (URLRequest) -> Reply)? {
+        get { lock.withLock { storedHandler } }
+        set { lock.withLock { storedHandler = newValue } }
+    }
+
+    static var requests: [URLRequest] {
+        get { lock.withLock { storedRequests } }
+        set { lock.withLock { storedRequests = newValue } }
+    }
+
+    private static func record(_ request: URLRequest) {
+        lock.withLock { storedRequests.append(request) }
+    }
 
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
@@ -21,7 +36,7 @@ final class StubURLProtocol: URLProtocol {
         if recorded.httpBody == nil, let stream = request.httpBodyStream {
             recorded.httpBody = Self.read(stream)
         }
-        Self.requests.append(recorded)
+        Self.record(recorded)
         let reply = Self.handler?(recorded) ?? Reply(error: URLError(.unknown))
         if let error = reply.error {
             client?.urlProtocol(self, didFailWithError: error)

@@ -83,12 +83,33 @@ final class AccountSafetyTests: XCTestCase {
     }
 
     @MainActor
-    func testDeleteWithAPasswordAccountNeedsThePasswordTyped() async throws {
+    func testAPasswordAccountDeletesFreshWithoutTypingIt() async throws {
+        router.on("DELETE", "/api/v1/me", try PremiumFixtures.json(200, ["deleted": true]))
         let (account, store) = try await signedIn(hasPassword: true)
         await account.deleteAccount()
-        XCTAssertEqual(account.failure, .currentPasswordRequired)
-        XCTAssertEqual(router.count("DELETE", "/api/v1/me"), 0)
+        XCTAssertEqual(try sentBody("DELETE", "/api/v1/me") as? [String: String], ["confirm": "delete"])
+        XCTAssertNil(store.token())
+    }
+
+    @MainActor
+    func testAPasswordAccountWithAnOldSessionIsOfferedSignIn() async throws {
+        router.on("DELETE", "/api/v1/me", try error(403, "reauth_required"))
+        let (account, store) = try await signedIn(hasPassword: true, signedInAgo: 3600)
+        XCTAssertFalse(account.deleteOffersSignIn)
+        await account.deleteAccount()
+        XCTAssertEqual(account.failure, .deleteReauth)
+        XCTAssertTrue(account.deleteOffersSignIn)
+        XCTAssertTrue(account.deleteNeedsPassword, "the password field stays")
         XCTAssertEqual(store.token(), "t0k")
+    }
+
+    @MainActor
+    func testAWrongPasswordOffersSignInToo() async throws {
+        router.on("DELETE", "/api/v1/me", try error(403, "password_wrong"))
+        let (account, _) = try await signedIn(hasPassword: true)
+        account.deletePassword = "nope"
+        await account.deleteAccount()
+        XCTAssertTrue(account.deleteOffersSignIn)
     }
 
     @MainActor

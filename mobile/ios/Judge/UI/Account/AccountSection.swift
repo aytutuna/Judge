@@ -150,19 +150,20 @@ private struct DeleteAccountAlert: ViewModifier {
         let lang = app.lang
         let account = app.account
         content.alert(L10n.appAccountDeleteTitle(lang), isPresented: $isPresented) {
-            if account.deleteNeedsSignIn {
-                Button(L10n.signinTitle(lang)) {
-                    Task { await account.signInAgainToDelete() }
-                }
-            } else {
-                if account.deleteNeedsPassword {
-                    SecureField(L10n.signinPassword(lang), text: Binding(
-                        get: { account.deletePassword },
-                        set: { account.deletePassword = $0 }
-                    ))
-                }
+            if account.deleteNeedsPassword {
+                SecureField(L10n.signinPassword(lang), text: Binding(
+                    get: { account.deletePassword },
+                    set: { account.deletePassword = $0 }
+                ))
+            }
+            if !account.deleteNeedsSignIn || account.deleteNeedsPassword {
                 Button(L10n.appAccountDeleteConfirm(lang), role: .destructive) {
                     Task { await account.deleteAccount() }
+                }
+            }
+            if account.deleteOffersSignIn {
+                Button(L10n.signinTitle(lang)) {
+                    Task { await account.signInAgainToDelete() }
                 }
             }
             if billing {

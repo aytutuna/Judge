@@ -951,8 +951,13 @@ final class AccountModel {
         return at == 0 || Date().timeIntervalSince1970 - at > Self.freshSignIn
     }
 
-    /// The account has a password the delete sheet must ask for.
+    /// The account has a password the delete sheet asks for. Left empty it
+    /// sends none, and the server decides by the age of the sign-in.
     var deleteNeedsPassword: Bool { info?.hasPassword == true }
+
+    /// The sheet also offers a new sign-in: the session is too old, or the
+    /// password was wrong and may be forgotten.
+    var deleteOffersSignIn: Bool { deleteNeedsSignIn || (isSignedIn && failure == .currentPasswordWrong) }
 
     /// Ends this session and opens sign-in, so the next delete is fresh.
     /// Nothing is wiped from the phone: the same account comes back.
@@ -972,15 +977,11 @@ final class AccountModel {
     /// server may have finished: /me without a user means it did.
     func deleteAccount() async {
         guard isSignedIn, busy == nil else { return }
-        if deleteNeedsPassword, deletePassword.isEmpty {
-            failure = .currentPasswordRequired
-            return
-        }
         busy = .delete
         failure = nil
         defer { busy = nil }
         let asked = api.tokenStore.token()
-        let typed = deleteNeedsPassword ? deletePassword : nil
+        let typed = deleteNeedsPassword && !deletePassword.isEmpty ? deletePassword : nil
         deletePassword = ""
         do {
             try await api.deleteAccount(password: typed)
