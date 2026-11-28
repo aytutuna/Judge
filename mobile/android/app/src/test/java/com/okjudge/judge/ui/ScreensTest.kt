@@ -864,10 +864,29 @@ class ScreensTest {
     fun deleteForm_asksForThePassword_whenTheAccountHasOne() {
         val sent = mutableListOf<String?>()
         form(DeleteUi(hasPassword = true), onDelete = { sent += it })
-        compose.onNodeWithTag(DeleteTags.CONFIRM).assertIsNotEnabled()
         compose.onNodeWithTag(DeleteTags.PASSWORD).performTextInput("made-up-pass")
         compose.onNodeWithTag(DeleteTags.CONFIRM).assertIsEnabled().performClick()
         assertEquals(listOf<String?>("made-up-pass"), sent)
+    }
+
+    @Test
+    fun deleteForm_withAPassword_canStillTryWithoutIt() {
+        val sent = mutableListOf<String?>()
+        form(DeleteUi(hasPassword = true), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertIsEnabled().performClick()
+        assertEquals("a fresh sign-in needs no password", listOf<String?>(null), sent)
+    }
+
+    @Test
+    fun deleteForm_reauthWithAPassword_offersBothWays() {
+        val sent = mutableListOf<String?>()
+        var again = 0
+        form(DeleteUi(hasPassword = true, problem = DeleteProblem.REAUTH_REQUIRED, onSignInAgain = { again++ }), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.PASSWORD).performTextInput("made-up-pass")
+        compose.onNodeWithTag(DeleteTags.CONFIRM).performClick()
+        compose.onNodeWithTag(DeleteTags.SIGN_IN_AGAIN).performClick()
+        assertEquals(listOf<String?>("made-up-pass"), sent)
+        assertEquals(1, again)
     }
 
     @Test

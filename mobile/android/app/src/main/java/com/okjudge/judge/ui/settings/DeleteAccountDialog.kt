@@ -115,14 +115,17 @@ fun DeleteAccountForm(
                 TextButton(onClick = onManageSubscription) { Text(s.appAccountManageSubscription, color = Palette.ink) }
             }
             TextButton(onClick = { ui.onClearProblem(); onDismiss() }) { Text(s.appCancel, color = Palette.ink) }
-            if (ui.problem == DeleteProblem.REAUTH_REQUIRED) {
+            val reauth = ui.problem == DeleteProblem.REAUTH_REQUIRED
+            if (reauth) {
                 TextButton(onClick = ui.onSignInAgain, enabled = !busy, modifier = Modifier.testTag(DeleteTags.SIGN_IN_AGAIN)) {
                     Text(s.accountSignOut, color = Palette.danger)
                 }
-            } else {
+            }
+            // An empty box sends no password: a fresh sign-in may delete without one, and the server says when it may not.
+            if (!reauth || ui.hasPassword) {
                 TextButton(
-                    onClick = { onDelete(password.takeIf { ui.hasPassword }) },
-                    enabled = !busy && (!ui.hasPassword || password.isNotEmpty()),
+                    onClick = { onDelete(password.takeIf { ui.hasPassword && it.isNotEmpty() }) },
+                    enabled = !busy,
                     modifier = Modifier.testTag(DeleteTags.CONFIRM),
                 ) { Text(s.appAccountDeleteConfirm, color = Palette.danger) }
             }
