@@ -22,8 +22,9 @@
  * training_withdrawn_at is NULL, and it is not removed or erased.
  */
 
-import type { Client, InStatement } from "@libsql/client";
-import { getDb } from "@/lib/db";
+import type { InStatement } from "@libsql/client";
+import type { Db } from "@/lib/d1";
+import { getDb, schemaManaged } from "@/lib/db";
 import { entitlementWriteBatch } from "@/lib/entitlements";
 import type { Lang } from "@/lib/langs";
 import { POLICY_VERSION } from "@/lib/policy";
@@ -92,10 +93,10 @@ export const LEDGER_GUARDS = [
 ];
 
 const globalForFeedback = globalThis as unknown as {
-  __judgeFeedbackReady?: { client: Client; ready: Promise<void> };
+  __judgeFeedbackReady?: { client: Db; ready: Promise<void> };
 };
 
-async function addColumns(client: Client): Promise<void> {
+async function addColumns(client: Db): Promise<void> {
   const added: [string, string, string][] = [
     ["verdict_ratings", "training_ok_at", "TEXT"],
     ["verdict_ratings", "training_withdrawn_at", "TEXT"],
@@ -116,6 +117,7 @@ async function addColumns(client: Client): Promise<void> {
 
 /** Creates the consent and rating tables once per process. Idempotent. */
 export async function ensureFeedbackTables(): Promise<void> {
+  if (schemaManaged()) return;
   const client = await getDb();
   const cached = globalForFeedback.__judgeFeedbackReady;
   if (cached?.client === client) return cached.ready;

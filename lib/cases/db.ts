@@ -14,9 +14,10 @@
  * Timestamps are ISO-8601 UTC strings, so string order is time order.
  */
 
-import type { Client, Row } from "@libsql/client";
+import type { Row } from "@libsql/client";
+import type { Db } from "@/lib/d1";
 import type { CaseMode, CaseStatus, PartyLetter, AppealStatus } from "@/lib/case-types";
-import { getDb } from "@/lib/db";
+import { getDb, schemaManaged } from "@/lib/db";
 import { PARTY_CHECK, PARTY_CHECK_WIDE, rebuildTable } from "@/lib/db-rebuild";
 import { ensureEntitlementTables } from "@/lib/entitlements";
 import type { KnownPerson } from "@/lib/evidence";
@@ -157,12 +158,13 @@ const SCHEMA = [
 ];
 
 const globalForCases = globalThis as unknown as {
-  __verdictCasesReady?: { client: Client; ready: Promise<void> };
+  __verdictCasesReady?: { client: Db; ready: Promise<void> };
 };
 
 /** Creates the case tables once per process (per database client). The
  * entitlement tables come first: case writes use premium_usage.hold_until. */
 export async function ensureCaseTables(): Promise<void> {
+  if (schemaManaged()) return;
   await ensureEntitlementTables();
   const client = await getDb();
   const cached = globalForCases.__verdictCasesReady;
@@ -187,7 +189,7 @@ export async function ensureCaseTables(): Promise<void> {
 
 /** Adds cases.respondent_claim_nonce to tables created before it existed.
  * A concurrent process adding it first is fine. */
-async function addClaimColumn(db: Client): Promise<void> {
+async function addClaimColumn(db: Db): Promise<void> {
   const info = await db.execute("PRAGMA table_info(cases)");
   if (info.rows.some((r) => String(r.name) === "respondent_claim_nonce")) return;
   try {
@@ -199,7 +201,7 @@ async function addClaimColumn(db: Client): Promise<void> {
 }
 
 /** Adds case_seats.seen_at to seat tables created before it existed. */
-async function addSeatSeenColumn(db: Client): Promise<void> {
+async function addSeatSeenColumn(db: Db): Promise<void> {
   const info = await db.execute("PRAGMA table_info(case_seats)");
   if (info.rows.some((r) => String(r.name) === "seen_at")) return;
   try {
@@ -234,7 +236,7 @@ const ADDED_COLUMNS: [string, string][] = [
   ["legal_hold", "INTEGER NOT NULL DEFAULT 0"],
 ];
 
-async function addCaseColumns(db: Client): Promise<void> {
+async function addCaseColumns(db: Db): Promise<void> {
   const info = await db.execute("PRAGMA table_info(cases)");
   const have = new Set(info.rows.map((r) => String(r.name)));
   for (const [name, type] of ADDED_COLUMNS) {
@@ -252,7 +254,7 @@ async function addCaseColumns(db: Client): Promise<void> {
  * tr in cases.lang. SQLite cannot drop a CHECK, so the table is rebuilt once
  * from its own definition minus that CHECK, every row copied as is, and its
  * indexes recreated. The language is validated before it is stored. */
-async function dropLangCheck(db: Client): Promise<void> {
+async function dropLangCheck(db: Db): Promise<void> {
   const table = await db.execute("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'cases'");
   const sql = String(table.rows[0]?.sql ?? "");
   const check = /\s*CHECK\s*\(\s*lang\s+IN\s*\(\s*'en'\s*,\s*'tr'\s*\)\s*\)/i;
@@ -273,14 +275,14 @@ async function dropLangCheck(db: Client): Promise<void> {
 }
 
 /** Tables created when a case had two sides allowed only a and b in `party`. */
-async function widenPartyChecks(db: Client): Promise<void> {
+async function widenPartyChecks(db: Db): Promise<void> {
   for (const table of ["case_sides", "case_appeals", "case_evidence"]) {
     await rebuildTable(db, table, PARTY_CHECK, PARTY_CHECK_WIDE);
   }
 }
 
 /** The migrated client, for reads. */
-export async function caseDb(): Promise<Client> {
+export async function caseDb(): Promise<Db> {
   await ensureCaseTables();
   return getDb();
 }

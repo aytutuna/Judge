@@ -1,4 +1,6 @@
 import { createClient, type Client } from "@libsql/client";
+import { d1Client, type Db } from "./d1";
+import { workerEnv } from "./worker-env";
 import type { Lang } from "./i18n";
 import { signal } from "./signals";
 import { VerdictResult } from "./types";
@@ -23,6 +25,7 @@ function createDb(): Client {
 // Reuse one client (and its schema check) across Next.js dev hot reloads and
 // warm serverless invocations.
 const globalForDb = globalThis as unknown as {
+  __verdictD1?: Db;
   __verdictLibsql?: Client;
   __verdictLibsqlReady?: Promise<void>;
 };
@@ -35,6 +38,12 @@ const ADDED_VERDICT_COLUMNS: [string, string][] = [
   ["erased_at", "TEXT"],
   ["legal_hold", "INTEGER NOT NULL DEFAULT 0"],
 ];
+
+/** On Workers the schema comes from migrations/ (wrangler d1 migrations), so
+ * the ensure*Tables functions have nothing to do. */
+export function schemaManaged(): boolean {
+  return Boolean(workerEnv()?.DB);
+}
 
 async function migrate(client: Client): Promise<void> {
   // WAL only applies to a local file; remote libSQL manages its own journal.
@@ -68,7 +77,9 @@ async function migrate(client: Client): Promise<void> {
   }
 }
 
-async function db(): Promise<Client> {
+async function db(): Promise<Db> {
+  const d1 = workerEnv()?.DB;
+  if (d1) return (globalForDb.__verdictD1 ??= d1Client(d1));
   const client = (globalForDb.__verdictLibsql ??= createDb());
   globalForDb.__verdictLibsqlReady ??= migrate(client).catch((e: unknown) => {
     // Let the next request retry instead of caching the failure forever.
@@ -81,7 +92,7 @@ async function db(): Promise<Client> {
 
 /** The shared, migrated client, for modules that keep their own tables in the
  * same database (accounts, entitlements). */
-export async function getDb(): Promise<Client> {
+export async function getDb(): Promise<Db> {
   return db();
 }
 

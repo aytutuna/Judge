@@ -13,8 +13,8 @@
  * Times are Unix milliseconds.
  */
 
-import type { Client } from "@libsql/client";
-import { getDb } from "@/lib/db";
+import type { Db } from "@/lib/d1";
+import { getDb, schemaManaged } from "@/lib/db";
 import { signal } from "@/lib/signals";
 
 const DAY_MS = 24 * 60 * 60_000;
@@ -55,11 +55,12 @@ const SCHEMA = [
 ];
 
 const globalForAnalytics = globalThis as unknown as {
-  __judgeAnalyticsReady?: { client: Client; ready: Promise<void> };
+  __judgeAnalyticsReady?: { client: Db; ready: Promise<void> };
   __judgeEventsPruner?: boolean;
 };
 
 export async function ensureAnalyticsTables(): Promise<void> {
+  if (schemaManaged()) return;
   const client = await getDb();
   const cached = globalForAnalytics.__judgeAnalyticsReady;
   if (cached?.client === client) return cached.ready;
@@ -74,7 +75,7 @@ export async function ensureAnalyticsTables(): Promise<void> {
   return ready;
 }
 
-export async function analyticsDb(): Promise<Client> {
+export async function analyticsDb(): Promise<Db> {
   await ensureAnalyticsTables();
   return getDb();
 }

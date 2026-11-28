@@ -20,10 +20,11 @@
  */
 
 import type { PartyLetter as CaseParty } from "@/lib/case-types";
-import type { Client, Row } from "@libsql/client";
+import type { Row } from "@libsql/client";
+import type { Db } from "@/lib/d1";
 import { teenSql } from "@/lib/age";
 import { ensureCaseTables } from "@/lib/cases/db";
-import { getDb } from "@/lib/db";
+import { getDb, schemaManaged } from "@/lib/db";
 import { ensureFeedbackTables } from "@/lib/feedback/db";
 import { PARTY_CHECK, PARTY_CHECK_WIDE, rebuildTable } from "@/lib/db-rebuild";
 import type { RemovalReason } from "@/lib/originals-types";
@@ -118,7 +119,7 @@ export function userBackfillStatements(userId: string, nowIso: string) {
 }
 
 const globalForOriginals = globalThis as unknown as {
-  __judgeOriginalsReady?: { client: Client; ready: Promise<void> };
+  __judgeOriginalsReady?: { client: Db; ready: Promise<void> };
 };
 
 /** Columns added to verdict_meta after its first version. The last five are
@@ -135,7 +136,7 @@ const ADDED_META_COLUMNS: [string, string][] = [
   ["sides", "INTEGER"],
 ];
 
-async function addMetaColumns(db: Client): Promise<void> {
+async function addMetaColumns(db: Db): Promise<void> {
   const info = await db.execute("PRAGMA table_info(verdict_meta)");
   const have = new Set(info.rows.map((r) => String(r.name)));
   for (const [name, type] of ADDED_META_COLUMNS) {
@@ -151,7 +152,7 @@ async function addMetaColumns(db: Client): Promise<void> {
 
 /** Tables created when a case had two sides: party was a or b, and a removal
  * could only be the owner, party A or party B. */
-async function widenChecks(db: Client): Promise<void> {
+async function widenChecks(db: Db): Promise<void> {
   await rebuildTable(db, "originals", PARTY_CHECK, PARTY_CHECK_WIDE);
   await rebuildTable(db, "verdict_meta", /'party_b'\s*,\s*'account_deleted'/, "'party_b','party_c','party_d','account_deleted'");
 }
@@ -159,6 +160,7 @@ async function widenChecks(db: Client): Promise<void> {
 /** Creates the case tables (with their added columns), the originals
  * tables, and runs the backfills, once per process. Idempotent. */
 export async function ensureOriginalsTables(): Promise<void> {
+  if (schemaManaged()) return;
   await ensureCaseTables();
   await ensureFeedbackTables();
   const client = await getDb();
@@ -189,7 +191,7 @@ export async function ensureOriginalsTables(): Promise<void> {
   return ready;
 }
 
-export async function originalsDb(): Promise<Client> {
+export async function originalsDb(): Promise<Db> {
   await ensureOriginalsTables();
   return getDb();
 }

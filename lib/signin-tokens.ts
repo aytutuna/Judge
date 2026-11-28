@@ -21,9 +21,9 @@
  * stripped), so there is no Google token to keep or revoke.
  */
 
-import type { Client } from "@libsql/client";
+import type { Db } from "@/lib/d1";
 import { appleClientSecret, appleEnv } from "./apple-secret";
-import { getDb } from "./db";
+import { getDb, schemaManaged } from "./db";
 import { entitlementWriteBatch } from "./entitlements";
 import { aad, openJson, originalsKeyState, sealJson } from "./originals/crypto";
 
@@ -55,12 +55,13 @@ const SCHEMA = `CREATE TABLE IF NOT EXISTS signin_tokens (
 )`;
 
 const globalForTokens = globalThis as unknown as {
-  __verdictSignInTokensReady?: { client: Client; ready: Promise<void> };
+  __verdictSignInTokensReady?: { client: Db; ready: Promise<void> };
 };
 
 /** Creates the token table once per process (per database client). */
-export async function ensureSignInTokenTables(): Promise<Client> {
+export async function ensureSignInTokenTables(): Promise<Db> {
   const client = await getDb();
+  if (schemaManaged()) return client;
   const cached = globalForTokens.__verdictSignInTokensReady;
   if (cached?.client !== client) {
     const ready = client.execute(SCHEMA).then(

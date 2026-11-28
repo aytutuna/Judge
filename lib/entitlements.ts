@@ -17,9 +17,10 @@
  */
 
 import { nanoid } from "nanoid";
-import type { Client, InStatement, InValue, ResultSet } from "@libsql/client";
+import type { InStatement, InValue, ResultSet } from "@libsql/client";
+import type { Db } from "@/lib/d1";
 import type { Entitlement, GrantSource, PremiumBlock, SubscriptionView } from "./account-types";
-import { getDb } from "./db";
+import { getDb, schemaManaged } from "./db";
 import { PRICING } from "./pricing";
 import { signal } from "./signals";
 
@@ -118,13 +119,14 @@ const SCHEMA = [
 ];
 
 const globalForEntitlements = globalThis as unknown as {
-  __verdictEntitlementsReady?: { client: Client; ready: Promise<void> };
+  __verdictEntitlementsReady?: { client: Db; ready: Promise<void> };
   __verdictEntitlementsChain?: Promise<unknown>;
   __verdictEntitlementsLastSweep?: number;
 };
 
 /** Creates the entitlement tables once per process (per database client). */
 export async function ensureEntitlementTables(): Promise<void> {
+  if (schemaManaged()) return;
   const client = await getDb();
   const cached = globalForEntitlements.__verdictEntitlementsReady;
   if (cached?.client === client) return cached.ready;
@@ -148,7 +150,7 @@ export async function ensureEntitlementTables(): Promise<void> {
  * (a reservation held past the usual 10-minute crash window, e.g. a
  * two-sided case waiting for its answer) and welcome_claims.age_blocked_at.
  * A concurrent process adding it first is fine. */
-async function addColumn(db: Client, table: string, column: string): Promise<void> {
+async function addColumn(db: Db, table: string, column: string): Promise<void> {
   const info = await db.execute(`PRAGMA table_info(${table})`);
   if (info.rows.some((r) => String(r.name) === column)) return;
   try {
@@ -159,7 +161,7 @@ async function addColumn(db: Client, table: string, column: string): Promise<voi
   }
 }
 
-async function client(): Promise<Client> {
+async function client(): Promise<Db> {
   await ensureEntitlementTables();
   return getDb();
 }
@@ -310,7 +312,7 @@ type SubRow = {
 
 /** Active subscriptions covering `now`, usable ones first, then the latest
  * period end. */
-async function activeSubscriptions(db: Client, userId: string, nowIso: string): Promise<SubRow[]> {
+async function activeSubscriptions(db: Db, userId: string, nowIso: string): Promise<SubRow[]> {
   const rs = await db.execute({
     sql: `SELECT id, source, product_id, period_start, period_end, will_renew, used_in_period, cap
           FROM subscriptions
@@ -379,7 +381,7 @@ export type ReserveResult =
   | { ok: false; code: "replay"; verdictId: string };
 
 async function existingByKey(
-  db: Client,
+  db: Db,
   userId: string,
   key: string,
 ): Promise<{ status: string; verdictId: string | null; bodyHash: string | null } | null> {

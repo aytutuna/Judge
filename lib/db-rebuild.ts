@@ -1,4 +1,4 @@
-import type { Client } from "@libsql/client";
+import type { Db } from "@/lib/d1";
 
 /**
  * SQLite cannot change a CHECK, so the table is rebuilt from its own
@@ -8,7 +8,7 @@ import type { Client } from "@libsql/client";
  * matches `pattern` is left alone, so running it again changes nothing.
  * Returns whether it rebuilt.
  */
-export async function rebuildTable(db: Client, table: string, pattern: RegExp, replacement: string): Promise<boolean> {
+export async function rebuildTable(db: Db, table: string, pattern: RegExp, replacement: string): Promise<boolean> {
   const found = await db.execute({ sql: "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = ?", args: [table] });
   const sql = String(found.rows[0]?.sql ?? "");
   if (!pattern.test(sql)) return false;

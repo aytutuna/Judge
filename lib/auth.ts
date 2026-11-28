@@ -14,6 +14,7 @@
 
 import { createHash, createHmac } from "node:crypto";
 import { LibsqlDialect } from "@libsql/kysely-libsql";
+import type { Client } from "@libsql/client";
 import { betterAuth, type Auth, type AuthContext, type BetterAuthOptions, type BetterAuthPlugin } from "better-auth";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { makeSignature } from "better-auth/crypto";
@@ -22,7 +23,8 @@ import { bearer, emailOTP } from "better-auth/plugins";
 import type { AgeState, AuthProviders, Viewer } from "./account-types";
 import { ageRefusal, ageStateOf, keptBlock, needsConfirmed, requestPath, type AgeRefusal } from "./age";
 import { APPLE_SECRET_REFRESH_MS, appleClientSecret, appleEnv } from "./apple-secret";
-import { getDb } from "./db";
+import { getDb, schemaManaged } from "./db";
+import { workerEnv } from "./worker-env";
 import { emailConfigured, langFromRequestUrl, sendSignInCodeEmail } from "./email";
 import { ensureEntitlementTables, grantMissedWelcomeCredit, grantWelcomeCredit } from "./entitlements";
 import { clientIp } from "./client-ip";
@@ -367,7 +369,7 @@ function buildOptions(env: Env, secret: string, client: Awaited<ReturnType<typeo
         ? [origin]
         : []
       : [...(origin ? [origin] : []), "http://localhost:*", "http://127.0.0.1:*", "http://[::1]:*"],
-    database: { dialect: new LibsqlDialect({ client }), type: "sqlite" },
+    database: workerEnv()?.DB ?? { dialect: new LibsqlDialect({ client: client as Client }), type: "sqlite" },
     // Browser sign-in errors that carry no callback of their own (lost
     // state, a bad callback URL) land on the sign-in page.
     onAPIError: { errorURL: "/signin" },
@@ -639,8 +641,10 @@ async function build(env: Env, key: string): Promise<Built> {
   const client = await getDb();
   const { options, appleIssuedAtMs } = buildOptions(env, secret, client);
   // Tables first, so the instance never starts against a missing schema.
-  const { runMigrations } = await getMigrations(options);
-  await runMigrations();
+  if (!schemaManaged()) {
+    const { runMigrations } = await getMigrations(options);
+    await runMigrations();
+  }
   await ensureEntitlementTables();
   return { key, auth: betterAuth(options), appleIssuedAtMs };
 }

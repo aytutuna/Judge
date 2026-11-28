@@ -18,8 +18,9 @@
  * client polls a stale job.
  */
 
-import type { Client, InStatement, ResultSet, Row } from "@libsql/client";
-import { getDb } from "@/lib/db";
+import type { InStatement, ResultSet, Row } from "@libsql/client";
+import type { Db } from "@/lib/d1";
+import { getDb, schemaManaged } from "@/lib/db";
 import {
   consumeStatement,
   ensureEntitlementTables,
@@ -64,7 +65,7 @@ const SCHEMA = [
 ];
 
 const globalForJobs = globalThis as unknown as {
-  __verdictJobsReady?: { client: Client; ready: Promise<void> };
+  __verdictJobsReady?: { client: Db; ready: Promise<void> };
   __verdictJobsLastSweep?: number;
   __verdictJobsSweeper?: boolean;
 };
@@ -72,6 +73,7 @@ const globalForJobs = globalThis as unknown as {
 /** Creates the job table (after the entitlement and originals tables its
  * batches touch), once per process. Idempotent. */
 export async function ensureVerdictJobTables(): Promise<void> {
+  if (schemaManaged()) return;
   await ensureEntitlementTables();
   await ensureOriginalsTables();
   const client = await getDb();
@@ -88,7 +90,7 @@ export async function ensureVerdictJobTables(): Promise<void> {
   return ready;
 }
 
-async function jobsDb(): Promise<Client> {
+async function jobsDb(): Promise<Db> {
   await ensureVerdictJobTables();
   return getDb();
 }
