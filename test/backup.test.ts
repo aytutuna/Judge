@@ -83,6 +83,31 @@ describe("backups", { timeout: 60_000 }, () => {
     await expect(openBackup(stored, "wrong")).rejects.toThrow();
   });
 
+  it("restores cleanly when a user signs up while the dump runs: the account row whose user was missed is dropped", async () => {
+    const source = await filled();
+    let signedUp = false;
+    const racing = {
+      execute: async (stmt: string | { sql: string; args?: never[] }) => {
+        const sql = typeof stmt === "string" ? stmt : stmt.sql;
+        if (!signedUp && sql.includes('FROM "account"')) {
+          signedUp = true;
+          await source.execute("INSERT INTO user (id, name, email, emailVerified, createdAt, updatedAt) VALUES ('u2', 'M', 'm@example.test', 1, 1700000000001, 1700000000001)");
+          await source.execute("INSERT INTO account (id, accountId, providerId, userId, createdAt, updatedAt) VALUES ('a2', 'y', 'email', 'u2', 1700000000001, 1700000000001)");
+        }
+        return source.execute(stmt);
+      },
+      batch: source.batch.bind(source),
+    };
+    const bucket = fakeBucket();
+    const done = await runBackup(env(bucket), racing as never, new Date("2026-12-01T03:30:00Z"));
+    expect(signedUp).toBe(true);
+    const restored = scratch();
+    await restored.executeMultiple(await openBackup(bucket.objects.get(done.key)!, PASS));
+    expect((await restored.execute("SELECT id FROM account ORDER BY id")).rows.map((r) => r.id)).toEqual(["a1"]);
+    await restored.execute("PRAGMA foreign_keys = on");
+    expect((await restored.execute("PRAGMA foreign_key_check")).rows).toEqual([]);
+  });
+
   it("pages through a table of more rows than one page holds", async () => {
     const source = scratch();
     await source.execute("CREATE TABLE t (id TEXT PRIMARY KEY, v TEXT)");
@@ -125,5 +150,6 @@ describe("backups", { timeout: 60_000 }, () => {
     expect(literal("a'b")).toBe("'a''b'");
     expect(literal(null)).toBe("NULL");
     expect(literal(5)).toBe("5");
+    expect(() => literal(new Uint8Array([1]))).toThrow(/BLOB/);
   });
 });
