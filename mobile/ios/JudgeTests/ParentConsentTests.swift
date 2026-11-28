@@ -230,6 +230,93 @@ final class ParentConsentTests: XCTestCase {
     }
 
     @MainActor
+    func testAMovedRequestKeepsItsReasonAfterTheReload() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON(changes: 1)))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        for code in ["parent_limit", "parent_conflict"] {
+            router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(409, ["error": "x", "code": code]))
+            account.parent.email = "mum@example.com"
+            await account.parent.send()
+            XCTAssertEqual(account.parent.error?.code, code)
+            XCTAssertEqual(account.parent.view?.changesLeft, 1, "the request was read again")
+        }
+    }
+
+    @MainActor
+    func testAPollKeepsTheErrorOfAFailedSendUntilTheRequestChanges() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON()))
+        router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(400, ["error": "x", "code": "parent_email"]))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        await account.parent.load()
+        account.parent.email = "me@example.com"
+        await account.parent.send()
+        XCTAssertEqual(account.parent.error?.code, "parent_email")
+        await account.parent.load()
+        XCTAssertEqual(account.parent.error?.code, "parent_email", "the same request, the same reason")
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON(resends: 1)))
+        await account.parent.load()
+        XCTAssertNil(account.parent.error, "the request moved, the old reason no longer fits")
+    }
+
+    @MainActor
+    func testAReadThatBeganBeforeASendIsDropped() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON(resends: 3)))
+        router.on("POST", "/api/v1/me/parent/resend", try PremiumFixtures.json(200, parentJSON(resends: 2)))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        let reading = Task { await account.parent.load() }
+        await Task.yield()
+        await account.parent.resend()
+        await reading.value
+        XCTAssertEqual(account.parent.view?.resendsLeft, 2)
+    }
+
+    @MainActor
+    func testAnExpiredSessionOnASendSignsOut() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(401, ["error": "x", "code": "signin_required"]))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        account.parent.email = "mum@example.com"
+        await account.parent.send()
+        XCTAssertFalse(account.isSignedIn)
+        XCTAssertNil(account.parent.view)
+        XCTAssertNil(account.parent.error)
+    }
+
+    @MainActor
+    func testTheChangeFormClosesWhenNoChangesAreLeft() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON(changes: 0)))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        account.parent.startChange()
+        XCTAssertTrue(account.parent.changing)
+        await account.parent.load()
+        XCTAssertFalse(account.parent.changing)
+    }
+
+    @MainActor
+    func testAFailedFirstReadShowsItsErrorUntilItWorks() async throws {
+        router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(503, ["error": "x", "code": "unavailable"]))
+        let (account, _) = makeAccount()
+        await account.refresh()
+        await account.parent.load()
+        XCTAssertEqual(account.parent.loadError?.code, "unavailable")
+        XCTAssertEqual(ParentModel.screen(state: .pending, view: account.parent.view, changing: false), .loading)
+        router.on("GET", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON()))
+        await account.parent.load()
+        XCTAssertNil(account.parent.loadError)
+        XCTAssertNotNil(account.parent.view)
+    }
+
+    @MainActor
     func testTheParentMailGoesOutInTheAppLanguage() async throws {
         router.on("GET", "/api/v1/me", try me(state(parent: "pending")))
         router.on("POST", "/api/v1/me/parent", try PremiumFixtures.json(200, parentJSON()))
