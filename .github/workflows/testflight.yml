@@ -1,5 +1,6 @@
 # Archives the iOS app and uploads it to TestFlight. Run by hand from main;
-# the commit must have a green Mobile run. Signs with the Apple Distribution
+# the commit must have a green Mobile run (push, or run Mobile by hand on main for a commit the
+# path filter skipped). Signs with the Apple Distribution
 # certificate and the "Judge App Store CI" profile from the repo secrets; the
 # App Store Connect API key is only used for the upload.
 name: TestFlight
