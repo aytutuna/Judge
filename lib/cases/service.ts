@@ -474,8 +474,17 @@ export async function respondToCase(input: RespondInput): Promise<RespondResult>
     }
     const fresh = (await getCase(row.id)) ?? row;
     if (won) {
-      if (ownerWrote) scheduleJudging(() => runCaseJudging(row.id, token, input.origin, startedAt));
-      else scheduleJudging(() => notifyOwnerSideWaiting(fresh, input.origin));
+      if (ownerWrote) {
+        scheduleJudging(
+          () => runCaseJudging(row.id, token, input.origin, startedAt),
+          { name: "caseJudging", args: [row.id, token, input.origin, startedAt] },
+        );
+      } else {
+        scheduleJudging(
+          () => notifyOwnerSideWaiting(fresh, input.origin),
+          { name: "ownerNotice", args: [fresh, input.origin] },
+        );
+      }
       return { ok: true, row: fresh, nameMap: sub.nameMap, claim: claimFor(fresh), replayed: false };
     }
     if (fresh.removedAt) return { ok: false, code: "removed" };
@@ -608,7 +617,12 @@ export async function writeOwnerSide(input: WriteSideInput): Promise<WriteSideRe
     }
     const fresh = (await getCase(row.id)) ?? row;
     if (won) {
-      if (answered) scheduleJudging(() => runCaseJudging(row.id, token, input.origin, startedAt));
+      if (answered) {
+        scheduleJudging(
+          () => runCaseJudging(row.id, token, input.origin, startedAt),
+          { name: "caseJudging", args: [row.id, token, input.origin, startedAt] },
+        );
+      }
       return { ok: true, row: fresh, nameMap: sub.nameMap, replayed: false };
     }
     if (fresh.removedAt) return { ok: false, code: "removed" };
@@ -668,7 +682,10 @@ export async function judgeNow(input: {
         ...(row.reservationId ? [holdStatement(row.reservationId, nowIso, guard)] : []),
       ]);
       if (rs[0].rowsAffected === 1) {
-        scheduleJudging(() => runCaseJudging(row.id, token, input.origin));
+        scheduleJudging(
+          () => runCaseJudging(row.id, token, input.origin),
+          { name: "caseJudging", args: [row.id, token, input.origin] },
+        );
         return { ok: true, row: (await getCase(row.id)) ?? row, started: true };
       }
       // The respondent answered first, or the invite just expired.
@@ -712,7 +729,10 @@ export async function judgeNow(input: {
       if (s === "judging" || s === "judged") return { ok: true, row: fresh, started: false };
       return { ok: false, code: "unavailable" };
     }
-    scheduleJudging(() => runCaseJudging(row.id, token, input.origin));
+    scheduleJudging(
+      () => runCaseJudging(row.id, token, input.origin),
+      { name: "caseJudging", args: [row.id, token, input.origin] },
+    );
     return { ok: true, row: (await getCase(row.id)) ?? row, started: true };
   }
   return { ok: false, code: "case_closed" };
@@ -785,7 +805,10 @@ async function judgeAnswered(
   if (!won && reservationId) await refundQuietly(reservationId);
   const fresh = (await getCase(row.id)) ?? row;
   if (won) {
-    scheduleJudging(() => runCaseJudging(row.id, token, origin));
+    scheduleJudging(
+      () => runCaseJudging(row.id, token, origin),
+      { name: "caseJudging", args: [row.id, token, origin] },
+    );
     return { ok: true, row: fresh, started: true };
   }
   // Another answer arrived, or the case moved on: the owner looks again.
@@ -1092,7 +1115,10 @@ export async function submitAppeal(input: AppealInput): Promise<AppealResult> {
   }
   const appeal = await getAppeal(row.id, party);
   if (appeal && appeal.attemptToken === attemptToken) {
-    scheduleJudging(() => runAppealJudging(row.id, appeal.id, attemptToken, startedAt));
+    scheduleJudging(
+      () => runAppealJudging(row.id, appeal.id, attemptToken, startedAt),
+      { name: "appealJudging", args: [row.id, appeal.id, attemptToken, startedAt] },
+    );
   }
   return { ok: true, row: (await getCase(row.id)) ?? row, nameMap: sub.nameMap, replayed: false };
 }

@@ -6,6 +6,8 @@ export type WorkerEnv = {
   ASSETS: Fetcher;
   BACKUPS: R2Bucket;
   RATE_LIMITER: LimiterNamespace;
+  JOBS: RunnerNamespace;
+  WORKER_SELF_REFERENCE: Fetcher;
 };
 /** What the app calls on the RateLimiter object (cloudflare/rate-limiter.ts). */
 export type LimiterStub = {
@@ -13,5 +15,10 @@ export type LimiterStub = {
     windows: { limit: number; windowMs: number }[],
     now?: number,
   ): Promise<{ ok: true } | { ok: false; resetAtMs: number }>;
+};
+/** What the app calls on the JobRunner object (cloudflare/job-runner.ts). */
+export type RunnerNamespace = {
+  idFromName(name: string): unknown;
+  get(id: unknown): { enqueue(job: { name: string; args: unknown[] }): Promise<void> };
 };
 export type LimiterNamespace = { idFromName(name: string): unknown; get(id: unknown): LimiterStub };

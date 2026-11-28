@@ -311,7 +311,8 @@ export async function submitVerdictAppeal(input: VerdictAppealInput): Promise<Ve
   }
 
   const original = originalPayload(input.rawText ?? input.text, input.evidence, sub);
-  scheduleJudging(() => runVerdictAppeal({ id, verdictId, userId, reservationId, original, startedAt, anonymizeUsage }));
+  const run = { id, verdictId, userId, reservationId, original, startedAt, anonymizeUsage };
+  scheduleJudging(() => runVerdictAppeal(run), { name: "verdictAppeal", args: [run] });
   const appeal = (await listVerdictAppeals(verdictId)).find((a) => a.id === id);
   if (!appeal) return { ok: false, code: "unavailable" };
   return { ok: true, appeal, nameMap: sub.nameMap, replayed: false };

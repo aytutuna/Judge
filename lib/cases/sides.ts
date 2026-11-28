@@ -186,8 +186,17 @@ export async function respondToSide(input: RespondSideInput): Promise<RespondSid
     }
     const fresh = (await getCase(row.id)) ?? row;
     if (won) {
-      if (complete) scheduleJudging(() => runCaseJudging(row.id, token, input.origin, startedAt));
-      else if (!ownerWrote && present === 0) scheduleJudging(() => notifyOwnerSideWaiting(fresh, input.origin));
+      if (complete) {
+        scheduleJudging(
+          () => runCaseJudging(row.id, token, input.origin, startedAt),
+          { name: "caseJudging", args: [row.id, token, input.origin, startedAt] },
+        );
+      } else if (!ownerWrote && present === 0) {
+        scheduleJudging(
+          () => notifyOwnerSideWaiting(fresh, input.origin),
+          { name: "ownerNotice", args: [fresh, input.origin] },
+        );
+      }
       const claim = claimFor(fresh, await getInvites(row.id), party);
       return { ok: true, row: fresh, nameMap: sub.nameMap, claim, replayed: false };
     }

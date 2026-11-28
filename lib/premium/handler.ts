@@ -523,26 +523,25 @@ async function startPremiumJob(p: {
   }
 
   const [{ runInBackground }, { runPremiumJob }] = await Promise.all([import("@/lib/background"), import("./async")]);
-  runInBackground("premium", () =>
-    runPremiumJob({
-      id,
-      userId,
-      reservationId: p.reservationId,
-      teen: p.teen,
-      prepared: prepared.prepared,
-      lang: data.lang,
-      venue: parseVenue(data.venue),
-      original: {
-        v: 1,
-        text: rawArgumentOf(p.rawBody, data.argument),
-        clarifications: rawClarificationsOf(p.rawBody, data.clarifications),
-        ...sealedEvidence(evidence, otherEvidence),
-        nameMap: prepared.prepared.nameMap,
-      },
-      startedAt: p.startedAt,
-      anonymizeUsage: anonymized.usage,
-    }),
-  );
+  const job = {
+    id,
+    userId,
+    reservationId: p.reservationId,
+    teen: p.teen,
+    prepared: prepared.prepared,
+    lang: data.lang,
+    venue: parseVenue(data.venue),
+    original: {
+      v: 1 as const,
+      text: rawArgumentOf(p.rawBody, data.argument),
+      clarifications: rawClarificationsOf(p.rawBody, data.clarifications),
+      ...sealedEvidence(evidence, otherEvidence),
+      nameMap: prepared.prepared.nameMap,
+    },
+    startedAt: p.startedAt,
+    anonymizeUsage: anonymized.usage,
+  };
+  runInBackground("premium", () => runPremiumJob(job), { name: "premium", args: [job] });
 
   const entitlement = await entitlementOrNull(userId);
   const body: VerdictAcceptedResponse = {
