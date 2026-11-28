@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.RadioButton
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -426,7 +427,7 @@ fun AgeParentScreen(
         }
         if (error != null) ErrorNote(Errors.message(error, s, lang))
         when {
-            declined -> Unit
+            declined && view != null -> Unit
             view == null -> TextAction(s.appRetry, onClick = onReload, color = Palette.ink2, modifier = Modifier.padding(top = 14.dp).testTag(AgeTags.PARENT_RELOAD))
             revoked || !sent || changing -> {
                 Text(s.ageParentEmail, style = JudgeType.slotTitle, modifier = Modifier.padding(top = 20.dp, bottom = 8.dp))
@@ -503,7 +504,11 @@ private fun CountryField(code: String?, enabled: Boolean, onPick: (String) -> Un
             .clip(JudgeShapes.field)
             .background(Palette.paper)
             .border(1.dp, Palette.line2, JudgeShapes.field)
-            .semantics { role = Role.DropdownList }
+            .semantics {
+                role = Role.DropdownList
+                contentDescription = s.ageWhere
+                code?.let { stateDescription = Countries.name(it, locale) }
+            }
             .clickable(enabled = enabled) { open = true }
             .padding(horizontal = 16.dp, vertical = 14.dp)
             .testTag(AgeTags.COUNTRY),

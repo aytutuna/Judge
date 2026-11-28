@@ -1,5 +1,6 @@
 package com.okjudge.judge.ui.age
 
+import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -120,6 +121,20 @@ class AgeParentScreensTest {
         compose.onAllNodesWithTag(AgeTags.PARENT_RESEND).assertCountEquals(0)
         compose.onNodeWithTag(AgeTags.SIGN_OUT).assertExists()
         compose.onNodeWithTag(AgeTags.DELETE).assertExists()
+    }
+
+    @Test
+    fun declined_beforeTheViewLoads_offersARetry() {
+        parent(status = "declined", view = null)
+        compose.onNodeWithTag(AgeTags.PARENT_DECLINED).assertExists()
+        compose.onNodeWithTag(AgeTags.PARENT_RELOAD).assertExists()
+    }
+
+    @Test
+    fun countryField_hasANameAndTheChosenCountry() {
+        date(hint = AgeHint(country = "DE"))
+        enterBirthDate(compose, yearsAgo(14))
+        compose.onNodeWithTag(AgeTags.COUNTRY).assertContentDescriptionEquals(s.ageWhere)
     }
 
     @Test
