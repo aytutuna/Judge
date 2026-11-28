@@ -99,7 +99,8 @@ jobs:
           dry-run: ${{ inputs.dry_run }}
 
       - name: Upload dSYMs to Sentry
-        # The build is already on TestFlight; missing symbols shouldn't fail the run.
+        # The build is already on TestFlight (skipped in a dry run, where nothing was sent); missing
+        # symbols shouldn't fail the run.
         continue-on-error: true
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

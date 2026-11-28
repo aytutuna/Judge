@@ -4,10 +4,12 @@
 name: Mobile
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - "mobile/**"
       - ".github/workflows/mobile.yml"
+      - ".github/workflows/testflight.yml"
       - "lib/**"
       - "components/scene/**"
       - "components/court/**"
