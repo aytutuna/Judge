@@ -2,7 +2,7 @@
 // bundles with a second copy of Next (10 MB); on Workers cloudflare/worker.ts
 // does its job, so the file is set aside for the build.
 import { spawnSync } from "node:child_process";
-import { existsSync, renameSync } from "node:fs";
+import { cpSync, existsSync, renameSync } from "node:fs";
 
 const PROXY = "proxy.ts";
 const ASIDE = "proxy.ts.off";
@@ -15,4 +15,6 @@ try {
 } finally {
   renameSync(ASIDE, PROXY);
 }
+// Link-preview cards read their fonts and mark from the static assets on Workers.
+if (status === 0) cpSync("assets", ".open-next/assets/_og", { recursive: true });
 process.exit(status);

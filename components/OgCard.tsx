@@ -4,18 +4,30 @@
  * colours and the site's own faces, loaded from committed OFL TTFs (static
  * instances with latin-ext, so Turkish renders). No emoji: Satori would
  * fetch emoji images from a CDN at render time, which is slow and can fail.
- * Server-only (reads the font files from disk).
+ * Server-only (reads the font files from disk; on Workers from the static
+ * assets, where scripts/cf-build.mjs copies assets/ to _og/).
  */
 
-import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { PALETTE, PALETTE_ALPHA, sideColors } from "@/lib/palette";
+import { workerEnv } from "@/lib/worker-env";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
-// The rounded Stone plate with the 3D mark, 4x its 64px slot.
-const MARK = `data:image/png;base64,${readFileSync(join(process.cwd(), "assets/og-mark.png")).toString("base64")}`;
+// The rounded Stone plate with the 3D mark, 4x its 64px slot. Set by ogFonts(),
+// which every card's route awaits before it renders.
+let mark = "";
+
+async function asset(name: string): Promise<Buffer> {
+  const env = workerEnv();
+  if (env) {
+    const res = await env.ASSETS.fetch(`https://assets.internal/_og/${name}`);
+    if (!res.ok) throw new Error(`asset ${name}: HTTP ${res.status}`);
+    return Buffer.from(await res.arrayBuffer());
+  }
+  return readFile(join(process.cwd(), "assets", name));
+}
 
 /** Nobody is known to be looking at a link preview, so Party A, who
  * started it, is the green side. Tug-bar fills use the 3:1 mark colours and
@@ -34,12 +46,13 @@ type OgFont = {
 };
 
 async function loadFonts(): Promise<OgFont[]> {
-  const dir = join(process.cwd(), "assets/fonts");
-  const [display, text, serif] = await Promise.all([
-    readFile(join(dir, "InterTight-Bold.ttf")),
-    readFile(join(dir, "Inter-Medium.ttf")),
-    readFile(join(dir, "InstrumentSerif-Italic.ttf")),
+  const [display, text, serif, plate] = await Promise.all([
+    asset("fonts/InterTight-Bold.ttf"),
+    asset("fonts/Inter-Medium.ttf"),
+    asset("fonts/InstrumentSerif-Italic.ttf"),
+    asset("og-mark.png"),
   ]);
+  mark = `data:image/png;base64,${plate.toString("base64")}`;
   return [
     { name: DISPLAY, data: display, weight: 700, style: "normal" },
     { name: TEXT, data: text, weight: 500, style: "normal" },
@@ -49,7 +62,7 @@ async function loadFonts(): Promise<OgFont[]> {
 
 let fontsPromise: Promise<OgFont[]> | null = null;
 
-/** The three faces the card uses, read once per server process. */
+/** The three faces the card uses (and the mark), read once per server process. */
 export function ogFonts(): Promise<OgFont[]> {
   if (!fontsPromise) {
     fontsPromise = loadFonts().catch((err: unknown) => {
@@ -113,7 +126,7 @@ export function OgCard({
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           {/* eslint-disable-next-line @next/next/no-img-element -- Satori, not the browser */}
-          <img src={MARK} width={64} height={64} alt="" style={{ flexShrink: 0 }} />
+          <img src={mark} width={64} height={64} alt="" style={{ flexShrink: 0 }} />
           <div
             style={{
               display: "flex",
