@@ -4,12 +4,13 @@
  * the row counts. Run it against a copy of the database (a restored backup or
  * a sqlite3 .backup file), never the live file.
  *
- *   JOB_SECRET=... npx tsx scripts/d1-copy.ts <sqlite file> <https://worker-url> [--wipe]
+ *   JOB_SECRET=... npx tsx scripts/d1-copy.ts <sqlite file> <https://worker-url> [--wipe]  (--wipe may stand anywhere)
  *
- * The Worker needs IMPORT_ENABLED=1 for the run. --wipe empties the target's tables first. Running it again is safe:
+ * The Worker needs IMPORT_ENABLED=1 for the run. --wipe empties the target's tables first and needs WIPE_ENABLED=1 on the Worker too (staging only). Running it again is safe:
  * rows are replaced by key, so the copy ends equal to the file.
  */
 import { createClient } from "@libsql/client";
+import { existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 const BATCH_ROWS = 50;
@@ -48,12 +49,15 @@ export async function copyDatabase(
   log: (s: string) => void = console.log,
   wipe = false,
 ): Promise<boolean> {
+  // Opened first: a wrong path must fail before anything in the target is emptied.
+  if (!existsSync(file)) throw new Error(`no such file: ${file}`);
+  const db = createClient({ url: `file:${file.replaceAll("\\", "/")}` });
+  await db.execute("SELECT 1 FROM sqlite_master LIMIT 1");
   if (wipe) {
     const res = await fetch(`${base}/api/internal/import`, { method: "DELETE", headers: { "x-internal-secret": secret } });
     if (!res.ok) throw new Error(`wipe: HTTP ${res.status}`);
     log("target tables emptied");
   }
-  const db = createClient({ url: `file:${file.replaceAll("\\", "/")}` });
   const sent: Record<string, number> = {};
   for (const table of await copyOrder(db)) {
     const info = await db.execute(`PRAGMA table_info("${table}")`);
@@ -96,13 +100,15 @@ export async function copyDatabase(
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  const [file, base] = process.argv.slice(2);
+  const args = process.argv.slice(2);
+  const wipe = args.includes("--wipe");
+  const [file, base] = args.filter((a) => a !== "--wipe");
   const secret = process.env.JOB_SECRET;
   if (!file || !base || !secret) {
-    console.error("Usage: JOB_SECRET=... npx tsx scripts/d1-copy.ts <sqlite file> <worker url>");
+    console.error("Usage: JOB_SECRET=... npx tsx scripts/d1-copy.ts [--wipe] <sqlite file> <worker url> [--wipe]");
     process.exit(2);
   }
-  copyDatabase(file, base.replace(/\/$/, ""), secret, console.log, process.argv.includes("--wipe")).then(
+  copyDatabase(file, base.replace(/\/$/, ""), secret, console.log, wipe).then(
     (ok) => {
       console.log(ok ? "row counts match" : "ROW COUNTS DIFFER");
       process.exit(ok ? 0 : 1);

@@ -26,8 +26,9 @@ export async function GET(req: Request): Promise<Response> {
   return Response.json(await tableCounts(await getDb()));
 }
 
-/** DELETE: empties every table, for a rehearsal copy into staging. */
+/** DELETE: empties every table, for a rehearsal copy into staging. Needs WIPE_ENABLED=1 as well; never set it on production. */
 export async function DELETE(req: Request): Promise<Response> {
-  if (!open(req)) return new Response("Not found\n", { status: 404 });
+  // A second switch, so the copy window of a real cutover cannot empty the database.
+  if (!open(req) || process.env.WIPE_ENABLED !== "1") return new Response("Not found\n", { status: 404 });
   return Response.json({ tables: await wipeAll(await getDb()) });
 }
