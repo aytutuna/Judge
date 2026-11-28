@@ -24,7 +24,7 @@ vi.mock("../lib/auth", async () => {
 
 const { getDb } = await import("../lib/db");
 await (await getDb()).execute(
-  'CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, email TEXT, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)',
+  'CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, email TEXT, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT, age_country TEXT, age_quebec TEXT, age_region_lifted_at TEXT, age_parent TEXT)',
 );
 const { blockMinor, keptBlock, caseHasTeen, verdictHasTeen } = await import("../lib/age");
 const { runCleanup } = await import("../lib/cleanup");

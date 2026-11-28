@@ -13,7 +13,7 @@ process.env.REMOVAL_LOG = LOG;
 const { runCleanup } = await import("../lib/cleanup");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which this test does not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT, age_country TEXT, age_quebec TEXT, age_region_lifted_at TEXT, age_parent TEXT)');
 const { removeUserData } = await import("../lib/originals/removal");
 const { ensureOriginalsTables } = await import("../lib/originals/db");
 const { appendRemovalLog, pruneRemovalLog } = await import("../lib/originals/removal-log");
@@ -41,7 +41,7 @@ async function all(sql: string, args: string[] = []) {
 
 describe("expired sign-in codes", () => {
   it("does nothing, and does not fail, before any sign-in created the table", async () => {
-    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0, blocked: 0 });
+    expect(await runCleanup(NOW)).toEqual({ verification: 0, ledger: 0, removalLog: 0, adultDobs: 0, attests: 0, blocked: 0, parentless: 0, parentRecords: 0 });
   });
 
   it("deletes the rows past their expiry and keeps the live ones", async () => {

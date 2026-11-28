@@ -63,7 +63,7 @@ const { appealVerdicts, roundsBlock, splitStoredInput } = await import("../lib/v
 const ent = await import("../lib/entitlements");
 const { getDb } = await import("../lib/db");
 // The real table comes from Better Auth, which these tests do not load.
-await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT)');
+await (await getDb()).execute('CREATE TABLE IF NOT EXISTS "user" (id TEXT PRIMARY KEY, age_confirmed_at TEXT, age_blocked_at TEXT, age_block_final TEXT, age_block_final_at TEXT, age_dob TEXT, age_dob_at TEXT, age_signal TEXT, age_signal_at TEXT, age_country TEXT, age_quebec TEXT, age_region_lifted_at TEXT, age_parent TEXT)');
 const { plainVerdictStatement, saveVerdictWithOriginals } = await import("../lib/originals/save");
 const { getVerdictMeta, listOwnerVerdicts } = await import("../lib/originals/db");
 const { operatorRemoveVerdict, removeVerdict } = await import("../lib/originals/removal");
