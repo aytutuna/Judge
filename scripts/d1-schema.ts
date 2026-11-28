@@ -37,7 +37,7 @@ export async function currentSchema(): Promise<string> {
     await Promise.all([ensureAnalyticsTables(), ensureVerdictJobTables(), ensureSignInTokenTables()]);
     const db = await getDb();
     const rs = await db.execute(
-      `SELECT type, sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT LIKE 'sqlite_%'
+      `SELECT type, sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT LIKE 'sqlite!_%' ESCAPE '!'
        ORDER BY CASE type WHEN 'table' THEN 0 WHEN 'index' THEN 1 ELSE 2 END, name`,
     );
     return rs.rows.map((r) => `${String(r.sql)};\n`).join("\n");

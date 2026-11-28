@@ -17,7 +17,7 @@ const BATCH_BYTES = 1_500_000;
 
 /** Tables with the ones other tables point at first (foreign keys are enforced on D1). */
 export async function copyOrder(db: ReturnType<typeof createClient>): Promise<string[]> {
-  const rs = await db.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY name");
+  const rs = await db.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite!_%' ESCAPE '!' ORDER BY name");
   const names = rs.rows.map((r) => String(r.name));
   const needs = new Map<string, Set<string>>();
   for (const name of names) {

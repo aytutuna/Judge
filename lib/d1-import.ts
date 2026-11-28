@@ -44,7 +44,7 @@ export async function importBatch(db: Db, batch: ImportBatch): Promise<number> {
 /** Row counts of every table, to compare with the source after a copy. */
 export async function tableCounts(db: Db): Promise<Record<string, number>> {
   const tables = await db.execute(
-    "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE '_cf_%' ORDER BY name",
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite!_%' ESCAPE '!' AND name NOT LIKE '!_cf!_%' ESCAPE '!' ORDER BY name",
   );
   const counts: Record<string, number> = {};
   for (const row of tables.rows) {
