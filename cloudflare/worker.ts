@@ -1,7 +1,8 @@
 import * as Sentry from "@sentry/cloudflare";
 import { sentryOptions } from "../lib/sentry";
 import { verdictRemoved } from "../lib/originals/removed";
-import { setWorkerEnv } from "../lib/worker-env";
+import { capBody } from "../lib/body-cap";
+import { runWithContext, setWorkerEnv } from "../lib/worker-env";
 import type { WorkerEnv } from "./env";
 // @ts-expect-error: written by `opennextjs-cloudflare build`
 import openNext from "../.open-next/worker.js";
@@ -59,12 +60,16 @@ const handler = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     setWorkerEnv(env);
     const url = new URL(request.url);
-    if (url.pathname.startsWith("/api/") && Number(request.headers.get("content-length")) > MAX_API_BODY) {
+    const api = url.pathname.startsWith("/api/");
+    if (api && Number(request.headers.get("content-length")) > MAX_API_BODY) {
       return new Response("Payload Too Large\n", { status: 413 });
     }
+    const capped = api ? capBody(request, MAX_API_BODY) : null;
+    if (capped) request = capped.request;
     const share = SHARE_PAGE.test(url.pathname) ? await removedPage(request, env, ctx, url.pathname.slice(3)) : null;
-    const res: Response = share ?? (await openNext.fetch(request, env, ctx));
+    const res: Response = await runWithContext(ctx, async () => share ?? (await openNext.fetch(request, env, ctx)));
     if (res.status === 101) return res;
+    if (capped?.exceeded()) return new Response("Payload Too Large\n", { status: 413 });
     const out = new Response(res.body, res);
     for (const [name, value] of Object.entries(SECURITY_HEADERS)) out.headers.set(name, value);
     return out;
