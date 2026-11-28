@@ -89,6 +89,7 @@ class Account(
     private val ageSignals: AgeSignalSource = AgeSignalSource.None,
     /** A phone that hasn't answered by then counts as unknown. */
     private val platformTimeoutMs: Long = 10_000,
+    private val ageHold: AgeHoldStore = AgeHoldStore.Memory(),
 ) {
     sealed interface State {
         /** The stored token is still being read off the main thread. */
@@ -160,7 +161,8 @@ class Account(
     }
 
     /** The phone's answer, asked at most once per run; null until it answered. */
-    private val _platformAge = MutableStateFlow<PlatformAge?>(null)
+    private val _platformAge = MutableStateFlow<PlatformAge?>(if (ageHold.held) PlatformAge.MINOR_UNAPPROVED else null)
+    private var askedThisRun = false
     val platformAge: StateFlow<PlatformAge?> = _platformAge.asStateFlow()
     private val _askingPlatform = MutableStateFlow(false)
     private var askingPlatform: Boolean
@@ -263,7 +265,7 @@ class Account(
      * "adult" can later clear an earlier "minor".
      */
     fun needsPlatformAge(onSignIn: Boolean): Boolean {
-        if (_platformAge.value != null || askingPlatform) return false
+        if (askedThisRun || askingPlatform) return false
         return when (val state = _state.value) {
             State.Loading -> false
             State.SignedOut -> onSignIn
@@ -273,11 +275,11 @@ class Account(
 
     /** Asks the phone's age signal; [host] is the Activity its prompt may attach to. */
     fun checkPlatformAge(host: Context) {
-        if (_platformAge.value != null) return
+        if (askedThisRun) return
         askPlatformAge(host)
     }
 
-    /** Asks again while the approval cover is up; the old answer holds until the new one comes. */
+    /** Asks again while the approval cover is up; the hold stays until Play gives a shared answer that is not a held minor. */
     fun recheckPlatformAge(host: Context) {
         if (_platformAge.value == PlatformAge.MINOR_UNAPPROVED) askPlatformAge(host)
     }
@@ -285,13 +287,17 @@ class Account(
     private fun askPlatformAge(host: Context) {
         if (askingPlatform) return
         askingPlatform = true
+        askedThisRun = true
         scope.launch {
             val answer = try {
                 withTimeoutOrNull(platformTimeoutMs) { ageSignals.check(host) } ?: PlatformAge.UNKNOWN
             } finally {
                 askingPlatform = false
             }
-            _platformAge.value = answer
+            if (!(answer == PlatformAge.UNKNOWN && _platformAge.value == PlatformAge.MINOR_UNAPPROVED)) {
+                _platformAge.value = answer
+                ageHold.held = answer == PlatformAge.MINOR_UNAPPROVED
+            }
             settleAge()
         }
     }
@@ -477,6 +483,7 @@ class Account(
         // Stored token and state change together, even if the screen goes away now.
         withContext(NonCancellable) {
             withContext(io) { tokens.set(grant.token) }
+            forgetDeleteState()
             _state.value = State.SignedIn()
             refresh()
             onSignedIn()
@@ -552,6 +559,7 @@ class Account(
         val wasSignedIn = _state.value is State.SignedIn
         tokens.clear()
         forgetAgeAnswers()
+        forgetDeleteState()
         if (wasSignedIn) onLeaving()
         _state.value = State.SignedOut
         if (wasSignedIn) _notices.trySend(Notice.SESSION_EXPIRED)
@@ -560,10 +568,17 @@ class Account(
     private suspend fun endLocally(notice: Notice) {
         withContext(io) { tokens.clear() }
         forgetAgeAnswers()
+        forgetDeleteState()
         onLeaving()
         _state.value = State.SignedOut
         onEndedByUser()
         _notices.trySend(notice)
+    }
+
+    /** A refusal or failure from an earlier session must not greet the next one. */
+    private fun forgetDeleteState() {
+        _deleteProblem.value = null
+        _deleteFailed.value = false
     }
 
     /** The next person to sign in on this phone is reported afresh; the phone's own answer stays. */

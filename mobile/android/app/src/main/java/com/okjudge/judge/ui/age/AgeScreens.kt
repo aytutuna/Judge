@@ -292,15 +292,14 @@ fun AgeApprovalScreen(
 ) {
     val s = LocalStrings.current
     Cover(Modifier.testTag(AgeTags.APPROVAL)) {
-        // TODO: move to lib/i18n.ts as age.approvalTitle and age.approval once the keys exist.
-        Text("A parent has to approve this", style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        Text(s.ageApprovalTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
         Text(
-            "Google Play is waiting for a parent or guardian to approve a change to Judge. Once they have, check again.",
+            s.ageApproval,
             style = JudgeType.lead,
             modifier = Modifier.padding(top = 10.dp),
         )
         PrimaryButton(
-            text = s.caseRetry,
+            text = s.appRetry,
             enabled = !busy,
             onClick = onCheckAgain,
             modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(AgeTags.CHECK_AGAIN),

@@ -204,6 +204,8 @@ class AgeScreensTest {
         compose.onNodeWithTag(AgeTags.DELETE).assertIsEnabled()
         compose.onNodeWithTag(AgeTags.CHECK_AGAIN).performClick()
         assertEquals(1, checks)
+        compose.onNodeWithText(s.ageApprovalTitle).assertExists()
+        compose.onNodeWithText(s.ageApproval).assertExists()
     }
 
     @Test

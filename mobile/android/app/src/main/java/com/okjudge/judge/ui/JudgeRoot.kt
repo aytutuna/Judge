@@ -917,6 +917,7 @@ private fun AgeOverlay(
     val context = LocalContext.current
     BackHandler { (context as? Activity)?.moveTaskToBack(true) }
     val busy by account.working.collectAsStateWithLifecycle()
+    val checking by account.ageChecking.collectAsStateWithLifecycle()
     when (gate) {
         AgeGate.DATE -> {
             val posting by account.agePosting.collectAsStateWithLifecycle()
@@ -940,7 +941,7 @@ private fun AgeOverlay(
             onContact = onContact,
         )
         AgeGate.APPROVAL -> AgeApprovalScreen(
-            busy = busy,
+            busy = busy || checking,
             onCheckAgain = { account.recheckPlatformAge(context) },
             onSignOut = onSignOut,
             onDelete = onDelete,

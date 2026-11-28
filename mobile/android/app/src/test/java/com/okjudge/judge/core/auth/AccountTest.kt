@@ -488,6 +488,35 @@ class AccountTest {
     }
 
     @Test
+    fun aReauthRefusal_doesNotSurviveSigningOutAndIn() = runBlocking {
+        routes.on(DELETE_ME, json(403, """{"error":"x","code":"reauth_required"}"""))
+        routes.on(SIGN_OUT, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("fresh"))
+        routes.on(ME, Routes.me())
+        val account = account(store().apply { set("old") })
+        assertFalse(account.deleteAccount())
+        assertEquals(DeleteProblem.REAUTH_REQUIRED, account.deleteProblem.value)
+        account.signOut()
+        assertNull("gone with the session", account.deleteProblem.value)
+
+        account.verifyCode("ada@example.com", "123456")
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        assertTrue("after a fresh sign-in the delete goes through", account.deleteAccount())
+        assertNull(account.deleteProblem.value)
+    }
+
+    @Test
+    fun aFailedDelete_isForgottenWhenTheSessionExpires() = runBlocking {
+        routes.on(DELETE_ME, json(503, """{"error":"x","code":"unavailable"}"""))
+        routes.on(DELETE_ME, json(401, """{"error":"x","code":"signin_required"}"""))
+        val account = account(store().apply { set("s") })
+        assertFalse(account.deleteAccount())
+        assertTrue(account.deleteFailed.value)
+        assertFalse(account.deleteAccount())
+        assertFalse(account.deleteFailed.value)
+    }
+
+    @Test
     fun deleteAccount_failure_keepsTheSession() = runBlocking {
         routes.on(DELETE_ME, json(503, """{"error":"Deleting the account failed. Try again.","code":"unavailable"}"""))
         val tokens = store().apply { set("session-d") }
