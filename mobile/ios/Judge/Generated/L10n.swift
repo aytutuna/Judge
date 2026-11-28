@@ -667,6 +667,8 @@ enum L10n {
     static func ageBlockedTitle(_ lang: AppLang) -> String { string("age.blockedTitle", lang) }
     static func ageBlocked(_ lang: AppLang) -> String { string("age.blocked", lang) }
     static func ageBlockedContact(_ lang: AppLang, email: String) -> String { format("age.blockedContact", lang, email) }
+    static func ageApprovalTitle(_ lang: AppLang) -> String { string("age.approvalTitle", lang) }
+    static func ageApproval(_ lang: AppLang) -> String { string("age.approval", lang) }
     static func errorPasswordWrong(_ lang: AppLang) -> String { string("error.password_wrong", lang) }
     static func errorPasswordRequired(_ lang: AppLang) -> String { string("error.password_required", lang) }
     static func errorReauthRequired(_ lang: AppLang) -> String { string("error.reauth_required", lang) }
@@ -1293,6 +1295,8 @@ enum L10n {
         "age.failed",
         "age.blockedTitle",
         "age.blocked",
+        "age.approvalTitle",
+        "age.approval",
         "error.password_wrong",
         "error.password_required",
         "error.reauth_required",

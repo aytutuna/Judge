@@ -541,6 +541,8 @@
     <string name="age_blocked_title">Judge chỉ dành cho người từ 13 tuổi trở lên</string>
     <string name="age_blocked">Tài khoản này không thể dùng Judge, vì Judge chỉ dành cho người từ 13 tuổi trở lên.</string>
     <string name="age_blocked_contact">Nghĩ đây là nhầm lẫn? Hãy gửi email tới %1$s.</string>
+    <string name="age_approval_title">Cần phụ huynh phê duyệt</string>
+    <string name="age_approval">Google Play đang chờ phụ huynh hoặc người giám hộ phê duyệt một thay đổi trong Judge. Khi họ đã duyệt, hãy kiểm tra lại.</string>
     <string name="error_password_wrong">Mật khẩu này không đúng.</string>
     <string name="error_password_required">Nhập mật khẩu hiện tại của bạn.</string>
     <string name="error_reauth_required">Hãy đăng xuất, đăng nhập lại rồi xóa tài khoản.</string>

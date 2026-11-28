@@ -541,6 +541,8 @@
     <string name="age_blocked_title">Judge 僅限 13 歲以上</string>
     <string name="age_blocked">這個帳號不能使用 Judge，因為 Judge 僅限 13 歲以上的人使用。</string>
     <string name="age_blocked_contact">覺得這是誤會嗎？請寄信到 %1$s。</string>
+    <string name="age_approval_title">需要家長核准</string>
+    <string name="age_approval">Google Play 正在等待家長或監護人核准 Judge 的一項變更。核准後，請再檢查一次。</string>
     <string name="error_password_wrong">密碼不正確。</string>
     <string name="error_password_required">請輸入目前的密碼。</string>
     <string name="error_reauth_required">請先登出，重新登入後再刪除帳號。</string>

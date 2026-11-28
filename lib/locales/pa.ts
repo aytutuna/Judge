@@ -837,6 +837,8 @@ const pa: Locale = {
     "age.blocked":
       "ਇਹ ਖਾਤਾ Judge ਨਹੀਂ ਵਰਤ ਸਕਦਾ, ਕਿਉਂਕਿ Judge ਸਿਰਫ਼ 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।",
     "age.blockedContact": "ਲੱਗਦਾ ਹੈ ਇਹ ਗ਼ਲਤੀ ਹੈ? {email} ’ਤੇ ਈਮੇਲ ਕਰੋ।",
+    "age.approvalTitle": "ਮਾਪਿਆਂ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦੇਣੀ ਪਵੇਗੀ",
+    "age.approval": "Google Play ਇਸ ਗੱਲ ਦੀ ਉਡੀਕ ਕਰ ਰਿਹਾ ਹੈ ਕਿ ਮਾਪੇ ਜਾਂ ਸਰਪ੍ਰਸਤ Judge ਵਿੱਚ ਹੋਏ ਬਦਲਾਅ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦੇਣ। ਮਨਜ਼ੂਰੀ ਮਿਲਣ ਤੋਂ ਬਾਅਦ ਦੁਬਾਰਾ ਜਾਂਚੋ।",
     "error.password_wrong": "ਇਹ ਪਾਸਵਰਡ ਸਹੀ ਨਹੀਂ ਹੈ।",
     "error.password_required": "ਆਪਣਾ ਮੌਜੂਦਾ ਪਾਸਵਰਡ ਦਾਖਲ ਕਰੋ।",
     "error.age_blocked": "Judge ਸਿਰਫ਼ 13 ਸਾਲ ਜਾਂ ਵੱਧ ਉਮਰ ਦੇ ਲੋਕਾਂ ਲਈ ਹੈ।",

@@ -541,6 +541,8 @@
     <string name="age_blocked_title">Judge สำหรับผู้ที่อายุ 13 ปีขึ้นไป</string>
     <string name="age_blocked">บัญชีนี้ใช้ Judge ไม่ได้ เพราะ Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป</string>
     <string name="age_blocked_contact">คิดว่าเป็นความผิดพลาดใช่ไหม ส่งอีเมลมาที่ %1$s</string>
+    <string name="age_approval_title">ต้องให้ผู้ปกครองอนุมัติ</string>
+    <string name="age_approval">Google Play กำลังรอให้ผู้ปกครองอนุมัติการเปลี่ยนแปลงใน Judge เมื่ออนุมัติแล้ว ให้ตรวจสอบอีกครั้ง</string>
     <string name="error_password_wrong">รหัสผ่านนี้ไม่ถูกต้อง</string>
     <string name="error_password_required">กรอกรหัสผ่านปัจจุบันของคุณ</string>
     <string name="error_reauth_required">ออกจากระบบแล้วเข้าสู่ระบบใหม่ จากนั้นค่อยลบบัญชี</string>

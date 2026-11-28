@@ -823,6 +823,8 @@ const zhHans: Locale = {
     "age.blockedTitle": "Judge 仅限 13 岁及以上",
     "age.blocked": "这个账号不能使用 Judge，因为 Judge 仅限 13 岁及以上的人使用。",
     "age.blockedContact": "觉得这是个误会？请发邮件到 {email}。",
+    "age.approvalTitle": "需要家长批准",
+    "age.approval": "Google Play 正在等待家长或监护人批准 Judge 的一项更改。批准后，请再检查一次。",
     "error.password_wrong": "密码不正确。",
     "error.password_required": "请输入当前密码。",
     "error.age_blocked": "Judge 仅限 13 岁及以上的人使用。",

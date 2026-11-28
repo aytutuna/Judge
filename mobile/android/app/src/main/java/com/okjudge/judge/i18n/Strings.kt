@@ -600,6 +600,8 @@ class Strings(private val res: Resources) {
     val ageBlockedTitle: String get() = res.getString(R.string.age_blocked_title)
     val ageBlocked: String get() = res.getString(R.string.age_blocked)
     fun ageBlockedContact(email: String): String = res.getString(R.string.age_blocked_contact, email)
+    val ageApprovalTitle: String get() = res.getString(R.string.age_approval_title)
+    val ageApproval: String get() = res.getString(R.string.age_approval)
     val errorPasswordWrong: String get() = res.getString(R.string.error_password_wrong)
     val errorPasswordRequired: String get() = res.getString(R.string.error_password_required)
     val errorReauthRequired: String get() = res.getString(R.string.error_reauth_required)
@@ -1225,6 +1227,8 @@ class Strings(private val res: Resources) {
             "age.failed" -> R.string.age_failed
             "age.blockedTitle" -> R.string.age_blocked_title
             "age.blocked" -> R.string.age_blocked
+            "age.approvalTitle" -> R.string.age_approval_title
+            "age.approval" -> R.string.age_approval
             "error.password_wrong" -> R.string.error_password_wrong
             "error.password_required" -> R.string.error_password_required
             "error.reauth_required" -> R.string.error_reauth_required

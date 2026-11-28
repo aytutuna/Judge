@@ -830,6 +830,8 @@ const th: Locale = {
     "age.blockedTitle": "Judge สำหรับผู้ที่อายุ 13 ปีขึ้นไป",
     "age.blocked": "บัญชีนี้ใช้ Judge ไม่ได้ เพราะ Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป",
     "age.blockedContact": "คิดว่าเป็นความผิดพลาดใช่ไหม ส่งอีเมลมาที่ {email}",
+    "age.approvalTitle": "ต้องให้ผู้ปกครองอนุมัติ",
+    "age.approval": "Google Play กำลังรอให้ผู้ปกครองอนุมัติการเปลี่ยนแปลงใน Judge เมื่ออนุมัติแล้ว ให้ตรวจสอบอีกครั้ง",
     "error.password_wrong": "รหัสผ่านนี้ไม่ถูกต้อง",
     "error.password_required": "กรอกรหัสผ่านปัจจุบันของคุณ",
     "error.age_blocked": "Judge ให้บริการเฉพาะผู้ที่อายุ 13 ปีขึ้นไป",

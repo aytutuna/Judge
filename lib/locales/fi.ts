@@ -868,6 +868,8 @@ const fi: Locale = {
     "age.blocked":
       "Tämä tili ei voi käyttää Judgea, koska Judge on tarkoitettu vain 13 vuotta täyttäneille.",
     "age.blockedContact": "Onko tämä mielestäsi virhe? Kirjoita osoitteeseen {email}.",
+    "age.approvalTitle": "Vanhemman on hyväksyttävä",
+    "age.approval": "Google Play odottaa, että vanhempi tai huoltaja hyväksyy Judgen muutoksen. Tarkista uudelleen, kun hän on tehnyt sen.",
     "error.password_wrong": "Salasana ei ole oikea.",
     "error.password_required": "Anna nykyinen salasanasi.",
     "error.age_blocked": "Judge on tarkoitettu vain 13 vuotta täyttäneille.",

@@ -856,6 +856,8 @@ const ro: Locale = {
     "age.blocked":
       "Acest cont nu poate folosi Judge, pentru că Judge e doar pentru persoane de 13 ani sau mai mari.",
     "age.blockedContact": "Crezi că e o greșeală? Scrie-ne la {email}.",
+    "age.approvalTitle": "Un părinte trebuie să aprobe",
+    "age.approval": "Google Play așteaptă ca un părinte sau un tutore să aprobe o modificare în Judge. După ce o face, verifică din nou.",
     "error.password_wrong": "Parola nu este corectă.",
     "error.password_required": "Introdu parola actuală.",
     "error.age_blocked": "Judge e doar pentru persoane de 13 ani sau mai mari.",

@@ -861,6 +861,8 @@ const tr: Locale = {
     "age.blocked":
       "Bu hesap Judge'ı kullanamaz, çünkü Judge yalnızca 13 yaş ve üzeri kişiler içindir.",
     "age.blockedContact": "Bunun bir hata olduğunu mu düşünüyorsun? {email} adresine yaz.",
+    "age.approvalTitle": "Bir ebeveynin onay vermesi gerekiyor",
+    "age.approval": "Google Play, Judge'daki bir değişiklik için bir ebeveynin veya velinin onay vermesini bekliyor. Onay verildikten sonra tekrar kontrol et.",
     "error.password_wrong": "Bu parola doğru değil.",
     "error.password_required": "Şu anki parolanı gir.",
     "error.age_blocked": "Judge yalnızca 13 yaş ve üzeri kişiler içindir.",

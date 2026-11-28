@@ -865,6 +865,8 @@ const ms: Locale = {
     "age.blocked":
       "Akaun ini tidak boleh menggunakan Judge, kerana Judge hanya untuk mereka yang berumur 13 tahun ke atas.",
     "age.blockedContact": "Rasa ini satu kesilapan? E-mel {email}.",
+    "age.approvalTitle": "Ibu bapa perlu meluluskan",
+    "age.approval": "Google Play menunggu ibu bapa atau penjaga meluluskan perubahan pada Judge. Selepas itu, semak semula.",
     "error.password_wrong": "Kata laluan itu tidak betul.",
     "error.password_required": "Masukkan kata laluan semasa anda.",
     "error.age_blocked": "Judge hanya untuk mereka yang berumur 13 tahun ke atas.",

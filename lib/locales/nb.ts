@@ -849,6 +849,8 @@ const nb: Locale = {
     "age.blocked":
       "Denne kontoen kan ikke bruke Judge, fordi Judge bare er for personer på 13 år eller eldre.",
     "age.blockedContact": "Tror du dette er en feil? Send e-post til {email}.",
+    "age.approvalTitle": "En forelder må godkjenne",
+    "age.approval": "Google Play venter på at en forelder eller foresatt godkjenner en endring i Judge. Sjekk igjen når det er gjort.",
     "error.password_wrong": "Det passordet stemmer ikke.",
     "error.password_required": "Skriv inn det nåværende passordet.",
     "error.age_blocked": "Judge er bare for personer på 13 år eller eldre.",

@@ -866,6 +866,8 @@ const vi: Locale = {
     "age.blocked":
       "Tài khoản này không thể dùng Judge, vì Judge chỉ dành cho người từ 13 tuổi trở lên.",
     "age.blockedContact": "Nghĩ đây là nhầm lẫn? Hãy gửi email tới {email}.",
+    "age.approvalTitle": "Cần phụ huynh phê duyệt",
+    "age.approval": "Google Play đang chờ phụ huynh hoặc người giám hộ phê duyệt một thay đổi trong Judge. Khi họ đã duyệt, hãy kiểm tra lại.",
     "error.password_wrong": "Mật khẩu này không đúng.",
     "error.password_required": "Nhập mật khẩu hiện tại của bạn.",
     "error.age_blocked": "Judge chỉ dành cho người từ 13 tuổi trở lên.",

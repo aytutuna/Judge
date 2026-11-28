@@ -550,6 +550,8 @@
     <string name="age_blocked_title">Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے</string>
     <string name="age_blocked">یہ اکاؤنٹ Judge استعمال نہیں کر سکتا، کیونکہ Judge صرف 13 سال یا اس سے زیادہ عمر کے لوگوں کے لیے ہے۔</string>
     <string name="age_blocked_contact">کیا آپ کو لگتا ہے یہ غلطی ہے؟ %1$s پر ای میل کریں۔</string>
+    <string name="age_approval_title">والدین کی منظوری ضروری ہے</string>
+    <string name="age_approval">Google Play اس بات کا انتظار کر رہا ہے کہ والدین یا سرپرست Judge میں ہونے والی تبدیلی کی منظوری دیں۔ منظوری کے بعد دوبارہ چیک کریں۔</string>
     <string name="error_password_wrong">یہ پاس ورڈ درست نہیں ہے۔</string>
     <string name="error_password_required">اپنا موجودہ پاس ورڈ درج کریں۔</string>
     <string name="error_reauth_required">سائن آؤٹ کریں اور دوبارہ سائن ان کریں، پھر اپنا اکاؤنٹ حذف کریں۔</string>

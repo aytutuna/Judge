@@ -568,6 +568,8 @@
     <string name="age_blocked_title">Judge je samo za osebe, stare 13 let ali več</string>
     <string name="age_blocked">S tem računom ne moreš uporabljati Judgea, ker je Judge samo za osebe, stare 13 let ali več.</string>
     <string name="age_blocked_contact">Misliš, da gre za napako? Piši na %1$s.</string>
+    <string name="age_approval_title">Potrebna je odobritev starša</string>
+    <string name="age_approval">Google Play čaka, da starš ali skrbnik odobri spremembo v aplikaciji Judge. Ko se to zgodi, preverite znova.</string>
     <string name="error_password_wrong">To geslo ni pravilno.</string>
     <string name="error_password_required">Vnesite svoje trenutno geslo.</string>
     <string name="error_reauth_required">Odjavi se, se znova prijavi in nato izbriši račun.</string>

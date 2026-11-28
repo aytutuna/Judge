@@ -837,6 +837,8 @@ const he: Locale = {
     "age.blockedTitle": "Judge מיועד לגילאי 13 ומעלה",
     "age.blocked": "החשבון הזה לא יכול להשתמש ב-Judge, כי Judge מיועד לגילאי 13 ומעלה בלבד.",
     "age.blockedContact": "חושבים שזו טעות? אפשר לכתוב ל-{email}.",
+    "age.approvalTitle": "נדרש אישור של הורה",
+    "age.approval": "Google Play ממתין שהורה או אפוטרופוס יאשרו שינוי ב-Judge. אחרי שיאשרו, בדקו שוב.",
     "error.password_wrong": "הסיסמה הזו אינה נכונה.",
     "error.password_required": "הזן את הסיסמה הנוכחית.",
     "error.age_blocked": "Judge מיועד לגילאי 13 ומעלה בלבד.",

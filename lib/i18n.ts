@@ -852,6 +852,8 @@ const en = {
   "age.blockedTitle": "Judge is for ages 13 and up",
   "age.blocked": "This account can't use Judge, because Judge is only for people 13 and older.",
   "age.blockedContact": "Think this is a mistake? Email {email}.",
+  "age.approvalTitle": "A parent has to approve this",
+  "age.approval": "Google Play is waiting for a parent or guardian to approve a change to Judge. Once they have, check again.",
   "error.password_wrong": "That password isn't right.",
   "error.password_required": "Enter your current password.",
   "error.reauth_required": "Sign out and sign in again, then delete your account.",
