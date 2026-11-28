@@ -4,7 +4,7 @@
  * Server only (node:crypto). The key never appears in logs or errors.
  */
 
-import { createPrivateKey, sign, type KeyObject } from "node:crypto";
+import { createPrivateKey, sign } from "node:crypto";
 
 /** Apple accepts at most 15,777,000 seconds (~182 days); 180 days is used. */
 export const APPLE_SECRET_TTL_SEC = 180 * 24 * 60 * 60;
@@ -29,15 +29,18 @@ export function appleEnv(env: Record<string, string | undefined> = process.env):
   return { teamId, keyId, clientId, privateKeyBase64 };
 }
 
-/** Parses the key: base64 of the PEM file, or (forgivingly) the PEM itself. */
-export function appleKey(privateKeyBase64: string): KeyObject {
+/** The key as a PEM string, checked to parse: base64 of the PEM file, or
+ * (forgivingly) the PEM itself. sign() gets the string rather than a key
+ * object because workerd's node:crypto only takes strings there. */
+export function appleKey(privateKeyBase64: string): string {
   const value = privateKeyBase64.trim();
   const pem = value.includes("-----BEGIN") ? value : Buffer.from(value, "base64").toString("utf8");
   if (!pem.includes("-----BEGIN PRIVATE KEY-----")) {
     throw new Error("APPLE_PRIVATE_KEY_BASE64 is not a base64-encoded PKCS#8 .p8 key");
   }
   try {
-    return createPrivateKey({ key: pem, format: "pem" });
+    createPrivateKey({ key: pem, format: "pem" });
+    return pem;
   } catch {
     throw new Error("APPLE_PRIVATE_KEY_BASE64 could not be parsed as a private key");
   }
