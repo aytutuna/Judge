@@ -18,6 +18,11 @@ enum class PlatformAge {
 
     /** A minor whose parent's approval of a significant change is pending or was declined. */
     MINOR_UNAPPROVED,
+
+    /** Play answered and has nothing to report (not shared, or no usable range). Not a held minor. */
+    NO_SIGNAL,
+
+    /** Play could not be asked or gave no final answer (error, timeout, cancelled prompt, verification pending). */
     UNKNOWN,
 }
 
@@ -74,19 +79,26 @@ object AgeCheck {
     }
 
     /**
-     * The store's full answer as one result. Anything but a shared answer (not shared, verification still
-     * required, unspecified) is unknown, so the date of birth decides. A minor whose significant change
-     * is pending or declined stays [PlatformAge.MINOR_UNAPPROVED] until the store shows approval.
+     * The store's full answer as one result. A clear "not shared", or a shared answer without a usable
+     * range, is [PlatformAge.NO_SIGNAL]: Play answered, so any earlier hold ends. Verification still
+     * required, unspecified or missing is [PlatformAge.UNKNOWN] (nothing is known). A minor whose
+     * significant change is pending or declined is [PlatformAge.MINOR_UNAPPROVED] until the store shows approval.
      */
     fun fromSignals(accessStatus: Int?, lower: Int?, upper: Int?, changeStatus: Int?): PlatformAge {
+        if (accessStatus == SIGNALS_NOT_SHARED) return PlatformAge.NO_SIGNAL
         if (accessStatus != SIGNALS_SHARED) return PlatformAge.UNKNOWN
         val range = fromRange(lower, upper)
         val held = changeStatus == CHANGE_PENDING || changeStatus == CHANGE_DECLINED
-        return if (range == PlatformAge.MINOR && held) PlatformAge.MINOR_UNAPPROVED else range
+        return when {
+            range == PlatformAge.MINOR && held -> PlatformAge.MINOR_UNAPPROVED
+            range == PlatformAge.UNKNOWN -> PlatformAge.NO_SIGNAL
+            else -> range
+        }
     }
 
     // Values of AgeSignalsStatus.SHARED and SignificantChangeStatus.PENDING / DECLINED (age-signals 0.0.6).
     const val SIGNALS_SHARED = 1
+    const val SIGNALS_NOT_SHARED = 2
     const val CHANGE_PENDING = 2
     const val CHANGE_DECLINED = 3
 

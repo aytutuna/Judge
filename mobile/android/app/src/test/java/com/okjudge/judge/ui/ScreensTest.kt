@@ -878,6 +878,13 @@ class ScreensTest {
     }
 
     @Test
+    fun deleteForm_wrongPassword_alsoOffersSigningInAgain() {
+        form(DeleteUi(hasPassword = true, problem = DeleteProblem.PASSWORD_WRONG))
+        compose.onNodeWithTag(DeleteTags.SIGN_IN_AGAIN).assertExists()
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertExists()
+    }
+
+    @Test
     fun deleteForm_reauthWithAPassword_offersBothWays() {
         val sent = mutableListOf<String?>()
         var again = 0

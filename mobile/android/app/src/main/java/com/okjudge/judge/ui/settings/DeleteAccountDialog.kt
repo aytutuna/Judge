@@ -116,7 +116,7 @@ fun DeleteAccountForm(
             }
             TextButton(onClick = { ui.onClearProblem(); onDismiss() }) { Text(s.appCancel, color = Palette.ink) }
             val reauth = ui.problem == DeleteProblem.REAUTH_REQUIRED
-            if (reauth) {
+            if (reauth || ui.problem == DeleteProblem.PASSWORD_WRONG) {
                 TextButton(onClick = ui.onSignInAgain, enabled = !busy, modifier = Modifier.testTag(DeleteTags.SIGN_IN_AGAIN)) {
                     Text(s.accountSignOut, color = Palette.danger)
                 }

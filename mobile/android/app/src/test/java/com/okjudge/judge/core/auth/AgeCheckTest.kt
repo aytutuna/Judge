@@ -40,11 +40,14 @@ class AgeCheckTest {
         assertEquals(PlatformAge.MINOR, AgeCheck.fromSignals(shared, 13, 15, 0))
         assertEquals(PlatformAge.MINOR, AgeCheck.fromSignals(shared, 16, 17, 1))
         assertEquals(PlatformAge.UNDER13, AgeCheck.fromSignals(shared, 0, 12, 0))
-        assertEquals("not shared", PlatformAge.UNKNOWN, AgeCheck.fromSignals(2, 18, null, 0))
+        assertEquals("a clear not-shared is an answer", PlatformAge.NO_SIGNAL, AgeCheck.fromSignals(2, 18, null, 0))
         assertEquals("verification required", PlatformAge.UNKNOWN, AgeCheck.fromSignals(3, 18, null, 0))
         assertEquals("unspecified", PlatformAge.UNKNOWN, AgeCheck.fromSignals(0, 18, null, 0))
         assertEquals(PlatformAge.UNKNOWN, AgeCheck.fromSignals(null, 18, null, 0))
-        assertEquals("no range", PlatformAge.UNKNOWN, AgeCheck.fromSignals(shared, null, null, 0))
+        assertEquals("shared without a usable range is an answer", PlatformAge.NO_SIGNAL, AgeCheck.fromSignals(shared, null, null, 0))
+        assertEquals(PlatformAge.NO_SIGNAL, AgeCheck.fromSignals(shared, 15, 20, 0))
+        assertNull("nothing to report", AgeCheck.report(PlatformAge.NO_SIGNAL, done))
+        assertNull(AgeCheck.report(PlatformAge.UNKNOWN, done))
     }
 
     @Test

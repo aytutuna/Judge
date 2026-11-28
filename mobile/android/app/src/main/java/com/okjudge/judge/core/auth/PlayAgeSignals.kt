@@ -29,9 +29,10 @@ class PlayAgeSignals(context: Context) : AgeSignalSource {
         return try {
             val manager = AgeSignalsManagerFactory.create(appContext)
             val access = manager.requestAgeSignalsAccess(AgeSignalsAccessRequest.builder().setActivity(activity).build()).await()
-            if (access.ageSignalsStatus() != AgeSignalsStatus.SHARED) return PlatformAge.UNKNOWN
+            val status = access.ageSignalsStatus()
+            if (status != AgeSignalsStatus.SHARED) return AgeCheck.fromSignals(status, null, null, null)
             val result = manager.checkAgeSignals(AgeSignalsRequest.builder().build()).await()
-            AgeCheck.fromSignals(access.ageSignalsStatus(), result.ageLower(), result.ageUpper(), result.significantChangeStatus())
+            AgeCheck.fromSignals(status, result.ageLower(), result.ageUpper(), result.significantChangeStatus())
         } catch (e: CancellationException) {
             throw e
         } catch (_: Exception) {

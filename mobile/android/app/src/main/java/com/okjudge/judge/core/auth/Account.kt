@@ -161,9 +161,16 @@ class Account(
     }
 
     /** The phone's answer, asked at most once per run; null until it answered. */
-    private val _platformAge = MutableStateFlow<PlatformAge?>(if (ageHold.held) PlatformAge.MINOR_UNAPPROVED else null)
+    private val _platformAge = MutableStateFlow<PlatformAge?>(null)
     private var askedThisRun = false
+
+    /**
+     * The approval cover is up. Seeded from the stored flag, so it drives only the gate and [ageRefusal];
+     * what is reported to the server is only what Play answered on this run ([_platformAge]).
+     */
+    private val _held = MutableStateFlow(ageHold.held)
     val platformAge: StateFlow<PlatformAge?> = _platformAge.asStateFlow()
+    val held: StateFlow<Boolean> = _held.asStateFlow()
     private val _askingPlatform = MutableStateFlow(false)
     private var askingPlatform: Boolean
         get() = _askingPlatform.value
@@ -184,8 +191,8 @@ class Account(
     /** The session whose store signal the server already has, so it is sent once per launch. */
     private var signalSentFor: String? = null
 
-    val ageGate: StateFlow<AgeGate> = combine(_state, _platformAge) { state, platform ->
-        AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age, platform)
+    val ageGate: StateFlow<AgeGate> = combine(_state, _held) { state, held ->
+        AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age, if (held) PlatformAge.MINOR_UNAPPROVED else null)
     }.stateIn(scope, SharingStarted.Eagerly, AgeGate.NONE)
 
     /** The phone's check or a report is running: actions wait a moment, with no change to the account. */
@@ -281,7 +288,7 @@ class Account(
 
     /** Asks again while the approval cover is up; the hold stays until Play gives a shared answer that is not a held minor. */
     fun recheckPlatformAge(host: Context) {
-        if (_platformAge.value == PlatformAge.MINOR_UNAPPROVED) askPlatformAge(host)
+        if (_held.value) askPlatformAge(host)
     }
 
     private fun askPlatformAge(host: Context) {
@@ -294,9 +301,11 @@ class Account(
             } finally {
                 askingPlatform = false
             }
-            if (!(answer == PlatformAge.UNKNOWN && _platformAge.value == PlatformAge.MINOR_UNAPPROVED)) {
-                _platformAge.value = answer
-                ageHold.held = answer == PlatformAge.MINOR_UNAPPROVED
+            _platformAge.value = answer
+            // Only a definite answer moves the hold; an error, timeout or dismissed prompt leaves it as it was.
+            if (answer != PlatformAge.UNKNOWN) {
+                _held.value = answer == PlatformAge.MINOR_UNAPPROVED
+                ageHold.held = _held.value
             }
             settleAge()
         }
@@ -313,7 +322,7 @@ class Account(
     fun ageRefusal(): String? {
         val age = (_state.value as? State.SignedIn)?.me?.age ?: return null
         return when {
-            age.blocked || _platformAge.value == PlatformAge.MINOR_UNAPPROVED -> AgeCheck.BLOCKED
+            age.blocked || _held.value -> AgeCheck.BLOCKED
             !age.confirmed -> AgeCheck.UNCONFIRMED
             askingPlatform || _agePosting.value -> AgeCheck.CHECKING
             else -> null
