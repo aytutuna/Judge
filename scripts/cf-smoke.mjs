@@ -206,7 +206,7 @@ async function run() {
     check("the judges were called through the fake endpoint", claude.length >= 2, `${claude.length} calls`);
     check(
       "judging ran in a JobRunner call back into the app",
-      devLog.length === 0 || devLog.join("").includes("[job-runner] premium finished"),
+      Boolean(process.env.SMOKE_BASE) || devLog.join("").includes("[job-runner] premium finished"),
     );
     const page = await api("GET", `/v/${id}`);
     check("the share page of a live verdict renders", page.status === 200, `${page.status}`);
