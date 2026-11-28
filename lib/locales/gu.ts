@@ -837,6 +837,8 @@ const gu: Locale = {
     "age.blocked":
       "આ એકાઉન્ટ Judge વાપરી શકતું નથી, કારણ કે Judge ફક્ત 13 કે તેથી વધુ ઉંમરના લોકો માટે છે.",
     "age.blockedContact": "તમને લાગે છે કે આ ભૂલ છે? {email} પર ઈમેલ કરો.",
+    "age.approvalTitle": "માતાપિતાએ મંજૂરી આપવી પડશે",
+    "age.approval": "Judge માં થયેલા ફેરફારને માતાપિતા અથવા વાલી મંજૂર કરે તેની Google Play રાહ જોઈ રહ્યું છે. મંજૂરી મળ્યા પછી ફરી તપાસો.",
     "error.password_wrong": "આ પાસવર્ડ સાચો નથી.",
     "error.password_required": "તમારો હાલનો પાસવર્ડ દાખલ કરો.",
     "error.age_blocked": "Judge ફક્ત 13 કે તેથી વધુ ઉંમરના લોકો માટે છે.",

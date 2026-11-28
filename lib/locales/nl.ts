@@ -862,6 +862,8 @@ const nl: Locale = {
     "age.blocked":
       "Dit account kan Judge niet gebruiken, omdat Judge alleen voor mensen van 13 jaar en ouder is.",
     "age.blockedContact": "Denk je dat dit een vergissing is? Mail naar {email}.",
+    "age.approvalTitle": "Een ouder moet goedkeuren",
+    "age.approval": "Google Play wacht tot een ouder of voogd een wijziging in Judge goedkeurt. Controleer het daarna opnieuw.",
     "error.password_wrong": "Dat wachtwoord klopt niet.",
     "error.password_required": "Vul je huidige wachtwoord in.",
     "error.age_blocked": "Judge is alleen voor mensen van 13 jaar en ouder.",

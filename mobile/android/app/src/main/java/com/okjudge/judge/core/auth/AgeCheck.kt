@@ -7,8 +7,24 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneOffset
 
-/** What the phone's own age signal says about the user. Only ever reported, never acted on here. */
-enum class PlatformAge { ADULT, MINOR, UNDER13, UNKNOWN }
+/**
+ * What the phone's own age signal says about the user. It is reported to the server, except that
+ * [MINOR_UNAPPROVED] also holds the app behind the approval cover.
+ */
+enum class PlatformAge {
+    ADULT,
+    MINOR,
+    UNDER13,
+
+    /** A minor whose parent's approval of a significant change is pending or was declined. */
+    MINOR_UNAPPROVED,
+
+    /** Play answered and has nothing to report (not shared, or no usable range). Not a held minor. */
+    NO_SIGNAL,
+
+    /** Play could not be asked or gave no final answer (error, timeout, cancelled prompt, verification pending). */
+    UNKNOWN,
+}
 
 /** What the app shows over everything else for the age check. */
 enum class AgeGate {
@@ -19,6 +35,9 @@ enum class AgeGate {
 
     /** A final block: Judge can't be used. */
     BLOCKED,
+
+    /** The store holds the account until a parent approves: nothing past the age step. */
+    APPROVAL,
 }
 
 /** The phone's age signal (Google Play Age Signals in the app). */
@@ -59,20 +78,43 @@ object AgeCheck {
         else -> PlatformAge.UNKNOWN
     }
 
+    /**
+     * The store's full answer as one result. A shared answer without a usable range is
+     * [PlatformAge.NO_SIGNAL]: Play answered, so any earlier hold ends. Anything not shared (the person's own choice
+     * to decline, verification still required, unspecified, missing) is [PlatformAge.UNKNOWN]: it says nothing about age. A minor whose
+     * significant change is pending or declined is [PlatformAge.MINOR_UNAPPROVED] until the store shows approval.
+     */
+    fun fromSignals(accessStatus: Int?, lower: Int?, upper: Int?, changeStatus: Int?): PlatformAge {
+        if (accessStatus != SIGNALS_SHARED) return PlatformAge.UNKNOWN
+        val range = fromRange(lower, upper)
+        val held = changeStatus == CHANGE_PENDING || changeStatus == CHANGE_DECLINED
+        return when {
+            range == PlatformAge.MINOR && held -> PlatformAge.MINOR_UNAPPROVED
+            range == PlatformAge.UNKNOWN -> PlatformAge.NO_SIGNAL
+            else -> range
+        }
+    }
+
+    // Values of AgeSignalsStatus.SHARED and SignificantChangeStatus.PENDING / DECLINED (age-signals 0.0.6).
+    const val SIGNALS_SHARED = 1
+    const val CHANGE_PENDING = 2
+    const val CHANGE_DECLINED = 3
+
     /** What to tell the server about the store's answer, or null when there is nothing to say or the block is final. */
     fun report(platform: PlatformAge?, age: AgeStatus?): Report? = when {
         age == null || (age.blocked && !age.needsDob) -> null
         platform == PlatformAge.ADULT -> Report(adult = true)
-        platform == PlatformAge.MINOR -> Report(adult = false)
+        platform == PlatformAge.MINOR || platform == PlatformAge.MINOR_UNAPPROVED -> Report(adult = false)
         platform == PlatformAge.UNDER13 -> Report(adult = false, under13 = true)
         else -> null
     }
 
-    /** Decided from the server's last word, in this order: a final block, the date step, nothing. */
-    fun gate(signedIn: Boolean, age: AgeStatus?): AgeGate = when {
+    /** Decided in this order: a final block, the date step, the store's pending approval, nothing. */
+    fun gate(signedIn: Boolean, age: AgeStatus?, platform: PlatformAge? = null): AgeGate = when {
         !signedIn || age == null -> AgeGate.NONE
         age.blocked && !age.needsDob -> AgeGate.BLOCKED
         age.needsDob -> AgeGate.DATE
+        platform == PlatformAge.MINOR_UNAPPROVED -> AgeGate.APPROVAL
         else -> AgeGate.NONE
     }
 

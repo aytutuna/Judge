@@ -54,6 +54,14 @@ enum class SignInError {
     FAILED,
 }
 
+/** Why a deletion needs another step; the delete sheet shows it. Other failures are [Account.Notice.DELETE_FAILED]. */
+enum class DeleteProblem {
+    /** No password to check and the sign-in is too old: sign in again first. */
+    REAUTH_REQUIRED,
+    PASSWORD_WRONG,
+    RATE_LIMITED,
+}
+
 sealed interface SignInResult {
     data object Success : SignInResult
     data object Cancelled : SignInResult
@@ -81,6 +89,7 @@ class Account(
     private val ageSignals: AgeSignalSource = AgeSignalSource.None,
     /** A phone that hasn't answered by then counts as unknown. */
     private val platformTimeoutMs: Long = 10_000,
+    private val ageHold: AgeHoldStore = AgeHoldStore.Memory(),
 ) {
     sealed interface State {
         /** The stored token is still being read off the main thread. */
@@ -144,9 +153,24 @@ class Account(
     private val _deleteFailed = MutableStateFlow(false)
     val deleteFailed: StateFlow<Boolean> = _deleteFailed.asStateFlow()
 
+    private val _deleteProblem = MutableStateFlow<DeleteProblem?>(null)
+    val deleteProblem: StateFlow<DeleteProblem?> = _deleteProblem.asStateFlow()
+
+    fun clearDeleteProblem() {
+        _deleteProblem.value = null
+    }
+
     /** The phone's answer, asked at most once per run; null until it answered. */
     private val _platformAge = MutableStateFlow<PlatformAge?>(null)
+    private var askedThisRun = false
+
+    /**
+     * The approval cover is up. Seeded from the stored flag, so it drives only the gate and [ageRefusal];
+     * what is reported to the server is only what Play answered on this run ([_platformAge]).
+     */
+    private val _held = MutableStateFlow(ageHold.held)
     val platformAge: StateFlow<PlatformAge?> = _platformAge.asStateFlow()
+    val held: StateFlow<Boolean> = _held.asStateFlow()
     private val _askingPlatform = MutableStateFlow(false)
     private var askingPlatform: Boolean
         get() = _askingPlatform.value
@@ -167,8 +191,8 @@ class Account(
     /** The session whose store signal the server already has, so it is sent once per launch. */
     private var signalSentFor: String? = null
 
-    val ageGate: StateFlow<AgeGate> = _state.map { state ->
-        AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age)
+    val ageGate: StateFlow<AgeGate> = combine(_state, _held) { state, held ->
+        AgeCheck.gate(state is State.SignedIn, (state as? State.SignedIn)?.me?.age, if (held) PlatformAge.MINOR_UNAPPROVED else null)
     }.stateIn(scope, SharingStarted.Eagerly, AgeGate.NONE)
 
     /** The phone's check or a report is running: actions wait a moment, with no change to the account. */
@@ -248,7 +272,7 @@ class Account(
      * "adult" can later clear an earlier "minor".
      */
     fun needsPlatformAge(onSignIn: Boolean): Boolean {
-        if (_platformAge.value != null || askingPlatform) return false
+        if (askedThisRun || askingPlatform) return false
         return when (val state = _state.value) {
             State.Loading -> false
             State.SignedOut -> onSignIn
@@ -258,8 +282,22 @@ class Account(
 
     /** Asks the phone's age signal; [host] is the Activity its prompt may attach to. */
     fun checkPlatformAge(host: Context) {
-        if (_platformAge.value != null || askingPlatform) return
+        if (askedThisRun) return
+        askPlatformAge(host)
+    }
+
+    /**
+     * Asks again while the approval cover is up. The hold ends only on a shared answer that is not a held minor;
+     * declining to share, errors, timeouts and dismissed prompts leave it up.
+     */
+    fun recheckPlatformAge(host: Context) {
+        if (_held.value) askPlatformAge(host)
+    }
+
+    private fun askPlatformAge(host: Context) {
+        if (askingPlatform) return
         askingPlatform = true
+        askedThisRun = true
         scope.launch {
             val answer = try {
                 withTimeoutOrNull(platformTimeoutMs) { ageSignals.check(host) } ?: PlatformAge.UNKNOWN
@@ -267,6 +305,11 @@ class Account(
                 askingPlatform = false
             }
             _platformAge.value = answer
+            // Only a definite answer moves the hold; an error, timeout or dismissed prompt leaves it as it was.
+            if (answer != PlatformAge.UNKNOWN) {
+                _held.value = answer == PlatformAge.MINOR_UNAPPROVED
+                ageHold.held = _held.value
+            }
             settleAge()
         }
     }
@@ -282,7 +325,7 @@ class Account(
     fun ageRefusal(): String? {
         val age = (_state.value as? State.SignedIn)?.me?.age ?: return null
         return when {
-            age.blocked -> AgeCheck.BLOCKED
+            age.blocked || _held.value -> AgeCheck.BLOCKED
             !age.confirmed -> AgeCheck.UNCONFIRMED
             askingPlatform || _agePosting.value -> AgeCheck.CHECKING
             else -> null
@@ -430,9 +473,9 @@ class Account(
      * Sets or replaces the password of the signed-in account; null when saved.
      * [current] replaces a password on a session that is not a fresh code sign-in.
      */
-    suspend fun setPassword(password: String, current: String?): SignInError? {
+    suspend fun setPassword(password: String, current: String?, lang: AppLang): SignInError? {
         val asked = tokens.get()
-        return when (val res = api.setPassword(password, current)) {
+        return when (val res = api.setPassword(password, current, lang)) {
             is ApiResult.Ok -> {
                 if (tokens.get() == asked) {
                     val signedIn = _state.value as? State.SignedIn
@@ -452,11 +495,24 @@ class Account(
         // Stored token and state change together, even if the screen goes away now.
         withContext(NonCancellable) {
             withContext(io) { tokens.set(grant.token) }
+            forgetDeleteState()
             _state.value = State.SignedIn()
             refresh()
             onSignedIn()
         }
         return SignInResult.Success
+    }
+
+    /**
+     * After the store's restore: asks the server to read the account's store plans and shows the balance
+     * it answers with. Any failure (503 not_configured, a rate limit, offline) is left alone: /me is read
+     * again by the caller.
+     */
+    suspend fun syncPurchases() {
+        val asked = tokens.get() ?: return
+        val res = api.syncPurchases()
+        if (tokens.get() != asked) return
+        (res as? ApiResult.Ok)?.value?.entitlement?.let(::applyEntitlement)
     }
 
     /** Ends the session on the server when it can, and on the phone always. */
@@ -470,12 +526,16 @@ class Account(
         }
     }
 
-    /** Deletes the account; true when the server confirmed. */
-    suspend fun deleteAccount(): Boolean {
+    /**
+     * Deletes the account; true when the server confirmed. [password] goes along for an account that has
+     * one. A refusal that the person can fix lands in [deleteProblem] instead of the failure notice.
+     */
+    suspend fun deleteAccount(password: String? = null): Boolean {
         if (!_working.compareAndSet(expect = false, update = true)) return false
         _deleteFailed.value = false
+        _deleteProblem.value = null
         try {
-            val res = api.deleteAccount()
+            val res = api.deleteAccount(password)
             val deleted = when {
                 res is ApiResult.Ok -> true
                 // No answer in time: the server may have finished anyway. A session
@@ -491,7 +551,10 @@ class Account(
             }
             // An expired session was already handled (and announced) by onSessionExpired.
             val error = (res as? ApiResult.Err)?.error
-            if (error == null || !error.isSigninRequired()) {
+            val problem = error?.let(::deleteProblemOf)
+            if (problem != null) {
+                _deleteProblem.value = problem
+            } else if (error == null || !error.isSigninRequired()) {
                 _deleteFailed.value = true
                 _notices.trySend(Notice.DELETE_FAILED)
             }
@@ -508,6 +571,7 @@ class Account(
         val wasSignedIn = _state.value is State.SignedIn
         tokens.clear()
         forgetAgeAnswers()
+        forgetDeleteState()
         if (wasSignedIn) onLeaving()
         _state.value = State.SignedOut
         if (wasSignedIn) _notices.trySend(Notice.SESSION_EXPIRED)
@@ -516,10 +580,17 @@ class Account(
     private suspend fun endLocally(notice: Notice) {
         withContext(io) { tokens.clear() }
         forgetAgeAnswers()
+        forgetDeleteState()
         onLeaving()
         _state.value = State.SignedOut
         onEndedByUser()
         _notices.trySend(notice)
+    }
+
+    /** A refusal or failure from an earlier session must not greet the next one. */
+    private fun forgetDeleteState() {
+        _deleteProblem.value = null
+        _deleteFailed.value = false
     }
 
     /** The next person to sign in on this phone is reported afresh; the phone's own answer stays. */
@@ -532,6 +603,16 @@ class Account(
         private val EMAIL = Regex("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
 
         fun looksLikeEmail(email: String): Boolean = EMAIL.matches(email.trim())
+
+        fun deleteProblemOf(e: UiError): DeleteProblem? {
+            if (e !is UiError.Api) return null
+            return when {
+                e.status == 429 -> DeleteProblem.RATE_LIMITED
+                e.status == 403 && e.code == "reauth_required" -> DeleteProblem.REAUTH_REQUIRED
+                e.status == 403 && e.code == "password_wrong" -> DeleteProblem.PASSWORD_WRONG
+                else -> null
+            }
+        }
 
         private fun UiError.isSigninRequired() = this is UiError.Api && status == 401 && code == "signin_required"
 

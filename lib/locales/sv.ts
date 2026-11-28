@@ -854,6 +854,8 @@ const sv: Locale = {
     "age.blocked":
       "Det här kontot kan inte använda Judge, eftersom Judge bara är för personer som är 13 år eller äldre.",
     "age.blockedContact": "Tror du att det är ett misstag? Mejla {email}.",
+    "age.approvalTitle": "En förälder måste godkänna",
+    "age.approval": "Google Play väntar på att en förälder eller vårdnadshavare godkänner en ändring i Judge. Kontrollera igen när det är gjort.",
     "error.password_wrong": "Lösenordet stämmer inte.",
     "error.password_required": "Ange ditt nuvarande lösenord.",
     "error.age_blocked": "Judge är bara för personer som är 13 år eller äldre.",

@@ -260,11 +260,12 @@ private fun AccountGroup(
 fun AccountScreen(
     account: Account.State,
     busy: Boolean,
-    onDelete: () -> Unit,
+    onDelete: (String?) -> Unit,
     onBack: () -> Unit,
     onManageSubscription: () -> Unit,
     modifier: Modifier = Modifier,
     export: ExportUi? = null,
+    delete: DeleteUi = DeleteUi(),
 ) {
     val s = LocalStrings.current
     // A subscription that still renews keeps billing after the account is gone.
@@ -306,25 +307,13 @@ fun AccountScreen(
         }
     }
     if (confirmDelete && signedIn) {
-        AlertDialog(
-            onDismissRequest = { confirmDelete = false },
-            title = { Text(s.appAccountDeleteTitle, style = JudgeType.sectionTitle) },
-            text = {
-                Text(
-                    if (billing) s.appAccountDeleteBody + "\n\n" + s.appAccountDeleteSubscription else s.appAccountDeleteBody,
-                    style = JudgeType.body,
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { confirmDelete = false; onDelete() }) { Text(s.appAccountDeleteConfirm, color = Palette.danger) }
-            },
-            dismissButton = {
-                Row {
-                    if (billing) TextButton(onClick = onManageSubscription) { Text(s.appAccountManageSubscription, color = Palette.ink) }
-                    TextButton(onClick = { confirmDelete = false }) { Text(s.appCancel, color = Palette.ink) }
-                }
-            },
-            containerColor = Palette.paper,
+        DeleteAccountDialog(
+            ui = delete,
+            busy = busy,
+            billing = billing,
+            onDelete = onDelete,
+            onManageSubscription = if (billing) onManageSubscription else null,
+            onDismiss = { confirmDelete = false },
         )
     }
 }

@@ -541,6 +541,8 @@
     <string name="age_blocked_title">Judge untuk usia 13 tahun ke atas</string>
     <string name="age_blocked">Akun ini tidak bisa memakai Judge, karena Judge hanya untuk orang berusia 13 tahun ke atas.</string>
     <string name="age_blocked_contact">Merasa ini keliru? Kirim email ke %1$s.</string>
+    <string name="age_approval_title">Orang tua harus menyetujui</string>
+    <string name="age_approval">Google Play menunggu orang tua atau wali menyetujui perubahan pada Judge. Setelah disetujui, periksa lagi.</string>
     <string name="error_password_wrong">Kata sandi itu tidak benar.</string>
     <string name="error_password_required">Masukkan kata sandimu saat ini.</string>
     <string name="error_reauth_required">Keluar dan masuk lagi, lalu hapus akunmu.</string>

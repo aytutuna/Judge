@@ -874,6 +874,8 @@ const de: Locale = {
     "age.blockedTitle": "Judge ist für Menschen ab 13",
     "age.blocked": "Dieses Konto kann Judge nicht nutzen, weil Judge nur für Menschen ab 13 ist.",
     "age.blockedContact": "Du denkst, das ist ein Irrtum? Schreib an {email}.",
+    "age.approvalTitle": "Ein Elternteil muss zustimmen",
+    "age.approval": "Google Play wartet darauf, dass ein Elternteil oder Erziehungsberechtigter eine Änderung an Judge genehmigt. Prüf danach noch einmal.",
     "error.password_wrong": "Dieses Passwort stimmt nicht.",
     "error.password_required": "Gib dein aktuelles Passwort ein.",
     "error.age_blocked": "Judge ist nur für Menschen ab 13.",

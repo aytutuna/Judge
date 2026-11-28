@@ -856,6 +856,8 @@ const ptBR: Locale = {
     "age.blocked":
       "Esta conta não pode usar o Judge, porque o Judge é só para quem tem 13 anos ou mais.",
     "age.blockedContact": "Acha que isso é um engano? Escreva para {email}.",
+    "age.approvalTitle": "Um responsável precisa aprovar",
+    "age.approval": "O Google Play está esperando um responsável aprovar uma mudança no Judge. Quando isso acontecer, verifique de novo.",
     "error.password_wrong": "Essa senha não está correta.",
     "error.password_required": "Digite sua senha atual.",
     "error.age_blocked": "O Judge é só para quem tem 13 anos ou mais.",

@@ -550,6 +550,8 @@
     <string name="age_blocked_title">Judge 13 yaş ve üzeri içindir</string>
     <string name="age_blocked">Bu hesap Judge\'ı kullanamaz, çünkü Judge yalnızca 13 yaş ve üzeri kişiler içindir.</string>
     <string name="age_blocked_contact">Bunun bir hata olduğunu mu düşünüyorsun? %1$s adresine yaz.</string>
+    <string name="age_approval_title">Bir ebeveynin onay vermesi gerekiyor</string>
+    <string name="age_approval">Google Play, Judge\'daki bir değişiklik için bir ebeveynin veya velinin onay vermesini bekliyor. Onay verildikten sonra tekrar kontrol et.</string>
     <string name="error_password_wrong">Bu parola doğru değil.</string>
     <string name="error_password_required">Şu anki parolanı gir.</string>
     <string name="error_reauth_required">Çıkış yap, tekrar giriş yap, sonra hesabını sil.</string>

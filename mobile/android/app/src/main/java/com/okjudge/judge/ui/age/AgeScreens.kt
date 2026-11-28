@@ -60,6 +60,8 @@ import com.okjudge.judge.i18n.LocalStrings
 import com.okjudge.judge.ui.components.PrimaryButton
 import com.okjudge.judge.ui.components.TextAction
 import com.okjudge.judge.ui.theme.JudgeShapes
+import com.okjudge.judge.ui.settings.DeleteAccountDialog
+import com.okjudge.judge.ui.settings.DeleteUi
 import com.okjudge.judge.ui.theme.JudgeType
 import com.okjudge.judge.ui.theme.Palette
 import java.time.Instant
@@ -77,6 +79,8 @@ object AgeTags {
     const val CONFIRM_YES = "age.confirmYes"
     const val CHANGE = "age.change"
     const val BLOCKED = "age.blocked"
+    const val APPROVAL = "age.approval"
+    const val CHECK_AGAIN = "age.checkAgain"
     const val SIGN_OUT = "age.signOut"
     const val DELETE = "age.delete"
     const val ERROR = "age.error"
@@ -107,15 +111,15 @@ fun AgeDateScreen(
     failed: Boolean,
     onSubmit: (LocalDate) -> Unit,
     onSignOut: () -> Unit,
-    onDelete: () -> Unit,
-    deleteFailed: Boolean = false,
+    onDelete: (String?) -> Unit,
+    delete: DeleteUi = DeleteUi(),
     /** The person went back to the picker or is about to confirm: the last failure no longer applies. */
     onEdit: () -> Unit = {},
     nowMillis: () -> Long = System::currentTimeMillis,
 ) {
     // The input pattern, the first weekday and Material's texts come from the app's language, not the phone's.
     InAppLanguage(LocalLang.current) {
-        AgeDateBody(busy, failed, onSubmit, onSignOut, onDelete, deleteFailed, onEdit, nowMillis)
+        AgeDateBody(busy, failed, onSubmit, onSignOut, onDelete, delete, onEdit, nowMillis)
     }
 }
 
@@ -126,8 +130,8 @@ private fun AgeDateBody(
     failed: Boolean,
     onSubmit: (LocalDate) -> Unit,
     onSignOut: () -> Unit,
-    onDelete: () -> Unit,
-    deleteFailed: Boolean,
+    onDelete: (String?) -> Unit,
+    delete: DeleteUi,
     onEdit: () -> Unit,
     nowMillis: () -> Long,
 ) {
@@ -230,7 +234,7 @@ private fun AgeDateBody(
             enabled = !busy,
             modifier = Modifier.padding(top = 14.dp).align(Alignment.CenterHorizontally).testTag(AgeTags.SIGN_OUT),
         )
-        DeleteAccount(busy, deleteFailed, onDelete, Modifier.align(Alignment.CenterHorizontally))
+        DeleteAccount(busy, delete, onDelete, Modifier.align(Alignment.CenterHorizontally))
     }
 }
 
@@ -240,9 +244,9 @@ fun AgeBlockedScreen(
     signedIn: Boolean,
     busy: Boolean,
     onSignOut: () -> Unit,
-    onDelete: () -> Unit,
+    onDelete: (String?) -> Unit,
     onContact: () -> Unit,
-    deleteFailed: Boolean = false,
+    delete: DeleteUi = DeleteUi(),
 ) {
     val s = LocalStrings.current
     val linkStyle = TextLinkStyles(SpanStyle(color = Palette.terraInk, textDecoration = TextDecoration.Underline))
@@ -269,28 +273,63 @@ fun AgeBlockedScreen(
                 onClick = onSignOut,
                 modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(AgeTags.SIGN_OUT),
             )
-            DeleteAccount(busy, deleteFailed, onDelete, Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally))
+            DeleteAccount(busy, delete, onDelete, Modifier.padding(top = 8.dp).align(Alignment.CenterHorizontally))
         }
+    }
+}
+
+/**
+ * The store has not shown a parent's approval of a change yet (pending or declined): nothing past this
+ * until Play says approved. Asking again is the only way forward besides signing out or deleting.
+ */
+@Composable
+fun AgeApprovalScreen(
+    busy: Boolean,
+    onCheckAgain: () -> Unit,
+    onSignOut: () -> Unit,
+    onDelete: (String?) -> Unit,
+    delete: DeleteUi = DeleteUi(),
+) {
+    val s = LocalStrings.current
+    Cover(Modifier.testTag(AgeTags.APPROVAL)) {
+        Text(s.ageApprovalTitle, style = JudgeType.sectionTitle, modifier = Modifier.semantics { heading() })
+        Text(
+            s.ageApproval,
+            style = JudgeType.lead,
+            modifier = Modifier.padding(top = 10.dp),
+        )
+        PrimaryButton(
+            text = s.appRetry,
+            enabled = !busy,
+            onClick = onCheckAgain,
+            modifier = Modifier.fillMaxWidth().padding(top = 28.dp).testTag(AgeTags.CHECK_AGAIN),
+        )
+        TextAction(
+            s.accountSignOut,
+            onClick = onSignOut,
+            color = Palette.ink2,
+            enabled = !busy,
+            modifier = Modifier.padding(top = 14.dp).align(Alignment.CenterHorizontally).testTag(AgeTags.SIGN_OUT),
+        )
+        DeleteAccount(busy, delete, onDelete, Modifier.align(Alignment.CenterHorizontally))
     }
 }
 
 /** "Delete account" with the same confirmation as in Settings. */
 @Composable
-private fun DeleteAccount(busy: Boolean, failed: Boolean, onDelete: () -> Unit, modifier: Modifier = Modifier) {
+private fun DeleteAccount(busy: Boolean, delete: DeleteUi, onDelete: (String?) -> Unit, modifier: Modifier = Modifier) {
     val s = LocalStrings.current
     var confirm by rememberSaveable { mutableStateOf(false) }
-    if (failed) ErrorNote(s.accountDeleteFailed)
+    if (delete.failed && !confirm) ErrorNote(s.accountDeleteFailed)
     TextAction(s.accountDelete, onClick = { confirm = true }, color = Palette.danger, enabled = !busy, modifier = modifier.testTag(AgeTags.DELETE))
     if (confirm) {
-        AlertDialog(
-            onDismissRequest = { confirm = false },
-            title = { Text(s.appAccountDeleteTitle, style = JudgeType.sectionTitle) },
-            text = { Text(s.appAccountDeleteBody, style = JudgeType.body) },
-            confirmButton = {
-                TextButton(onClick = { confirm = false; onDelete() }) { Text(s.appAccountDeleteConfirm, color = Palette.danger) }
-            },
-            dismissButton = { TextButton(onClick = { confirm = false }) { Text(s.appCancel, color = Palette.ink) } },
-            containerColor = Palette.paper,
+        DeleteAccountDialog(
+            ui = delete,
+            busy = busy,
+            billing = false,
+            onDelete = onDelete,
+            onManageSubscription = null,
+            onDismiss = { confirm = false },
         )
     }
 }

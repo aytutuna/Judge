@@ -559,6 +559,8 @@
     <string name="age_blocked_title">O Judge é só para quem tem 13 anos ou mais</string>
     <string name="age_blocked">Esta conta não pode usar o Judge, porque o Judge é só para quem tem 13 anos ou mais.</string>
     <string name="age_blocked_contact">Achas que isto é um engano? Escreve para %1$s.</string>
+    <string name="age_approval_title">Um dos pais tem de aprovar</string>
+    <string name="age_approval">O Google Play está à espera de que um dos pais ou um tutor aprove uma alteração no Judge. Quando isso acontecer, volta a verificar.</string>
     <string name="error_password_wrong">Essa palavra-passe não está correta.</string>
     <string name="error_password_required">Introduz a tua palavra-passe atual.</string>
     <string name="error_reauth_required">Sai e entra de novo, depois apaga a tua conta.</string>

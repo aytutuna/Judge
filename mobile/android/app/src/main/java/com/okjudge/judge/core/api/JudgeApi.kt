@@ -27,6 +27,7 @@ import com.okjudge.judge.core.model.MineVerdict
 import com.okjudge.judge.core.model.WrittenSides
 import com.okjudge.judge.core.model.decodeWrittenSides
 import com.okjudge.judge.core.model.NameMapping
+import com.okjudge.judge.core.model.PurchaseSyncResponse
 import com.okjudge.judge.core.model.ServerConfig
 import com.okjudge.judge.core.model.SessionGrant
 import com.okjudge.judge.core.model.StoredVerdict
@@ -470,6 +471,12 @@ class JudgeApi(
         return execute(getClient, req) { _, text -> WireJson.json.decodeFromString(MeResponse.serializer(), text) }
     }
 
+    /** POST /api/v1/me/purchases/sync: the server asks RevenueCat for the account's plans and answers with its balance. */
+    suspend fun syncPurchases(): ApiResult<PurchaseSyncResponse> {
+        val req = request(url("api", "v1", "me", "purchases", "sync")).post(EMPTY).build()
+        return execute(accountClient, req) { _, text -> WireJson.json.decodeFromString(PurchaseSyncResponse.serializer(), text) }
+    }
+
     /** POST /api/v1/me/age with the store's answer ([under13] only with `adult = false`). */
     suspend fun reportAge(adult: Boolean, under13: Boolean = false): ApiResult<AgeStatus> = postAge(
         buildJsonObject {
@@ -545,13 +552,17 @@ class JudgeApi(
         signIn = true,
     ) { _, text -> decodeGrant(text) }
 
-    /** POST /api/v1/me/password: sets the password, or replaces it ([current] unless the sign-in is fresh). */
-    suspend fun setPassword(password: String, current: String?): ApiResult<Unit> {
+    /**
+     * POST /api/v1/me/password: sets the password, or replaces it ([current] unless the sign-in is fresh).
+     * The server writes the "password changed" email in `lang`; OkHttp sends no Accept-Language.
+     */
+    suspend fun setPassword(password: String, current: String?, lang: AppLang): ApiResult<Unit> {
         val body = buildJsonObject {
             put("password", password)
             if (current != null) put("current", current)
         }.toString()
-        val req = request(url("api", "v1", "me", "password")).post(body.toRequestBody(JSON)).build()
+        val url = url("api", "v1", "me", "password").newBuilder().addQueryParameter("lang", lang.tag).build()
+        val req = request(url).post(body.toRequestBody(JSON)).build()
         return execute(accountClient, req) { _, _ -> }
     }
 
@@ -574,10 +585,16 @@ class JudgeApi(
         return execute(exportClient, req) { _, text -> text }
     }
 
-    /** DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). */
-    suspend fun deleteAccount(): ApiResult<Unit> {
-        val body = buildJsonObject { put("confirm", "delete") }.toString()
-        val req = request(url("api", "v1", "me")).delete(body.toRequestBody(JSON)).build()
+    /**
+     * DELETE /api/v1/me: deletes the account (the server keeps verdict rows, anonymized). Judge-Reauth
+     * tells the server this build can ask for a password; [password] goes along for an account that has one.
+     */
+    suspend fun deleteAccount(password: String? = null): ApiResult<Unit> {
+        val body = buildJsonObject {
+            put("confirm", "delete")
+            if (password != null) put("password", password)
+        }.toString()
+        val req = request(url("api", "v1", "me")).header("Judge-Reauth", "1").delete(body.toRequestBody(JSON)).build()
         return execute(deleteClient, req) { _, _ -> }
     }
 

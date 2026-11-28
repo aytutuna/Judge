@@ -823,6 +823,8 @@ const zhHant: Locale = {
     "age.blockedTitle": "Judge 僅限 13 歲以上",
     "age.blocked": "這個帳號不能使用 Judge，因為 Judge 僅限 13 歲以上的人使用。",
     "age.blockedContact": "覺得這是誤會嗎？請寄信到 {email}。",
+    "age.approvalTitle": "需要家長核准",
+    "age.approval": "Google Play 正在等待家長或監護人核准 Judge 的一項變更。核准後，請再檢查一次。",
     "error.password_wrong": "密碼不正確。",
     "error.password_required": "請輸入目前的密碼。",
     "error.age_blocked": "Judge 僅限 13 歲以上的人使用。",

@@ -559,6 +559,8 @@
     <string name="age_blocked_title">Judge e doar pentru persoane de 13 ani sau mai mari</string>
     <string name="age_blocked">Acest cont nu poate folosi Judge, pentru că Judge e doar pentru persoane de 13 ani sau mai mari.</string>
     <string name="age_blocked_contact">Crezi că e o greșeală? Scrie-ne la %1$s.</string>
+    <string name="age_approval_title">Un părinte trebuie să aprobe</string>
+    <string name="age_approval">Google Play așteaptă ca un părinte sau un tutore să aprobe o modificare în Judge. După ce o face, verifică din nou.</string>
     <string name="error_password_wrong">Parola nu este corectă.</string>
     <string name="error_password_required">Introdu parola actuală.</string>
     <string name="error_reauth_required">Deconectează-te și conectează-te din nou, apoi șterge contul.</string>

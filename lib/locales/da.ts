@@ -856,6 +856,8 @@ const da: Locale = {
     "age.blocked":
       "Denne konto kan ikke bruge Judge, fordi Judge kun er for personer på 13 år og derover.",
     "age.blockedContact": "Tror du, det er en fejl? Skriv til {email}.",
+    "age.approvalTitle": "En forælder skal godkende",
+    "age.approval": "Google Play venter på, at en forælder eller værge godkender en ændring i Judge. Når det er sket, så tjek igen.",
     "error.password_wrong": "Den adgangskode er ikke rigtig.",
     "error.password_required": "Skriv din nuværende adgangskode.",
     "error.age_blocked": "Judge er kun for personer på 13 år og derover.",

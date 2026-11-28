@@ -34,6 +34,44 @@ class AgeCheckTest {
     }
 
     @Test
+    fun signals_onlyASharedAnswerCounts() {
+        val shared = 1
+        assertEquals(PlatformAge.ADULT, AgeCheck.fromSignals(shared, 18, null, 0))
+        assertEquals(PlatformAge.MINOR, AgeCheck.fromSignals(shared, 13, 15, 0))
+        assertEquals(PlatformAge.MINOR, AgeCheck.fromSignals(shared, 16, 17, 1))
+        assertEquals(PlatformAge.UNDER13, AgeCheck.fromSignals(shared, 0, 12, 0))
+        assertEquals("not shared", PlatformAge.UNKNOWN, AgeCheck.fromSignals(2, 18, null, 0))
+        assertEquals("declining to share is not an answer", PlatformAge.UNKNOWN, AgeCheck.fromSignals(2, null, null, null))
+        assertEquals("verification required", PlatformAge.UNKNOWN, AgeCheck.fromSignals(3, 18, null, 0))
+        assertEquals("unspecified", PlatformAge.UNKNOWN, AgeCheck.fromSignals(0, 18, null, 0))
+        assertEquals(PlatformAge.UNKNOWN, AgeCheck.fromSignals(null, 18, null, 0))
+        assertEquals("shared without a usable range is an answer", PlatformAge.NO_SIGNAL, AgeCheck.fromSignals(shared, null, null, 0))
+        assertEquals(PlatformAge.NO_SIGNAL, AgeCheck.fromSignals(shared, 15, 20, 0))
+        assertNull("nothing to report", AgeCheck.report(PlatformAge.NO_SIGNAL, done))
+        assertNull(AgeCheck.report(PlatformAge.UNKNOWN, done))
+    }
+
+    @Test
+    fun signals_aMinorWithAPendingOrDeclinedChange_isHeld() {
+        assertEquals(PlatformAge.MINOR_UNAPPROVED, AgeCheck.fromSignals(1, 13, 15, 2))
+        assertEquals(PlatformAge.MINOR_UNAPPROVED, AgeCheck.fromSignals(1, 16, 17, 3))
+        assertEquals("approved", PlatformAge.MINOR, AgeCheck.fromSignals(1, 16, 17, 1))
+        assertEquals("unspecified", PlatformAge.MINOR, AgeCheck.fromSignals(1, 16, 17, 0))
+        assertEquals("an adult has nothing to approve", PlatformAge.ADULT, AgeCheck.fromSignals(1, 18, null, 2))
+        assertEquals("under 13 stays final", PlatformAge.UNDER13, AgeCheck.fromSignals(1, 0, 12, 3))
+    }
+
+    @Test
+    fun heldMinor_isReportedAsAMinor_andGatesTheApp() {
+        assertEquals(AgeCheck.Report(adult = false), AgeCheck.report(PlatformAge.MINOR_UNAPPROVED, done))
+        assertEquals(AgeGate.APPROVAL, AgeCheck.gate(signedIn = true, age = done, platform = PlatformAge.MINOR_UNAPPROVED))
+        assertEquals(AgeGate.NONE, AgeCheck.gate(signedIn = true, age = done, platform = PlatformAge.MINOR))
+        assertEquals(AgeGate.NONE, AgeCheck.gate(signedIn = false, age = done, platform = PlatformAge.MINOR_UNAPPROVED))
+        assertEquals("the date step comes first", AgeGate.DATE, AgeCheck.gate(true, needsDate, PlatformAge.MINOR_UNAPPROVED))
+        assertEquals("a final block stays", AgeGate.BLOCKED, AgeCheck.gate(true, finalBlock, PlatformAge.MINOR_UNAPPROVED))
+    }
+
+    @Test
     fun report_mapsTheStoreAnswer() {
         assertEquals(AgeCheck.Report(adult = true), AgeCheck.report(PlatformAge.ADULT, needsDate))
         assertEquals(AgeCheck.Report(adult = false), AgeCheck.report(PlatformAge.MINOR, needsDate))

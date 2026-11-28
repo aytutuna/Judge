@@ -163,7 +163,11 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
         if (s.busy == null && s.resendIn == 0) send(lang, s.mode)
     }
 
+    /** The app's language when the code was sent; the password call carries it for the server's email. */
+    private var lang = AppLang.EN
+
     private fun send(lang: AppLang, mode: SignInMode) {
+        this.lang = lang
         val email = _state.value.email.trim()
         _state.update { it.copy(busy = SignInBusy.SEND, error = null) }
         viewModelScope.launch {
@@ -220,7 +224,7 @@ class SignInViewModel(private val account: Account, private val last: LastSignIn
         }
         _state.update { it.copy(busy = SignInBusy.PASSWORD, error = null) }
         viewModelScope.launch {
-            val error = account.setPassword(s.password, null)
+            val error = account.setPassword(s.password, null, lang)
             _state.update {
                 when (error) {
                     null, SignInError.PASSWORD_NOT_TAKEN -> it.copy(busy = null, password = "", done = true)

@@ -559,6 +559,8 @@
     <string name="age_blocked_title">Judge és per a persones de 13 anys o més</string>
     <string name="age_blocked">Aquest compte no pot fer servir Judge, perquè Judge és només per a persones de 13 anys o més.</string>
     <string name="age_blocked_contact">Creus que és un error? Escriu a %1$s.</string>
+    <string name="age_approval_title">Cal l\'aprovació d\'un progenitor</string>
+    <string name="age_approval">Google Play espera que un progenitor o tutor aprovi un canvi a Judge. Quan ho hagi fet, torna a comprovar-ho.</string>
     <string name="error_password_wrong">Aquesta contrasenya no és correcta.</string>
     <string name="error_password_required">Escriu la teva contrasenya actual.</string>
     <string name="error_reauth_required">Tanca la sessió, torna a iniciar-la i elimina el compte.</string>

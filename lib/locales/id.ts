@@ -863,6 +863,8 @@ const id: Locale = {
     "age.blocked":
       "Akun ini tidak bisa memakai Judge, karena Judge hanya untuk orang berusia 13 tahun ke atas.",
     "age.blockedContact": "Merasa ini keliru? Kirim email ke {email}.",
+    "age.approvalTitle": "Orang tua harus menyetujui",
+    "age.approval": "Google Play menunggu orang tua atau wali menyetujui perubahan pada Judge. Setelah disetujui, periksa lagi.",
     "error.password_wrong": "Kata sandi itu tidak benar.",
     "error.password_required": "Masukkan kata sandimu saat ini.",
     "error.age_blocked": "Judge hanya untuk orang berusia 13 tahun ke atas.",

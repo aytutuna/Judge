@@ -868,6 +868,8 @@ const hu: Locale = {
     "age.blocked":
       "Ez a fiók nem használhatja a Judge-ot, mert a Judge csak 13 éves vagy idősebb embereknek szól.",
     "age.blockedContact": "Szerinted tévedés? Írj e-mailt ide: {email}.",
+    "age.approvalTitle": "Szülői jóváhagyás szükséges",
+    "age.approval": "A Google Play arra vár, hogy egy szülő vagy gondviselő jóváhagyjon egy változtatást a Judge-ban. Ha megtörtént, ellenőrizd újra.",
     "error.password_wrong": "Ez a jelszó nem helyes.",
     "error.password_required": "Add meg a jelenlegi jelszavad.",
     "error.age_blocked": "A Judge csak 13 éves vagy idősebb embereknek szól.",

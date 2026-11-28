@@ -874,6 +874,8 @@ const ca: Locale = {
     "age.blocked":
       "Aquest compte no pot fer servir Judge, perquè Judge és només per a persones de 13 anys o més.",
     "age.blockedContact": "Creus que és un error? Escriu a {email}.",
+    "age.approvalTitle": "Cal l'aprovació d'un progenitor",
+    "age.approval": "Google Play espera que un progenitor o tutor aprovi un canvi a Judge. Quan ho hagi fet, torna a comprovar-ho.",
     "error.password_wrong": "Aquesta contrasenya no és correcta.",
     "error.password_required": "Escriu la teva contrasenya actual.",
     "error.age_blocked": "Judge és només per a persones de 13 anys o més.",

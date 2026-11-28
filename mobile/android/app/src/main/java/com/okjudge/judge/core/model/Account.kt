@@ -116,6 +116,10 @@ data class MeResponse(
     val needsPassword: Boolean = false,
 )
 
+/** The answer of POST /api/v1/me/purchases/sync: how many plans were added, and the balance after. */
+@Serializable
+data class PurchaseSyncResponse(val synced: Int = 0, val entitlement: Entitlement? = null)
+
 /** The `{token, user}` body of a successful Better Auth sign-in. */
 @Serializable
 data class SessionGrant(

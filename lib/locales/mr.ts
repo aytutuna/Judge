@@ -843,6 +843,8 @@ const mr: Locale = {
     "age.blocked":
       "हे खाते Judge वापरू शकत नाही, कारण Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे.",
     "age.blockedContact": "हे चुकीचे वाटते का? {email} वर ईमेल करा.",
+    "age.approvalTitle": "पालकांनी मंजुरी द्यावी लागेल",
+    "age.approval": "Judge मधील बदलाला पालकांनी मंजुरी द्यावी यासाठी Google Play वाट पाहत आहे. मंजुरी मिळाल्यावर पुन्हा तपासा.",
     "error.password_wrong": "हा पासवर्ड बरोबर नाही.",
     "error.password_required": "तुमचा सध्याचा पासवर्ड टाका.",
     "error.age_blocked": "Judge फक्त 13 वर्षे आणि त्याहून मोठ्यांसाठी आहे.",

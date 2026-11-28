@@ -73,7 +73,11 @@ class AccountAgeTest {
     }
 
     /** Signed in from the start (unless [token] is null), wired as in AppContainer. */
-    private fun account(token: String? = "session-1", platformTimeoutMs: Long = 10_000): Pair<Account, JudgeApi> {
+    private fun account(
+        token: String? = "session-1",
+        platformTimeoutMs: Long = 10_000,
+        hold: AgeHoldStore = AgeHoldStore.Memory(),
+    ): Pair<Account, JudgeApi> {
         val tokens = MemoryTokenStore(token)
         lateinit var account: Account
         val api = JudgeApi(
@@ -83,7 +87,7 @@ class AccountAgeTest {
         )
         account = Account(
             api, tokens, FakeGoogle(GoogleIdResult.Cancelled), scope, io = Dispatchers.IO,
-            ageSignals = signals, platformTimeoutMs = platformTimeoutMs,
+            ageSignals = signals, platformTimeoutMs = platformTimeoutMs, ageHold = hold,
         )
         return account to api
     }
@@ -116,6 +120,147 @@ class AccountAgeTest {
     private val needsDate get() = me(age(needsDob = true))
     private val finished get() = me(age(confirmed = true))
     private val finalBlock get() = me(age(blocked = true))
+
+    private suspend fun Account.recheck() {
+        val before = phoneAsked
+        recheckPlatformAge(context)
+        withTimeout(10_000) { while (phoneAsked == before || ageChecking.value) delay(20) }
+    }
+
+    @Test
+    fun heldMinor_staysHeld_whenARecheckGivesNothingUsable() = runBlocking {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true, teen = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+        assertEquals(AgeCheck.BLOCKED, account.ageRefusal())
+
+        phone = PlatformAge.UNKNOWN
+        account.recheck()
+        assertEquals("unknown keeps the hold", AgeGate.APPROVAL, account.ageGate.value)
+        assertTrue(account.held.value)
+    }
+
+    @Test
+    fun heldMinor_staysHeld_whenTheRecheckTimesOut() = runBlocking<Unit> {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true, teen = true)))
+        val (account, _) = account(platformTimeoutMs = 200)
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+
+        phoneHangs = true
+        account.recheck()
+        assertEquals(AgeGate.APPROVAL, account.ageGate.value)
+    }
+
+    @Test
+    fun heldMinor_isReleasedByARealSharedAnswer() = runBlocking {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true, teen = true)))
+        val hold = AgeHoldStore.Memory()
+        val (account, _) = account(hold = hold)
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+        assertTrue(hold.held)
+
+        phone = PlatformAge.MINOR
+        account.recheck()
+        account.awaitGate(AgeGate.NONE)
+        assertFalse(hold.held)
+        assertNull(account.ageRefusal())
+    }
+
+    @Test
+    fun heldMinor_staysHeld_whenThePersonDeclinesToShare() = runBlocking<Unit> {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true, teen = true)))
+        val hold = AgeHoldStore.Memory()
+        val (account, _) = account(hold = hold)
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+        phone = AgeCheck.fromSignals(accessStatus = 2, lower = null, upper = null, changeStatus = null)
+        account.recheck()
+        assertEquals(AgeGate.APPROVAL, account.ageGate.value)
+        assertTrue(hold.held)
+    }
+
+    @Test
+    fun heldMinor_isReleasedBySharedWithoutARange_andByAnApprovedMinor() = runBlocking<Unit> {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true, teen = true)))
+        val hold = AgeHoldStore.Memory()
+        val (account, _) = account(hold = hold)
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+        phone = AgeCheck.fromSignals(accessStatus = 1, lower = 16, upper = 17, changeStatus = 1)
+        account.recheck()
+        account.awaitGate(AgeGate.NONE)
+        assertFalse(hold.held)
+    }
+
+    @Test
+    fun heldMinor_isReleasedByAnAdultAnswer() = runBlocking<Unit> {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true)))
+        val (account, _) = account()
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+        phone = PlatformAge.ADULT
+        account.recheck()
+        account.awaitGate(AgeGate.NONE)
+    }
+
+    @Test
+    fun aColdStartOffline_keepsAStoredHold_untilASharedAnswerClearsIt() = runBlocking<Unit> {
+        val hold = AgeHoldStore.Memory().apply { held = true }
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true)))
+        phone = PlatformAge.UNKNOWN
+        val (account, _) = account(hold = hold)
+        account.refresh()
+        account.awaitGate(AgeGate.APPROVAL)
+        assertTrue("the launch check still runs", account.needsPlatformAge(onSignIn = false))
+        account.checkPlatformAge(context)
+        withTimeout(10_000) { while (phoneAsked == 0 || account.ageChecking.value) delay(20) }
+        assertEquals("an unknown answer keeps it", AgeGate.APPROVAL, account.ageGate.value)
+        assertTrue(hold.held)
+        assertTrue("nothing is reported for a stored hold", routes.requestsTo(AGE).isEmpty())
+
+        phone = PlatformAge.ADULT
+        account.recheck()
+        account.awaitGate(AgeGate.NONE)
+        assertFalse(hold.held)
+        awaitSignal()
+        assertEquals("Play's own answer is what gets sent", "true", ageBody()["adult"]!!.jsonPrimitive.content)
+    }
+
+    @Test
+    fun aStoredHold_isNotReportedAsAMinor_beforePlayAnswers() = runBlocking<Unit> {
+        val hold = AgeHoldStore.Memory().apply { held = true }
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true)))
+        phoneHangs = true
+        val (account, _) = account(hold = hold, platformTimeoutMs = 200)
+        account.refresh()
+        account.awaitGate(AgeGate.APPROVAL)
+        delay(300)
+        assertTrue(routes.requestsTo(AGE).isEmpty())
+        assertNull(account.platformAge.value?.takeIf { it == PlatformAge.MINOR_UNAPPROVED })
+    }
 
     @Test
     fun adultSignal_isSentEvenForAConfirmedAccount() = runBlocking {

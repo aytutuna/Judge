@@ -847,6 +847,8 @@ const kn: Locale = {
     "age.blocked":
       "ಈ ಖಾತೆ Judge ಬಳಸಲು ಸಾಧ್ಯವಿಲ್ಲ, ಏಕೆಂದರೆ Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.",
     "age.blockedContact": "ಇದು ತಪ್ಪು ಎನಿಸುತ್ತದೆಯೇ? {email} ಗೆ ಇಮೇಲ್ ಮಾಡಿ.",
+    "age.approvalTitle": "ಪೋಷಕರು ಅನುಮೋದಿಸಬೇಕು",
+    "age.approval": "Judge ನಲ್ಲಿನ ಬದಲಾವಣೆಯನ್ನು ಪೋಷಕರು ಅಥವಾ ಪಾಲಕರು ಅನುಮೋದಿಸಲು Google Play ಕಾಯುತ್ತಿದೆ. ಅನುಮೋದನೆಯ ನಂತರ ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ.",
     "error.password_wrong": "ಈ ಪಾಸ್‌ವರ್ಡ್ ಸರಿಯಿಲ್ಲ.",
     "error.password_required": "ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಪಾಸ್‌ವರ್ಡ್ ನಮೂದಿಸಿ.",
     "error.age_blocked": "Judge 13 ವರ್ಷ ಮತ್ತು ಮೇಲ್ಪಟ್ಟವರಿಗೆ ಮಾತ್ರ.",

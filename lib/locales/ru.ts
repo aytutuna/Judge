@@ -854,6 +854,8 @@ const ru: Locale = {
     "age.blocked":
       "Этот аккаунт не может пользоваться Judge, потому что Judge только для людей от 13 лет.",
     "age.blockedContact": "Думаете, это ошибка? Напишите на {email}.",
+    "age.approvalTitle": "Нужно одобрение родителя",
+    "age.approval": "Google Play ждёт, пока родитель или опекун одобрит изменение в Judge. Когда это будет сделано, проверьте снова.",
     "error.password_wrong": "Этот пароль неверный.",
     "error.password_required": "Введите текущий пароль.",
     "error.age_blocked": "Judge только для людей от 13 лет.",

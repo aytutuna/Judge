@@ -81,6 +81,7 @@ class PurchaseControllerTest {
     private val account = MutableStateFlow<Account.State>(Account.State.SignedIn())
     private var refreshes = 0
     private var ageRefusal: String? = null
+    private var syncs = 0
 
     /** What the next /me reads return, by call number (1-based); unchanged otherwise. */
     private var onRefresh: (Int) -> Unit = {}
@@ -106,6 +107,7 @@ class PurchaseControllerTest {
             },
             scope = backgroundScope,
             ageRefusal = { ageRefusal },
+            syncRestored = { syncs++ },
         )
 
     /** Started and logged in as u1, with the offers loaded. */
@@ -365,6 +367,18 @@ class PurchaseControllerTest {
         settle()
         assertEquals(2, refreshes)
         assertEquals(listOf("restore"), gateway.calls)
+    }
+
+    @Test
+    fun restore_asksTheServerToSync_afterTheStoreAnswered() = runTest {
+        val c = ready()
+        c.restore()
+        runCurrent()
+        assertEquals(1, syncs)
+        gateway.restoreOutcome = RestoreOutcome.Failed
+        c.restore()
+        runCurrent()
+        assertEquals("a failed store restore still lets the server look", 2, syncs)
     }
 
     @Test

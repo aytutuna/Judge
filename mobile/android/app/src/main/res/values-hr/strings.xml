@@ -559,6 +559,8 @@
     <string name="age_blocked_title">Judge je za osobe od 13 godina nadalje</string>
     <string name="age_blocked">Ovaj račun ne može koristiti Judge jer je Judge samo za osobe od 13 godina nadalje.</string>
     <string name="age_blocked_contact">Misliš da je greška? Pošalji e-poštu na %1$s.</string>
+    <string name="age_approval_title">Roditelj mora odobriti</string>
+    <string name="age_approval">Google Play čeka da roditelj ili skrbnik odobri promjenu u aplikaciji Judge. Kad to učini, provjeri ponovno.</string>
     <string name="error_password_wrong">Ta lozinka nije točna.</string>
     <string name="error_password_required">Unesi svoju trenutnu lozinku.</string>
     <string name="error_reauth_required">Odjavi se i ponovno prijavi, pa onda izbriši račun.</string>

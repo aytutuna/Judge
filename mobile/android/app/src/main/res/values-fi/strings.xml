@@ -550,6 +550,8 @@
     <string name="age_blocked_title">Judge on tarkoitettu 13 vuotta täyttäneille</string>
     <string name="age_blocked">Tämä tili ei voi käyttää Judgea, koska Judge on tarkoitettu vain 13 vuotta täyttäneille.</string>
     <string name="age_blocked_contact">Onko tämä mielestäsi virhe? Kirjoita osoitteeseen %1$s.</string>
+    <string name="age_approval_title">Vanhemman on hyväksyttävä</string>
+    <string name="age_approval">Google Play odottaa, että vanhempi tai huoltaja hyväksyy Judgen muutoksen. Tarkista uudelleen, kun hän on tehnyt sen.</string>
     <string name="error_password_wrong">Salasana ei ole oikea.</string>
     <string name="error_password_required">Anna nykyinen salasanasi.</string>
     <string name="error_reauth_required">Kirjaudu ulos ja takaisin sisään ja poista sitten tilisi.</string>

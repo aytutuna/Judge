@@ -322,12 +322,13 @@ class AccountTest {
         routes.on(Routes.SET_PASSWORD, json(200, """{"ok":true}"""))
         val account = account(store().apply { set("session-p") })
         account.refresh()
-        assertNull(account.setPassword("made-up-pass", "old-made-up"))
+        assertNull(account.setPassword("made-up-pass", "old-made-up", AppLang.TR))
         val request = routes.requestsTo(Routes.SET_PASSWORD).single()
         assertEquals("Bearer session-p", request.headers["Authorization"])
         val body = Json.parseToJsonElement(request.body!!.utf8()).jsonObject
         assertEquals("made-up-pass", body["password"]!!.jsonPrimitive.content)
         assertEquals("old-made-up", body["current"]!!.jsonPrimitive.content)
+        assertEquals("tr", request.url.queryParameter("lang"))
         assertEquals(true, (account.state.value as Account.State.SignedIn).me!!.hasPassword)
     }
 
@@ -336,7 +337,7 @@ class AccountTest {
         val account = account(store().apply { set("session-p") })
         suspend fun answer(status: Int, code: String): SignInError? {
             routes.on(Routes.SET_PASSWORD, json(status, """{"code":"$code"}"""))
-            return account.setPassword("made-up-pass", null)
+            return account.setPassword("made-up-pass", null, AppLang.EN)
         }
         assertEquals(SignInError.PASSWORD_SHORT, answer(400, "too_short"))
         assertEquals(SignInError.PASSWORD_SHORT, answer(400, "too_long"))
@@ -439,6 +440,83 @@ class AccountTest {
     }
 
     @Test
+    fun deleteAccount_sendsTheReauthHeader_andThePasswordWhenGiven() = runBlocking {
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        val account = account(store().apply { set("session-d") })
+        assertTrue(account.deleteAccount("made-up-pass"))
+        val withPassword = routes.requestsTo(DELETE_ME).single()
+        assertEquals("1", withPassword.headers["Judge-Reauth"])
+        assertEquals("made-up-pass", Json.parseToJsonElement(withPassword.body!!.utf8()).jsonObject["password"]!!.jsonPrimitive.content)
+
+        val second = account(store().apply { set("session-e") })
+        assertTrue(second.deleteAccount())
+        val without = routes.requestsTo(DELETE_ME).last()
+        assertEquals("1", without.headers["Judge-Reauth"])
+        assertNull(Json.parseToJsonElement(without.body!!.utf8()).jsonObject["password"])
+    }
+
+    @Test
+    fun deleteAccount_refusalsThePersonCanFix_landInDeleteProblem() = runBlocking {
+        val tokens = store().apply { set("session-d") }
+        val account = account(tokens)
+        suspend fun answer(status: Int, code: String): DeleteProblem? {
+            routes.on(DELETE_ME, json(status, """{"error":"x","code":"$code"}"""))
+            assertFalse(account.deleteAccount())
+            return account.deleteProblem.value
+        }
+        assertEquals(DeleteProblem.REAUTH_REQUIRED, answer(403, "reauth_required"))
+        assertEquals(DeleteProblem.PASSWORD_WRONG, answer(403, "password_wrong"))
+        assertEquals(DeleteProblem.RATE_LIMITED, answer(429, "rate_limited"))
+        assertEquals("the session stays", "session-d", tokens.get())
+        assertFalse("not the generic failure", account.deleteFailed.value)
+        assertNull("another failure clears it", answer(503, "unavailable"))
+        assertTrue(account.deleteFailed.value)
+        account.clearDeleteProblem()
+        assertNull(account.deleteProblem.value)
+    }
+
+    @Test
+    fun deleteAccount_afterAFreshSignIn_deletes() = runBlocking {
+        routes.on(DELETE_ME, json(403, """{"error":"x","code":"reauth_required"}"""))
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        val account = account(store().apply { set("session-d") })
+        assertFalse(account.deleteAccount())
+        assertEquals(DeleteProblem.REAUTH_REQUIRED, account.deleteProblem.value)
+        assertTrue(account.deleteAccount())
+        assertNull(account.deleteProblem.value)
+    }
+
+    @Test
+    fun aReauthRefusal_doesNotSurviveSigningOutAndIn() = runBlocking {
+        routes.on(DELETE_ME, json(403, """{"error":"x","code":"reauth_required"}"""))
+        routes.on(SIGN_OUT, json(200, """{"success":true}"""))
+        routes.on(VERIFY_CODE, Routes.grant("fresh"))
+        routes.on(ME, Routes.me())
+        val account = account(store().apply { set("old") })
+        assertFalse(account.deleteAccount())
+        assertEquals(DeleteProblem.REAUTH_REQUIRED, account.deleteProblem.value)
+        account.signOut()
+        assertNull("gone with the session", account.deleteProblem.value)
+
+        account.verifyCode("ada@example.com", "123456")
+        routes.on(DELETE_ME, json(200, """{"deleted":true}"""))
+        assertTrue("after a fresh sign-in the delete goes through", account.deleteAccount())
+        assertNull(account.deleteProblem.value)
+    }
+
+    @Test
+    fun aFailedDelete_isForgottenWhenTheSessionExpires() = runBlocking {
+        routes.on(DELETE_ME, json(503, """{"error":"x","code":"unavailable"}"""))
+        routes.on(DELETE_ME, json(401, """{"error":"x","code":"signin_required"}"""))
+        val account = account(store().apply { set("s") })
+        assertFalse(account.deleteAccount())
+        assertTrue(account.deleteFailed.value)
+        assertFalse(account.deleteAccount())
+        assertFalse(account.deleteFailed.value)
+    }
+
+    @Test
     fun deleteAccount_failure_keepsTheSession() = runBlocking {
         routes.on(DELETE_ME, json(503, """{"error":"Deleting the account failed. Try again.","code":"unavailable"}"""))
         val tokens = store().apply { set("session-d") }
@@ -495,6 +573,35 @@ class AccountTest {
         refresh.await()
         assertEquals("new", tokens.get())
         assertTrue(account.isSignedIn)
+    }
+
+    // --- restore sync ---
+
+    @Test
+    fun syncPurchases_showsTheBalanceTheServerAnswers() = runBlocking {
+        routes.on(ME, Routes.me(credits = 0))
+        routes.on(
+            "POST /api/v1/me/purchases/sync",
+            json(200, """{"synced":1,"entitlement":{"canUsePremium":true,"blockedReason":null,"credits":7,"subscription":null,"resetsAt":null}}"""),
+        )
+        val account = account(store().apply { set("session-s") })
+        account.refresh()
+        account.syncPurchases()
+        assertEquals(7, (account.state.value as Account.State.SignedIn).me!!.entitlement!!.credits)
+        assertEquals("Bearer session-s", routes.requestsTo("POST /api/v1/me/purchases/sync").single().headers["Authorization"])
+    }
+
+    @Test
+    fun syncPurchases_notConfigured_isSilent() = runBlocking {
+        routes.on(ME, Routes.me(credits = 3))
+        routes.on("POST /api/v1/me/purchases/sync", json(503, """{"error":"x","code":"not_configured"}"""))
+        val account = account(store().apply { set("session-s") })
+        account.refresh()
+        account.syncPurchases()
+        val state = account.state.value as Account.State.SignedIn
+        assertEquals(3, state.me!!.entitlement!!.credits)
+        assertFalse(state.loadFailed)
+        assertNull(account.nextNoticeQuick())
     }
 
     // --- 401 ---

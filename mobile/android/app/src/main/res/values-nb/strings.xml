@@ -550,6 +550,8 @@
     <string name="age_blocked_title">Judge er for deg som er 13 år eller eldre</string>
     <string name="age_blocked">Denne kontoen kan ikke bruke Judge, fordi Judge bare er for personer på 13 år eller eldre.</string>
     <string name="age_blocked_contact">Tror du dette er en feil? Send e-post til %1$s.</string>
+    <string name="age_approval_title">En forelder må godkjenne</string>
+    <string name="age_approval">Google Play venter på at en forelder eller foresatt godkjenner en endring i Judge. Sjekk igjen når det er gjort.</string>
     <string name="error_password_wrong">Det passordet stemmer ikke.</string>
     <string name="error_password_required">Skriv inn det nåværende passordet.</string>
     <string name="error_reauth_required">Logg ut og logg inn igjen, og slett så kontoen din.</string>

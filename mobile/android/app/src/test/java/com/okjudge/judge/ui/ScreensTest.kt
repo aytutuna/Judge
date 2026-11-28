@@ -69,6 +69,10 @@ import com.okjudge.judge.core.model.SubscriptionView
 import com.okjudge.judge.core.auth.SignInError
 import com.okjudge.judge.core.auth.SignInMethod
 import com.okjudge.judge.core.auth.Account
+import com.okjudge.judge.core.auth.DeleteProblem
+import com.okjudge.judge.ui.settings.DeleteAccountForm
+import com.okjudge.judge.ui.settings.DeleteTags
+import com.okjudge.judge.ui.settings.DeleteUi
 import com.okjudge.judge.i18n.LangPref
 import com.okjudge.judge.core.display.ContentLang
 import com.okjudge.judge.core.display.PartyNames
@@ -849,6 +853,100 @@ class ScreensTest {
         assertEquals(0, deleted)
         compose.onAllNodesWithText(s.appAccountDeleteConfirm).onLast().performClick()
         assertEquals(1, deleted)
+    }
+
+    // The delete form is tested outside its dialog: a text box inside a dialog window never goes idle under Robolectric.
+    private fun form(ui: DeleteUi, busy: Boolean = false, onDelete: (String?) -> Unit = {}) = compose.setContent {
+        Themed(AppLang.EN) { DeleteAccountForm(ui, busy, billing = false, onDelete = onDelete, onManageSubscription = null, onDismiss = {}) }
+    }
+
+    @Test
+    fun deleteForm_asksForThePassword_whenTheAccountHasOne() {
+        val sent = mutableListOf<String?>()
+        form(DeleteUi(hasPassword = true), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.PASSWORD).performTextInput("made-up-pass")
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertIsEnabled().performClick()
+        assertEquals(listOf<String?>("made-up-pass"), sent)
+    }
+
+    @Test
+    fun deleteForm_withAPassword_canStillTryWithoutIt() {
+        val sent = mutableListOf<String?>()
+        form(DeleteUi(hasPassword = true), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertIsEnabled().performClick()
+        assertEquals("a fresh sign-in needs no password", listOf<String?>(null), sent)
+    }
+
+    @Test
+    fun deleteForm_wrongPassword_alsoOffersSigningInAgain() {
+        form(DeleteUi(hasPassword = true, problem = DeleteProblem.PASSWORD_WRONG))
+        compose.onNodeWithTag(DeleteTags.SIGN_IN_AGAIN).assertExists()
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertExists()
+    }
+
+    @Test
+    fun deleteForm_reauthWithAPassword_offersBothWays() {
+        val sent = mutableListOf<String?>()
+        var again = 0
+        form(DeleteUi(hasPassword = true, problem = DeleteProblem.REAUTH_REQUIRED, onSignInAgain = { again++ }), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.PASSWORD).performTextInput("made-up-pass")
+        compose.onNodeWithTag(DeleteTags.CONFIRM).performClick()
+        compose.onNodeWithTag(DeleteTags.SIGN_IN_AGAIN).performClick()
+        assertEquals(listOf<String?>("made-up-pass"), sent)
+        assertEquals(1, again)
+    }
+
+    @Test
+    fun deleteForm_withoutAPassword_sendsNone() {
+        val sent = mutableListOf<String?>()
+        form(DeleteUi(), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.PASSWORD).assertDoesNotExist()
+        compose.onNodeWithTag(DeleteTags.CONFIRM).performClick()
+        assertEquals(listOf<String?>(null), sent)
+    }
+
+    @Test
+    fun deleteForm_whileDeleting_cannotBeSentAgain() {
+        form(DeleteUi(), busy = true)
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertIsNotEnabled()
+    }
+
+    @Test
+    fun deleteForm_passwordProblems_useTheServerWording() {
+        val s = UiTestSupport.s(AppLang.EN)
+        val ui = androidx.compose.runtime.mutableStateOf(DeleteUi(hasPassword = true, problem = DeleteProblem.PASSWORD_WRONG))
+        compose.setContent {
+            Themed(AppLang.EN) { DeleteAccountForm(ui.value, false, billing = false, onDelete = {}, onManageSubscription = null, onDismiss = {}) }
+        }
+        compose.onNodeWithTag(DeleteTags.ERROR).assertTextEquals(s.errorPasswordWrong)
+        ui.value = DeleteUi(hasPassword = true, problem = DeleteProblem.RATE_LIMITED)
+        compose.onNodeWithTag(DeleteTags.ERROR).assertTextEquals(s.accountDeleteLimited)
+        ui.value = DeleteUi(failed = true)
+        compose.onNodeWithTag(DeleteTags.ERROR).assertTextEquals(s.accountDeleteFailed)
+    }
+
+    @Test
+    fun deleteForm_needingAFreshSignIn_offersSigningInAgain() {
+        var again = 0
+        val sent = mutableListOf<String?>()
+        val s = UiTestSupport.s(AppLang.EN)
+        form(DeleteUi(problem = DeleteProblem.REAUTH_REQUIRED, onSignInAgain = { again++ }), onDelete = { sent += it })
+        compose.onNodeWithTag(DeleteTags.ERROR).assertTextEquals(s.errorReauthRequired)
+        compose.onNodeWithTag(DeleteTags.CONFIRM).assertDoesNotExist()
+        compose.onNodeWithTag(DeleteTags.SIGN_IN_AGAIN).performClick()
+        assertEquals(1, again)
+        assertTrue(sent.isEmpty())
+    }
+
+    @Test
+    fun accountPage_deleteSendsNoPassword_forAnAccountWithoutOne() {
+        val sent = mutableListOf<String?>()
+        compose.setContent {
+            Themed(AppLang.EN) { AccountScreen(signedInAs(), busy = false, onDelete = { sent += it }, onBack = {}, onManageSubscription = {}) }
+        }
+        compose.onNodeWithTag(SettingsTags.DELETE).performClick()
+        compose.onNodeWithTag(DeleteTags.CONFIRM).performClick()
+        assertEquals(listOf<String?>(null), sent)
     }
 
     @Test

@@ -550,6 +550,8 @@
     <string name="age_blocked_title">Judge is for ages 13 and up</string>
     <string name="age_blocked">This account can\'t use Judge, because Judge is only for people 13 and older.</string>
     <string name="age_blocked_contact">Think this is a mistake? Email %1$s.</string>
+    <string name="age_approval_title">A parent has to approve this</string>
+    <string name="age_approval">Google Play is waiting for a parent or guardian to approve a change to Judge. Once they have, check again.</string>
     <string name="error_password_wrong">That password isn\'t right.</string>
     <string name="error_password_required">Enter your current password.</string>
     <string name="error_reauth_required">Sign out and sign in again, then delete your account.</string>
