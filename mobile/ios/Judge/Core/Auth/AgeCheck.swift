@@ -221,7 +221,7 @@ final class DeclaredAgeRangeAsker: AgeRangeAsking {
     #if DECLARED_AGE_RANGE
     /// Whether the system lists parental consent for significant changes
     /// among this person's regulatory features (iOS 26.4).
-    private static func parentalConsentRequired() async -> Bool {
+    private nonisolated static func parentalConsentRequired() async -> Bool {
         guard #available(iOS 26.4, *) else { return false }
         let features = (try? await AgeRangeService.shared.requiredRegulatoryFeatures) ?? []
         return features.contains(.significantAppChangeRequiresParentalConsent)
