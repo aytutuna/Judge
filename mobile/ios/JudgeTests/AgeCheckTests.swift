@@ -403,6 +403,7 @@ final class AccountAgeTests: XCTestCase {
         var reported: [Bool] = []
         account.onUnderEighteen = { reported.append($0) }
         account.pickDob(AgeCheck.gregorian.date(byAdding: .year, value: -15, to: Date())!)
+        account.pickCountry("FR")
         await account.submitDob()
         XCTAssertEqual(account.ageGate, .none)
         XCTAssertTrue(account.underEighteen)
