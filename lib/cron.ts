@@ -10,7 +10,9 @@ import { sweepCases } from "@/lib/cases/sweep";
 import { runCleanup } from "@/lib/cleanup";
 import { sweepStaleReservations } from "@/lib/entitlements";
 import { sweepErasures } from "@/lib/erasure";
+import { backupConfigured, runBackup, type BackupEnv } from "@/lib/backup";
 import { sweepVerdictJobs } from "@/lib/verdict-jobs";
+import { workerEnv } from "@/lib/worker-env";
 
 async function each(steps: Record<string, () => Promise<unknown>>): Promise<void> {
   for (const [name, step] of Object.entries(steps)) {
@@ -26,6 +28,16 @@ export const CRON_TASKS = {
   /** Every 5 minutes: jobs, cases and credit reservations left behind by a lost run. */
   sweep: () => each({ jobs: sweepVerdictJobs, cases: sweepCases, reservations: sweepStaleReservations }),
   /** Once a day: retention (events, removed text, sign-in codes, consent and removal logs). */
+  /** Nightly: the encrypted copy of the database in R2. Unset settings skip it, loudly. */
+  backup: async () => {
+    const env: Partial<BackupEnv> = { ...workerEnv(), ...process.env };
+    if (!backupConfigured(env)) {
+      console.error("[alert:backup] no off-platform copy: BACKUPS, CLOUDFLARE_ACCOUNT_ID, D1_DATABASE_ID, CLOUDFLARE_API_TOKEN or BACKUP_PASSPHRASE is not set");
+      return;
+    }
+    const done = await runBackup(env);
+    console.info(`[backup] wrote ${done.key} (${done.bytes} bytes), deleted ${done.deleted} old`);
+  },
   daily: () => each({ events: pruneEvents, erasure: sweepErasures, cleanup: runCleanup }),
 } satisfies Record<string, () => Promise<void>>;
 

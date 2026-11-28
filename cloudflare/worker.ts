@@ -71,7 +71,10 @@ const handler = {
         method: "POST",
         headers: { "x-internal-secret": env.JOB_SECRET },
       }).then((res) => {
-        if (!res.ok) console.error(`[cron] ${task} answered HTTP ${res.status}`);
+        if (!res.ok) {
+          console.error(`[cron] ${task} answered HTTP ${res.status}`);
+          Sentry.captureMessage(`cron ${task} answered HTTP ${res.status}`, "error");
+        }
       }),
     );
   },
