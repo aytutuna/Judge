@@ -54,6 +54,29 @@ export type AgeState = {
   parent?: "pending" | "declined" | "revoked";
 };
 
+/** GET /api/v1/me/parent and the answer to the requests that change it:
+ * where the parent step stands for a teen. Never carries the address. */
+export type ParentView = {
+  /** "none": no request exists yet (the account may not need one). */
+  status: "none" | "pending" | "approved" | "declined" | "revoked";
+  /** An address was given and a mail went out. */
+  sent: boolean;
+  /** The address as j***@example.com. */
+  emailHint: string | null;
+  /** When the current link stops working, ISO. */
+  expiresAt: string | null;
+  expired: boolean;
+  resendsLeft: number;
+  changesLeft: number;
+  /** The earliest ISO time a resend is accepted; null when it is allowed now. */
+  resendAt: string | null;
+  /** When the account is deleted if nothing changes, ISO. */
+  deleteAt: string | null;
+};
+
+/** GET /api/v1/parent/<token>: what a parent's link is for. */
+export type ParentLink = { kind: "request" | "withdraw"; name: string; usable: boolean };
+
 /** GET /api/v1/me. Signed out: { user: null, entitlement: null, age: null }.
  * A bearer token with no live session: 401 signin_required instead. */
 export type MeResponse = {

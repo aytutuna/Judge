@@ -22,6 +22,7 @@
 
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import type { InStatement } from "@libsql/client";
+import type { ParentLink, ParentView } from "@/lib/account-types";
 import { ageStateOf } from "@/lib/age";
 import { canonicalEmail, parentEmailHash } from "@/lib/auth";
 import { getDb } from "@/lib/db";
@@ -101,23 +102,6 @@ function origin(): string {
   }
 }
 
-/** What the teen's pending screen needs; never the address. */
-export type ParentView = {
-  status: ParentStatus | "none";
-  /** An address was given and a mail went out. */
-  sent: boolean;
-  /** The address as j***@example.com. */
-  emailHint: string | null;
-  /** When the current link stops working, ISO. */
-  expiresAt: string | null;
-  expired: boolean;
-  resendsLeft: number;
-  changesLeft: number;
-  /** The earliest ISO time a resend is accepted; null when it is allowed now. */
-  resendAt: string | null;
-  /** When the account is deleted if nothing changes, ISO. */
-  deleteAt: string | null;
-};
 
 type Row = {
   id: string;
@@ -277,13 +261,8 @@ async function isJudgeAddress(email: string): Promise<boolean> {
   return rs.rows.length > 0;
 }
 
-/** What a parent's link shows. */
-export type LinkInfo = {
-  kind: "request" | "withdraw";
-  name: string;
-  /** False for a request link past its 14 days or already answered. */
-  usable: boolean;
-};
+/** What a parent's link shows. `usable` is false for a request link past its 14 days. */
+export type LinkInfo = ParentLink;
 
 type LinkRow = Row & { name: string | null };
 

@@ -8,7 +8,7 @@
 import { createAuthClient } from "better-auth/react";
 import { emailOTPClient } from "better-auth/client/plugins";
 import { isApiErrorCode, type ApiErrorCode } from "./api-errors";
-import type { AgeState, AppConfig, MeResponse } from "./account-types";
+import type { AgeState, AppConfig, MeResponse, ParentLink, ParentView } from "./account-types";
 import type { Key } from "./i18n";
 
 // No baseURL: the browser's own origin, so one build works on any domain.
@@ -210,17 +210,90 @@ export function fetchConfig(): Promise<AppConfig> {
 /** POST /api/v1/me/age with the date of birth (YYYY-MM-DD). The account's age
  * state (blocked when it is under 13), or the HTTP status that refused it
  * (0 when the request itself failed). */
-export async function submitDob(dob: string): Promise<{ age: AgeState } | { status: number }> {
+export async function submitDob(dob: string, places: { country?: string; quebec?: boolean } = {}): Promise<{ age: AgeState } | { status: number }> {
   try {
     const res = await fetch("/api/v1/me/age", {
       method: "POST",
       headers: { "content-type": "application/json" },
       credentials: "same-origin",
-      body: JSON.stringify({ dob }),
+      body: JSON.stringify({ dob, ...places }),
     });
     return res.ok ? { age: (await res.json()) as AgeState } : { status: res.status };
   } catch {
     return { status: 0 };
+  }
+}
+
+/** GET /api/v1/me/age: where the request's IP puts the person, to pre-select
+ * the date step's questions. Null when it could not be read. */
+export async function fetchAgeHint(): Promise<{ country: string | null; quebec: boolean | null } | null> {
+  try {
+    return await getJson("/api/v1/me/age");
+  } catch {
+    return null;
+  }
+}
+
+/** The answer of a parent-step call: the view, or the error body and status
+ * for apiErrorMessage. */
+export type ParentOutcome = { ok: true; view: ParentView } | { ok: false; status: number; body: unknown };
+
+async function parentCall(path: string, init?: RequestInit): Promise<ParentOutcome> {
+  try {
+    const res = await fetch(path, { credentials: "same-origin", cache: "no-store", ...init });
+    const body: unknown = await res.json().catch(() => null);
+    return res.ok ? { ok: true, view: body as ParentView } : { ok: false, status: res.status, body };
+  } catch {
+    return { ok: false, status: 0, body: null };
+  }
+}
+
+/** GET /api/v1/me/parent. */
+export const fetchParent = () => parentCall("/api/v1/me/parent");
+
+/** POST /api/v1/me/parent: gives or changes the parent's address and mails the request. */
+export const sendParent = (email: string, turnstileToken?: string) =>
+  parentCall("/api/v1/me/parent", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ email, ...(turnstileToken ? { turnstileToken } : {}) }),
+  });
+
+/** POST /api/v1/me/parent/resend. */
+export const resendParent = (turnstileToken?: string) =>
+  parentCall("/api/v1/me/parent/resend", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(turnstileToken ? { turnstileToken } : {}),
+  });
+
+/** GET /api/v1/parent/<token>: null when the link matches nothing. */
+export async function fetchParentLink(token: string): Promise<ParentLink | "unavailable" | null> {
+  try {
+    const res = await fetch(`/api/v1/parent/${token}`, { cache: "no-store" });
+    if (res.status === 404) return null;
+    return res.ok ? ((await res.json()) as ParentLink) : "unavailable";
+  } catch {
+    return "unavailable";
+  }
+}
+
+/** POST /api/v1/parent/<token>: the result, or the error body and status. */
+export async function decideParentLink(
+  token: string,
+  action: "approve" | "decline" | "withdraw",
+  guardian?: boolean,
+): Promise<{ ok: true; result: string } | { ok: false; status: number; body: unknown }> {
+  try {
+    const res = await fetch(`/api/v1/parent/${token}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ action, ...(guardian ? { guardian } : {}) }),
+    });
+    const body = (await res.json().catch(() => null)) as { result?: string } | null;
+    return res.ok && body?.result ? { ok: true, result: body.result } : { ok: false, status: res.status, body };
+  } catch {
+    return { ok: false, status: 0, body: null };
   }
 }
 
