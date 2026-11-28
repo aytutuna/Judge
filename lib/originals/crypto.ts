@@ -48,6 +48,7 @@ export const aad = {
   caseDisplay: (caseId: string, party: CaseParty) => `judge:display:v1:case:${caseId}:${party}`,
   signInToken: (provider: string, clientId: string, userId: string) =>
     `judge:signin-token:v1:${provider}:${clientId}:${userId}`,
+  parentEmail: (userId: string) => `judge:parent-email:v1:${userId}`,
 };
 
 /** 32 bytes from base64 or base64url, or null. */
