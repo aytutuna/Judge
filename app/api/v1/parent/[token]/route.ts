@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { apiErrorBody, API_ERROR_STATUS, type ApiErrorCode } from "@/lib/api-errors";
-import { isSameOrigin } from "@/lib/auth";
+import { isSameOrigin, resolveViewer } from "@/lib/auth";
 import { clientIp } from "@/lib/client-ip";
 import { decideParent, isParentToken, linkInfo } from "@/lib/parent-consent";
 import { checkIpLimits } from "@/lib/ratelimit";
@@ -74,7 +74,9 @@ export async function POST(req: Request, ctx: RouteContext<"/api/v1/parent/[toke
   const { action, guardian = false } = parsed.data;
   if (action === "approve" && !guardian) return fail("invalid", "Tick that you are the parent or legal guardian.");
   try {
-    const result = await decideParent(token, action, guardian);
+    // Whoever is signed in on this browser cannot approve for themselves.
+    const { viewer } = await resolveViewer(req).catch(() => ({ viewer: null }));
+    const result = await decideParent(token, action, guardian, new Date(), viewer?.user.id ?? null);
     if (result === "failed") return fail("unavailable", "Try again in a minute.");
     if (result === "invalid") return fail("parent_link", "This link does not work.");
     return NextResponse.json({ result }, { headers: NO_STORE });

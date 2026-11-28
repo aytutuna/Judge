@@ -47,10 +47,10 @@ export function needsParent(dob: string | null, countries: string[], quebec: boo
   return dob !== null && youngerThan(dob, parentAge(countries, quebec), now);
 }
 
-/** Brazil's 18+ rule: the person is under 18 by their date of birth and a
- * signal says Brazil. */
-export function brazilRefusal(dob: string | null, countries: string[], now = new Date()): boolean {
-  return dob !== null && countries.includes("BR") && youngerThan(dob, 18, now);
+/** Brazil's 18+ rule: the person is under 18 (by the date or by the store's
+ * minor signal, as AgeState.teen says) and a signal says Brazil. */
+export function brazilRefusal(teen: boolean, countries: string[]): boolean {
+  return teen && countries.includes("BR");
 }
 
 /** A store country changes the stored places only when it adds a rule: Brazil,

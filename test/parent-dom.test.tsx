@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AgeGate } from "../components/AgeGate";
 import { ParentLinkScreen } from "../components/ParentLinkScreen";
 import type { ParentView } from "../lib/account-types";
-import { t } from "../lib/i18n";
+import { formatDate, t } from "../lib/i18n";
 import { refreshViewer } from "../lib/use-viewer";
 
 vi.mock("next/navigation", () => ({
@@ -215,6 +215,22 @@ describe("the parent step", () => {
     expect(await screen.findByText(t("en", "age.parentWaitTitle"))).toBeTruthy();
   });
 
+  it("keeps Send again off until the hour is over, and says when", async () => {
+    const at = new Date(Date.now() + 40 * 60_000).toISOString();
+    parentView = { ...SENT, resendAt: at };
+    await openStep({ ...TEEN, parent: "pending" });
+    const button = (await screen.findByRole("button", { name: t("en", "age.parentResend") })) as HTMLButtonElement;
+    expect(button.disabled).toBe(true);
+    expect(screen.getByText(/You can send it again at/)).toBeTruthy();
+  });
+
+  it("names the day the account is deleted instead of a fixed count", async () => {
+    const deleteAt = new Date(Date.now() + 12 * 86_400_000).toISOString();
+    parentView = { ...SENT, deleteAt };
+    await openStep({ ...TEEN, parent: "pending" });
+    expect(await screen.findByText(t("en", "age.parentDelete", { date: formatDate("en", deleteAt)! }))).toBeTruthy();
+  });
+
   it("says the link expired, and turns off a send that has no tries left", async () => {
     parentView = { ...SENT, expired: true, resendsLeft: 0, changesLeft: 0 };
     await openStep({ ...TEEN, parent: "pending" });
@@ -235,9 +251,11 @@ describe("the parent step", () => {
   });
 
   it("tells a teen whose parent said no, with sign out and delete", async () => {
+    const deleteAt = new Date(Date.now() + 20 * 86_400_000).toISOString();
+    parentView = { ...NOT_SENT, status: "declined", deleteAt };
     await openStep({ ...TEEN, parent: "declined" });
     expect(await screen.findByText(t("en", "age.parentDeclinedTitle"))).toBeTruthy();
-    expect(screen.getByText(t("en", "age.parentDeclined"))).toBeTruthy();
+    expect(await screen.findByText(t("en", "age.parentDeclined", { date: formatDate("en", deleteAt)! }))).toBeTruthy();
     expect(screen.getByRole("link", { name: t("en", "account.delete") })).toBeTruthy();
     expect(emailInput()).toBeNull();
   });

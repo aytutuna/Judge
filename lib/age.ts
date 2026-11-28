@@ -197,7 +197,7 @@ export function ageStateOf(f: AgeFields, now = new Date()): AgeState {
   const dated = f.dobAt != null || dob !== null;
   const teen = !blocked && ((dob !== null && underEighteen(dob, now)) || minorSignalCounts(f, dob, now));
   const countries = parseCountries(f.country);
-  const restricted = !blocked && f.regionLiftedAt == null && brazilRefusal(dob, countries, now);
+  const restricted = !blocked && f.regionLiftedAt == null && brazilRefusal(teen, countries);
   const held = !blocked && !restricted && f.parent !== "approved" && needsParent(dob, countries, f.quebec != null, now);
   const parent = held ? (f.parent === "declined" || f.parent === "revoked" ? f.parent : "pending") : null;
   return {
@@ -425,13 +425,16 @@ export async function submitDob(
   if (underThirteen(dob, now)) return blockMinor(userId, now);
   const nowIso = now.toISOString();
   const teen = underEighteen(dob, now);
+  // The places are kept for a teen by any signal: a store minor signal makes a
+  // teen of someone who typed an adult date, and Brazil still applies to them.
+  const keepPlaces = teen || before.teen;
   const places = geoToStored(geo);
   const [done] = await entitlementWriteBatch([
     {
       sql: `UPDATE "user" SET age_dob = ?, age_dob_at = ?, age_confirmed_at = COALESCE(age_confirmed_at, ?), age_source = 'dob',
               age_blocked_at = NULL, age_block_final = NULL, age_country = ?, age_quebec = ?
             WHERE id = ? AND age_dob_at IS NULL AND age_block_final IS NULL`,
-      args: [teen ? dob : null, nowIso, nowIso, teen && places.countries.length ? places.countries.join(",") : null, teen && places.quebec ? "1" : null, userId],
+      args: [teen ? dob : null, nowIso, nowIso, keepPlaces && places.countries.length ? places.countries.join(",") : null, keepPlaces && places.quebec ? "1" : null, userId],
     },
     // Only after this request's own write took effect.
     ...(await sameWrite(userId, nowIso, dob, teen, claims)),
@@ -451,14 +454,15 @@ export async function submitDob(
 export async function recordStoreCountry(userId: string, country: string, now = new Date()): Promise<AgeState> {
   const db = await getDb();
   for (let tries = 0; tries < 3; tries++) {
-    const rs = await db.execute({ sql: `SELECT age_country, age_quebec, age_dob FROM "user" WHERE id = ?`, args: [userId] });
+    const rs = await db.execute({ sql: `SELECT age_country, age_quebec FROM "user" WHERE id = ?`, args: [userId] });
     const row = rs.rows[0];
     const stored = typeof row?.age_country === "string" ? row.age_country : null;
     const countries = parseCountries(stored);
-    if (!row || row.age_dob == null || !tightens(country, countries, row.age_quebec != null)) break;
+    // A teen by any signal, the store's minor signal included.
+    if (!row || !(await readAge(userId, now)).teen || !tightens(country, countries, row.age_quebec != null)) break;
     const next = [...countries, country].sort().join(",");
     const done = await db.execute({
-      sql: `UPDATE "user" SET age_country = ? WHERE id = ? AND age_country IS ? AND age_dob IS NOT NULL`,
+      sql: `UPDATE "user" SET age_country = ? WHERE id = ? AND age_country IS ?`,
       args: [next, userId, stored],
     });
     if (done.rowsAffected > 0) break;

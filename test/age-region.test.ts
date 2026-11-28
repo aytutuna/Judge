@@ -88,16 +88,11 @@ describe("who needs a parent", () => {
 });
 
 describe("Brazil", () => {
-  it("refuses under 18 when any signal says Brazil", () => {
-    expect(brazilRefusal(dobAged(15), ["BR"], NOW)).toBe(true);
-    expect(brazilRefusal(dobAged(17), ["BR", "US"], NOW)).toBe(true);
-    expect(brazilRefusal(dobAged(15), ["US"], NOW)).toBe(false);
-  });
-
-  it("lets go on the 18th birthday", () => {
-    expect(brazilRefusal("2008-11-29", ["BR"], NOW)).toBe(true);
-    expect(brazilRefusal("2008-11-28", ["BR"], NOW)).toBe(false);
-    expect(brazilRefusal(null, ["BR"], NOW)).toBe(false);
+  it("refuses a teen when any signal says Brazil", () => {
+    expect(brazilRefusal(true, ["BR"])).toBe(true);
+    expect(brazilRefusal(true, ["BR", "US"])).toBe(true);
+    expect(brazilRefusal(true, ["US"])).toBe(false);
+    expect(brazilRefusal(false, ["BR"])).toBe(false);
   });
 });
 

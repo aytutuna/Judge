@@ -9668,271 +9668,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سيُحذف الحساب بعد 30 يومًا. يمكنك حذفه الآن."
+            "value" : "سيُحذف الحساب في %1$@. يمكنك حذفه الآن."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "৩০ দিন পর অ্যাকাউন্ট মুছে যাবে। চাইলে এখনই মুছে ফেলতে পারেন।"
+            "value" : "%1$@ তারিখে অ্যাকাউন্ট মুছে যাবে। চাইলে এখনই মুছে ফেলতে পারেন।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El compte s'eliminarà d'aquí a 30 dies. Pots eliminar-lo ara."
+            "value" : "El compte s'eliminarà el %1$@. Pots eliminar-lo ara."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Účet se za 30 dní smaže. Můžeš ho smazat hned."
+            "value" : "Účet se %1$@ smaže. Můžeš ho smazat hned."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontoen bliver slettet om 30 dage. Du kan slette den nu."
+            "value" : "Kontoen bliver slettet den %1$@. Du kan slette den nu."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Konto wird in 30 Tagen gelöscht. Du kannst es jetzt löschen."
+            "value" : "Das Konto wird am %1$@ gelöscht. Du kannst es jetzt löschen."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ο λογαριασμός θα διαγραφεί σε 30 ημέρες. Μπορείς να τον διαγράψεις τώρα."
+            "value" : "Ο λογαριασμός θα διαγραφεί στις %1$@. Μπορείς να τον διαγράψεις τώρα."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The account will be deleted in 30 days. You can delete it now."
+            "value" : "The account will be deleted on %1$@. You can delete it now."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La cuenta se eliminará en 30 días. Puedes eliminarla ahora."
+            "value" : "La cuenta se eliminará el %1$@. Puedes eliminarla ahora."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tili poistetaan 30 päivän kuluttua. Voit poistaa sen heti."
+            "value" : "Tili poistetaan %1$@. Voit poistaa sen heti."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le compte sera supprimé dans 30 jours. Tu peux le supprimer dès maintenant."
+            "value" : "Le compte sera supprimé le %1$@. Tu peux le supprimer dès maintenant."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "એકાઉન્ટ 30 દિવસમાં ડિલીટ થઈ જશે. તમે તેને હમણાં ડિલીટ કરી શકો છો."
+            "value" : "એકાઉન્ટ %1$@ એ ડિલીટ થઈ જશે. તમે તેને હમણાં ડિલીટ કરી શકો છો."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "החשבון יימחק בעוד 30 ימים. אפשר גם למחוק אותו עכשיו."
+            "value" : "החשבון יימחק ב-%1$@. אפשר גם למחוק אותו עכשיו."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अकाउंट 30 दिन में डिलीट हो जाएगा। आप इसे अभी डिलीट कर सकते हैं।"
+            "value" : "अकाउंट %1$@ को डिलीट हो जाएगा। आप इसे अभी डिलीट कर सकते हैं।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Račun će biti izbrisan za 30 dana. Možeš ga izbrisati i odmah."
+            "value" : "Račun će biti izbrisan %1$@. Možeš ga izbrisati i odmah."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A fiók 30 nap múlva törlődik. Most is törölheted."
+            "value" : "A fiók ekkor törlődik: %1$@. Most is törölheted."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Akun akan dihapus dalam 30 hari. Kamu bisa menghapusnya sekarang."
+            "value" : "Akun akan dihapus pada %1$@. Kamu bisa menghapusnya sekarang."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'account verrà eliminato tra 30 giorni. Puoi eliminarlo subito."
+            "value" : "L'account verrà eliminato il %1$@. Puoi eliminarlo subito."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アカウントは30日後に削除されます。今すぐ削除することもできます。"
+            "value" : "アカウントは%1$@に削除されます。今すぐ削除することもできます。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಖಾತೆ 30 ದಿನಗಳಲ್ಲಿ ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ನೀವು ಈಗಲೇ ಅಳಿಸಬಹುದು."
+            "value" : "ಖಾತೆ %1$@ ರಂದು ಅಳಿಸಲ್ಪಡುತ್ತದೆ. ನೀವು ಈಗಲೇ ಅಳಿಸಬಹುದು."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "계정은 30일 뒤에 삭제돼요. 지금 바로 삭제할 수도 있어요."
+            "value" : "계정은 %1$@에 삭제돼요. 지금 바로 삭제할 수도 있어요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "അക്കൗണ്ട് 30 ദിവസത്തിനുള്ളിൽ ഡിലീറ്റ് ആകും. ഇപ്പോൾത്തന്നെ ഡിലീറ്റ് ചെയ്യാനും കഴിയും."
+            "value" : "അക്കൗണ്ട് %1$@-ന് ഡിലീറ്റ് ആകും. ഇപ്പോൾത്തന്നെ ഡിലീറ്റ് ചെയ്യാനും കഴിയും."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "खाते 30 दिवसांत डिलीट होईल. तुम्ही ते आताही डिलीट करू शकता."
+            "value" : "खाते %1$@ रोजी डिलीट होईल. तुम्ही ते आताही डिलीट करू शकता."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Akaun akan dipadam dalam 30 hari. Anda boleh memadamnya sekarang."
+            "value" : "Akaun akan dipadam pada %1$@. Anda boleh memadamnya sekarang."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontoen blir slettet etter 30 dager. Du kan slette den nå."
+            "value" : "Kontoen blir slettet %1$@. Du kan slette den nå."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Het account wordt na 30 dagen verwijderd. Je kunt het nu al verwijderen."
+            "value" : "Het account wordt op %1$@ verwijderd. Je kunt het nu al verwijderen."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "30 ଦିନରେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ ହୋଇଯିବ। ଆପଣ ଏବେ ହିଁ ଏହାକୁ ଡିଲିଟ୍ କରିପାରିବେ।"
+            "value" : "%1$@ ରେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ ହୋଇଯିବ। ଆପଣ ଏବେ ହିଁ ଏହାକୁ ଡିଲିଟ୍ କରିପାରିବେ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਖਾਤਾ 30 ਦਿਨਾਂ ਵਿੱਚ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ। ਤੁਸੀਂ ਇਸ ਨੂੰ ਹੁਣੇ ਮਿਟਾ ਸਕਦੇ ਹੋ।"
+            "value" : "ਖਾਤਾ %1$@ ਨੂੰ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ। ਤੁਸੀਂ ਇਸ ਨੂੰ ਹੁਣੇ ਮਿਟਾ ਸਕਦੇ ਹੋ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konto zostanie usunięte po 30 dniach. Możesz usunąć je teraz."
+            "value" : "Konto zostanie usunięte %1$@. Możesz usunąć je teraz."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A conta será excluída em 30 dias. Você pode excluí-la agora."
+            "value" : "A conta será excluída em %1$@. Você pode excluí-la agora."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A conta vai ser apagada em 30 dias. Podes apagá-la já."
+            "value" : "A conta vai ser apagada em %1$@. Podes apagá-la já."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contul va fi șters în 30 de zile. Îl poți șterge acum."
+            "value" : "Contul va fi șters pe %1$@. Îl poți șterge acum."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Аккаунт будет удалён через 30 дней. Вы можете удалить его сейчас."
+            "value" : "Аккаунт будет удалён %1$@. Вы можете удалить его сейчас."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Účet sa o 30 dní zruší. Môžeš ho zrušiť už teraz."
+            "value" : "Účet sa zruší %1$@. Môžeš ho zrušiť už teraz."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Račun bo izbrisan čez 30 dni. Izbrišeš ga lahko že zdaj."
+            "value" : "Račun bo izbrisan %1$@. Izbrišeš ga lahko že zdaj."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontot raderas om 30 dagar. Du kan radera det nu."
+            "value" : "Kontot raderas den %1$@. Du kan radera det nu."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "கணக்கு 30 நாட்களில் நீக்கப்படும். இப்போதே நீக்கலாம்."
+            "value" : "கணக்கு %1$@ அன்று நீக்கப்படும். இப்போதே நீக்கலாம்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "30 రోజుల్లో అకౌంట్ డిలీట్ అవుతుంది. ఇప్పుడే డిలీట్ చేయవచ్చు."
+            "value" : "%1$@న అకౌంట్ డిలీట్ అవుతుంది. ఇప్పుడే డిలీట్ చేయవచ్చు."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "บัญชีจะถูกลบใน 30 วัน คุณจะลบตอนนี้เลยก็ได้"
+            "value" : "บัญชีจะถูกลบวันที่ %1$@ คุณจะลบตอนนี้เลยก็ได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hesap 30 gün içinde silinecek. İstersen şimdi silebilirsin."
+            "value" : "Hesap %1$@ tarihinde silinecek. İstersen şimdi silebilirsin."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Акаунт буде видалено за 30 днів. Можеш видалити його зараз."
+            "value" : "Акаунт буде видалено %1$@. Можеш видалити його зараз."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اکاؤنٹ 30 دن میں حذف ہو جائے گا۔ آپ اسے ابھی بھی حذف کر سکتے ہیں۔"
+            "value" : "اکاؤنٹ %1$@ کو حذف ہو جائے گا۔ آپ اسے ابھی بھی حذف کر سکتے ہیں۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tài khoản sẽ bị xóa sau 30 ngày. Bạn có thể xóa ngay bây giờ."
+            "value" : "Tài khoản sẽ bị xóa vào %1$@. Bạn có thể xóa ngay bây giờ."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账号将在 30 天后删除，你也可以现在就删除。"
+            "value" : "账号将在 %1$@ 删除，你也可以现在就删除。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "帳號會在 30 天後刪除，你也可以現在就刪除。"
+            "value" : "帳號會在 %1$@ 刪除，你也可以現在就刪除。"
           }
         }
       }
@@ -10220,271 +10220,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "دون موافقة، يُحذف الحساب بعد 30 يومًا."
+            "value" : "دون موافقة، يُحذف الحساب في %1$@."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "সম্মতি না পেলে ৩০ দিন পর অ্যাকাউন্ট মুছে যাবে।"
+            "value" : "সম্মতি না পেলে %1$@ তারিখে অ্যাকাউন্ট মুছে যাবে।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sense vistiplau, el compte s'elimina d'aquí a 30 dies."
+            "value" : "Sense vistiplau, el compte s'elimina el %1$@."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez souhlasu se účet za 30 dní smaže."
+            "value" : "Bez souhlasu se účet %1$@ smaže."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uden et ja bliver kontoen slettet om 30 dage."
+            "value" : "Uden et ja bliver kontoen slettet den %1$@."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ohne Zustimmung wird das Konto in 30 Tagen gelöscht."
+            "value" : "Ohne Zustimmung wird das Konto am %1$@ gelöscht."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Χωρίς ναι, ο λογαριασμός διαγράφεται σε 30 ημέρες."
+            "value" : "Χωρίς ναι, ο λογαριασμός διαγράφεται στις %1$@."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Without a yes, the account is deleted in 30 days."
+            "value" : "Without a yes, the account is deleted on %1$@."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sin un sí, la cuenta se elimina en 30 días."
+            "value" : "Sin un sí, la cuenta se elimina el %1$@."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ilman suostumusta tili poistetaan 30 päivän kuluttua."
+            "value" : "Ilman suostumusta tili poistetaan %1$@."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sans accord, le compte est supprimé dans 30 jours."
+            "value" : "Sans accord, le compte est supprimé le %1$@."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "હા વગર, એકાઉન્ટ 30 દિવસમાં ડિલીટ થઈ જશે."
+            "value" : "હા વગર, એકાઉન્ટ %1$@ એ ડિલીટ થઈ જશે."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "בלי אישור, החשבון יימחק בעוד 30 ימים."
+            "value" : "בלי אישור, החשבון יימחק ב-%1$@."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "हाँ न मिलने पर अकाउंट 30 दिन में डिलीट हो जाएगा।"
+            "value" : "हाँ न मिलने पर अकाउंट %1$@ को डिलीट हो जाएगा।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez pristanka račun se briše za 30 dana."
+            "value" : "Bez pristanka račun se briše %1$@."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Beleegyezés nélkül a fiók 30 nap múlva törlődik."
+            "value" : "Beleegyezés nélkül a fiók ekkor törlődik: %1$@."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tanpa persetujuan, akun dihapus dalam 30 hari."
+            "value" : "Tanpa persetujuan, akun dihapus pada %1$@."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Senza un sì, l'account viene eliminato dopo 30 giorni."
+            "value" : "Senza un sì, l'account viene eliminato il %1$@."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "同意が得られない場合、アカウントは30日後に削除されます。"
+            "value" : "同意が得られない場合、アカウントは%1$@に削除されます。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಒಪ್ಪಿಗೆ ಸಿಗದಿದ್ದರೆ, ಖಾತೆ 30 ದಿನಗಳಲ್ಲಿ ಅಳಿಸಲ್ಪಡುತ್ತದೆ."
+            "value" : "ಒಪ್ಪಿಗೆ ಸಿಗದಿದ್ದರೆ, ಖಾತೆ %1$@ ರಂದು ಅಳಿಸಲ್ಪಡುತ್ತದೆ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "동의가 없으면 계정은 30일 뒤에 삭제돼요."
+            "value" : "동의가 없으면 계정은 %1$@에 삭제돼요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "സമ്മതം കിട്ടിയില്ലെങ്കിൽ അക്കൗണ്ട് 30 ദിവസത്തിനുള്ളിൽ ഡിലീറ്റ് ആകും."
+            "value" : "സമ്മതം കിട്ടിയില്ലെങ്കിൽ അക്കൗണ്ട് %1$@-ന് ഡിലീറ്റ് ആകും."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "संमती मिळाली नाही तर खाते 30 दिवसांत डिलीट होईल."
+            "value" : "संमती मिळाली नाही तर खाते %1$@ रोजी डिलीट होईल."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tanpa persetujuan, akaun dipadam dalam 30 hari."
+            "value" : "Tanpa persetujuan, akaun dipadam pada %1$@."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uten et ja blir kontoen slettet etter 30 dager."
+            "value" : "Uten et ja blir kontoen slettet %1$@."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zonder ja wordt het account na 30 dagen verwijderd."
+            "value" : "Zonder ja wordt het account op %1$@ verwijderd."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ହଁ ନ ମିଳିଲେ, 30 ଦିନରେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ ହୋଇଯିବ।"
+            "value" : "ହଁ ନ ମିଳିଲେ, %1$@ ରେ ଆକାଉଣ୍ଟ ଡିଲିଟ୍ ହୋଇଯିବ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਹਾਂ ਤੋਂ ਬਿਨਾਂ, ਖਾਤਾ 30 ਦਿਨਾਂ ਵਿੱਚ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
+            "value" : "ਹਾਂ ਤੋਂ ਬਿਨਾਂ, ਖਾਤਾ %1$@ ਨੂੰ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez zgody konto zostanie usunięte po 30 dniach."
+            "value" : "Bez zgody konto zostanie usunięte %1$@."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sem o sim, a conta é excluída em 30 dias."
+            "value" : "Sem o sim, a conta é excluída em %1$@."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sem o sim, a conta é apagada em 30 dias."
+            "value" : "Sem o sim, a conta é apagada em %1$@."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fără un da, contul se șterge în 30 de zile."
+            "value" : "Fără un da, contul se șterge pe %1$@."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Без согласия аккаунт будет удалён через 30 дней."
+            "value" : "Без согласия аккаунт будет удалён %1$@."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bez súhlasu sa účet o 30 dní zruší."
+            "value" : "Bez súhlasu sa účet zruší %1$@."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Brez odobritve se račun čez 30 dni izbriše."
+            "value" : "Brez odobritve bo račun %1$@ izbrisan."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Utan ett ja raderas kontot om 30 dagar."
+            "value" : "Utan ett ja raderas kontot den %1$@."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ஒப்புதல் இல்லையென்றால் கணக்கு 30 நாட்களில் நீக்கப்படும்."
+            "value" : "ஒப்புதல் இல்லையென்றால் கணக்கு %1$@ அன்று நீக்கப்படும்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ఒప్పుకోకపోతే, 30 రోజుల్లో అకౌంట్ డిలీట్ అవుతుంది."
+            "value" : "ఒప్పుకోకపోతే, %1$@న అకౌంట్ డిలీట్ అవుతుంది."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ถ้าไม่ได้รับการอนุมัติ บัญชีจะถูกลบใน 30 วัน"
+            "value" : "ถ้าไม่ได้รับการอนุมัติ บัญชีจะถูกลบวันที่ %1$@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evet denmezse hesap 30 gün içinde silinir."
+            "value" : "Evet denmezse hesap %1$@ tarihinde silinir."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Без згоди акаунт буде видалено за 30 днів."
+            "value" : "Без згоди акаунт буде видалено %1$@."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ہاں کے بغیر اکاؤنٹ 30 دن میں حذف ہو جائے گا۔"
+            "value" : "ہاں کے بغیر اکاؤنٹ %1$@ کو حذف ہو جائے گا۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nếu không được đồng ý, tài khoản sẽ bị xóa sau 30 ngày."
+            "value" : "Nếu không được đồng ý, tài khoản sẽ bị xóa vào %1$@."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果没有得到同意，账号将在 30 天后删除。"
+            "value" : "如果没有得到同意，账号将在 %1$@ 删除。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果沒有得到同意，帳號會在 30 天後刪除。"
+            "value" : "如果沒有得到同意，帳號會在 %1$@ 刪除。"
           }
         }
       }
@@ -10526,7 +10526,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-Mail des Elternteils oder Vormunds"
+            "value" : "E-Mail des Elternteils oder der sorgeberechtigten Person"
           }
         },
         "el" : {
@@ -10772,271 +10772,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "انتهت صلاحية الرابط. أرسله مرة أخرى."
+            "value" : "انتهت صلاحية الرابط."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "লিংকের মেয়াদ শেষ। আবার পাঠান।"
+            "value" : "লিংকের মেয়াদ শেষ।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'enllaç ha caducat. Torna'l a enviar."
+            "value" : "L'enllaç ha caducat."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odkaz vypršel. Pošli ho znovu."
+            "value" : "Odkaz vypršel."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Linket er udløbet. Send det igen."
+            "value" : "Linket er udløbet."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Der Link ist abgelaufen. Sende ihn noch mal."
+            "value" : "Der Link ist abgelaufen."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ο σύνδεσμος έληξε. Στείλε τον ξανά."
+            "value" : "Ο σύνδεσμος έληξε."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The link expired. Send it again."
+            "value" : "The link expired."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El enlace caducó. Envíalo de nuevo."
+            "value" : "El enlace caducó."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Linkki vanheni. Lähetä se uudelleen."
+            "value" : "Linkki vanheni."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le lien a expiré. Renvoie-le."
+            "value" : "Le lien a expiré."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "લિંકની મુદત પૂરી થઈ ગઈ. ફરી મોકલો."
+            "value" : "લિંકની મુદત પૂરી થઈ ગઈ."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "תוקף הקישור פג. אפשר לשלוח שוב."
+            "value" : "תוקף הקישור פג."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "लिंक की समय-सीमा खत्म हो गई। इसे दोबारा भेजें।"
+            "value" : "लिंक की समय-सीमा खत्म हो गई।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Poveznica je istekla. Pošalji je ponovno."
+            "value" : "Poveznica je istekla."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A link lejárt. Küldd el újra."
+            "value" : "A link lejárt."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tautannya sudah kedaluwarsa. Kirim lagi."
+            "value" : "Tautannya sudah kedaluwarsa."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Il link è scaduto. Invialo di nuovo."
+            "value" : "Il link è scaduto."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "リンクの期限が切れました。もう一度送ってください。"
+            "value" : "リンクの期限が切れました。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಲಿಂಕ್‌ನ ಅವಧಿ ಮುಗಿದಿದೆ. ಮತ್ತೆ ಕಳುಹಿಸಿ."
+            "value" : "ಲಿಂಕ್‌ನ ಅವಧಿ ಮುಗಿದಿದೆ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "링크가 만료됐어요. 다시 보내 주세요."
+            "value" : "링크가 만료됐어요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ലിങ്കിന്റെ കാലാവധി തീർന്നു. വീണ്ടും അയയ്ക്കൂ."
+            "value" : "ലിങ്കിന്റെ കാലാവധി തീർന്നു."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "लिंकची मुदत संपली. पुन्हा पाठवा."
+            "value" : "लिंकची मुदत संपली."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pautan sudah tamat tempoh. Hantar semula."
+            "value" : "Pautan sudah tamat tempoh."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lenken har utløpt. Send den på nytt."
+            "value" : "Lenken har utløpt."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "De link is verlopen. Verstuur hem opnieuw."
+            "value" : "De link is verlopen."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଲିଙ୍କ୍ ମିଆଦ ଶେଷ ହୋଇଗଲା। ପୁଣି ପଠାନ୍ତୁ।"
+            "value" : "ଲିଙ୍କ୍ ମିଆଦ ଶେଷ ହୋଇଗଲା।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਲਿੰਕ ਦੀ ਮਿਆਦ ਖ਼ਤਮ ਹੋ ਗਈ। ਦੁਬਾਰਾ ਭੇਜੋ।"
+            "value" : "ਲਿੰਕ ਦੀ ਮਿਆਦ ਖ਼ਤਮ ਹੋ ਗਈ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Link wygasł. Wyślij go ponownie."
+            "value" : "Link wygasł."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O link expirou. Envie de novo."
+            "value" : "O link expirou."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A ligação expirou. Envia outra vez."
+            "value" : "A ligação expirou."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Linkul a expirat. Trimite-l din nou."
+            "value" : "Linkul a expirat."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Срок ссылки истёк. Отправьте её снова."
+            "value" : "Срок ссылки истёк."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Odkaz vypršal. Pošli ho znova."
+            "value" : "Odkaz vypršal."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povezava je potekla. Pošlji jo znova."
+            "value" : "Povezava je potekla."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Länken har gått ut. Skicka den igen."
+            "value" : "Länken har gått ut."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "இணைப்பின் காலம் முடிந்தது. மீண்டும் அனுப்புங்கள்."
+            "value" : "இணைப்பின் காலம் முடிந்தது."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "లింక్ గడువు ముగిసింది. మళ్లీ పంపండి."
+            "value" : "లింక్ గడువు ముగిసింది."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ลิงก์หมดอายุแล้ว ส่งใหม่อีกครั้ง"
+            "value" : "ลิงก์หมดอายุแล้ว"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bağlantının süresi doldu. Tekrar gönder."
+            "value" : "Bağlantının süresi doldu."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Посилання застаріло. Надішли його ще раз."
+            "value" : "Посилання застаріло."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لنک کی مدت ختم ہو گئی۔ دوبارہ بھیجیں۔"
+            "value" : "لنک کی مدت ختم ہو گئی۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Liên kết đã hết hạn. Hãy gửi lại."
+            "value" : "Liên kết đã hết hạn."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "链接已过期，请重新发送。"
+            "value" : "链接已过期。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "連結已過期，請重新傳送。"
+            "value" : "連結已過期。"
           }
         }
       }
@@ -11150,7 +11150,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inserisci la sua email. Gli mandiamo un link per approvare."
+            "value" : "Inserisci l'email del genitore o tutore. Mandiamo un link per approvare."
           }
         },
         "ja" : {
@@ -11593,6 +11593,282 @@
         }
       }
     },
+    "age.parentResendAt" : {
+      "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يمكنك إرساله مرة أخرى في %1$@."
+          }
+        },
+        "bn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@-এ আবার পাঠাতে পারবেন।"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podràs tornar-lo a enviar a les %1$@."
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znovu ho můžeš poslat v %1$@."
+          }
+        },
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan sende det igen kl. %1$@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst ihn um %1$@ noch mal senden."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μπορείς να τον στείλεις ξανά στις %1$@."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can send it again at %1$@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podrás enviarlo de nuevo a las %1$@."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voit lähettää sen uudelleen klo %1$@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu pourras le renvoyer à %1$@."
+          }
+        },
+        "gu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "તમે તેને %1$@ વાગ્યે ફરી મોકલી શકો છો."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפשר לשלוח שוב ב-%1$@."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आप इसे %1$@ पर दोबारा भेज सकते हैं।"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ponovno je možeš poslati u %1$@."
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Újra elküldheted ekkor: %1$@."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamu bisa mengirimnya lagi pukul %1$@."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi inviarlo di nuovo alle %1$@."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@にもう一度送れます。"
+          }
+        },
+        "kn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ನೀವು ಇದನ್ನು %1$@ ಕ್ಕೆ ಮತ್ತೆ ಕಳುಹಿಸಬಹುದು."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@에 다시 보낼 수 있어요."
+          }
+        },
+        "ml" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@-ന് നിങ്ങൾക്ക് വീണ്ടും അയയ്ക്കാം."
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "तुम्ही ती %1$@ ला पुन्हा पाठवू शकता."
+          }
+        },
+        "ms" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda boleh hantar semula pada %1$@."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan sende den på nytt kl. %1$@."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je kunt hem opnieuw versturen om %1$@."
+          }
+        },
+        "or" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ଆପଣ %1$@ ରେ ପୁଣି ପଠାଇପାରିବେ।"
+          }
+        },
+        "pa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ਤੁਸੀਂ %1$@ ਵਜੇ ਦੁਬਾਰਾ ਭੇਜ ਸਕਦੇ ਹੋ।"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Możesz wysłać go ponownie o %1$@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você pode enviar de novo às %1$@."
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podes enviar outra vez às %1$@."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poți trimite din nou la %1$@."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить снова можно в %1$@."
+          }
+        },
+        "sk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znova ho môžeš poslať o %1$@."
+          }
+        },
+        "sl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Znova jo lahko pošlješ ob %1$@."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan skicka den igen kl. %1$@."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ மணிக்கு மீண்டும் அனுப்பலாம்."
+          }
+        },
+        "te" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@కు మళ్లీ పంపవచ్చు."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่งอีกครั้งได้เวลา %1$@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ sonrasında tekrar gönderebilirsin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіслати ще раз можна о %1$@."
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آپ %1$@ پر دوبارہ بھیج سکتے ہیں۔"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bạn có thể gửi lại lúc %1$@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你可以在 %1$@ 后重新发送。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你可以在 %1$@ 後重新傳送。"
+          }
+        }
+      }
+    },
     "age.parentRevoked" : {
       "comment" : "Generated by mobile/shared/strings/export-strings.ts from lib/i18n.ts. Do not edit.",
       "extractionState" : "manual",
@@ -11600,271 +11876,271 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الحساب مقفل وسيُحذف بعد 30 يومًا ما لم يوافق أحد الوالدين مجددًا."
+            "value" : "الحساب مقفل وسيُحذف في %1$@ ما لم يوافق أحد الوالدين مجددًا."
           }
         },
         "bn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "অ্যাকাউন্ট লক করা আছে। বাবা-মা আবার সম্মতি না দিলে ৩০ দিন পর এটা মুছে যাবে।"
+            "value" : "অ্যাকাউন্ট লক করা আছে। বাবা-মা আবার সম্মতি না দিলে %1$@ তারিখে এটা মুছে যাবে।"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "El compte està bloquejat i s'eliminarà d'aquí a 30 dies si un pare o una mare no el torna a aprovar."
+            "value" : "El compte està bloquejat i s'eliminarà el %1$@ si un pare o una mare no el torna a aprovar."
           }
         },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Účet je zamčený a za 30 dní se smaže, pokud ho rodič znovu neschválí."
+            "value" : "Účet je zamčený a %1$@ se smaže, pokud ho rodič znovu neschválí."
           }
         },
         "da" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontoen er låst og bliver slettet om 30 dage, medmindre en forælder godkender igen."
+            "value" : "Kontoen er låst og bliver slettet den %1$@, medmindre en forælder godkender igen."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Konto ist gesperrt und wird in 30 Tagen gelöscht, wenn nicht ein Elternteil wieder zustimmt."
+            "value" : "Das Konto ist gesperrt und wird am %1$@ gelöscht, wenn nicht ein Elternteil wieder zustimmt."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ο λογαριασμός είναι κλειδωμένος και θα διαγραφεί σε 30 ημέρες, αν δεν εγκρίνει ξανά ένας γονέας."
+            "value" : "Ο λογαριασμός είναι κλειδωμένος και θα διαγραφεί στις %1$@, αν δεν εγκρίνει ξανά ένας γονέας."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The account is locked and will be deleted in 30 days unless a parent approves again."
+            "value" : "The account is locked and will be deleted on %1$@ unless a parent approves again."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La cuenta está bloqueada y se eliminará en 30 días si uno de tus padres no la aprueba de nuevo."
+            "value" : "La cuenta está bloqueada y se eliminará el %1$@ si uno de tus padres no la aprueba de nuevo."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tili on lukittu ja poistetaan 30 päivän kuluttua, ellei vanhempi hyväksy sitä uudelleen."
+            "value" : "Tili on lukittu ja poistetaan %1$@, ellei vanhempi hyväksy sitä uudelleen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le compte est verrouillé et sera supprimé dans 30 jours, sauf si un parent l’approuve de nouveau."
+            "value" : "Le compte est verrouillé et sera supprimé le %1$@, sauf si un parent l’approuve de nouveau."
           }
         },
         "gu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "એકાઉન્ટ લૉક છે, અને માતાપિતા ફરી મંજૂરી ન આપે તો 30 દિવસમાં ડિલીટ થઈ જશે."
+            "value" : "એકાઉન્ટ લૉક છે, અને માતાપિતા ફરી મંજૂરી ન આપે તો %1$@ એ ડિલીટ થઈ જશે."
           }
         },
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "החשבון נעול, והוא יימחק בעוד 30 ימים אלא אם הורה יאשר שוב."
+            "value" : "החשבון נעול, והוא יימחק ב-%1$@ אלא אם הורה יאשר שוב."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अकाउंट लॉक है और 30 दिन में डिलीट हो जाएगा, जब तक माता-पिता दोबारा मंज़ूरी न दें।"
+            "value" : "अकाउंट लॉक है और %1$@ को डिलीट हो जाएगा, जब तक माता-पिता दोबारा मंज़ूरी न दें।"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Račun je zaključan i bit će izbrisan za 30 dana ako roditelj ponovno ne odobri."
+            "value" : "Račun je zaključan i bit će izbrisan %1$@ ako roditelj ponovno ne odobri."
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A fiók zárolva van, és 30 nap múlva törlődik, hacsak egy szülő nem hagyja jóvá újra."
+            "value" : "A fiók zárolva van, és ekkor törlődik: %1$@, hacsak egy szülő nem hagyja jóvá újra."
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Akun dikunci dan akan dihapus dalam 30 hari kecuali orang tua menyetujui lagi."
+            "value" : "Akun dikunci dan akan dihapus pada %1$@ kecuali orang tua menyetujui lagi."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'account è bloccato e verrà eliminato tra 30 giorni, a meno che un genitore non approvi di nuovo."
+            "value" : "L'account è bloccato e verrà eliminato il %1$@, a meno che un genitore non approvi di nuovo."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アカウントはロックされ、保護者が改めて承認しない限り30日後に削除されます。"
+            "value" : "アカウントはロックされ、保護者が改めて承認しない限り%1$@に削除されます。"
           }
         },
         "kn" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ಖಾತೆ ಲಾಕ್ ಆಗಿದೆ. ಪೋಷಕರು ಮತ್ತೆ ಒಪ್ಪದಿದ್ದರೆ ಅದು 30 ದಿನಗಳಲ್ಲಿ ಅಳಿಸಲ್ಪಡುತ್ತದೆ."
+            "value" : "ಖಾತೆ ಲಾಕ್ ಆಗಿದೆ. ಪೋಷಕರು ಮತ್ತೆ ಒಪ್ಪದಿದ್ದರೆ ಅದು %1$@ ರಂದು ಅಳಿಸಲ್ಪಡುತ್ತದೆ."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "계정이 잠겼고, 부모님이 다시 승인하지 않으면 30일 뒤에 삭제돼요."
+            "value" : "계정이 잠겼고, 부모님이 다시 승인하지 않으면 %1$@에 삭제돼요."
           }
         },
         "ml" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "അക്കൗണ്ട് ലോക്ക് ആയിരിക്കുന്നു. ഒരു രക്ഷിതാവ് വീണ്ടും അംഗീകരിച്ചില്ലെങ്കിൽ 30 ദിവസത്തിനുള്ളിൽ ഡിലീറ്റ് ആകും."
+            "value" : "അക്കൗണ്ട് ലോക്ക് ആയിരിക്കുന്നു. ഒരു രക്ഷിതാവ് വീണ്ടും അംഗീകരിച്ചില്ലെങ്കിൽ %1$@-ന് ഡിലീറ്റ് ആകും."
           }
         },
         "mr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "खाते लॉक झाले आहे आणि पालकांनी पुन्हा मंजुरी दिली नाही तर ते 30 दिवसांत डिलीट होईल."
+            "value" : "खाते लॉक झाले आहे आणि पालकांनी पुन्हा मंजुरी दिली नाही तर ते %1$@ रोजी डिलीट होईल."
           }
         },
         "ms" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Akaun dikunci dan akan dipadam dalam 30 hari kecuali ibu bapa meluluskan semula."
+            "value" : "Akaun dikunci dan akan dipadam pada %1$@ kecuali ibu bapa meluluskan semula."
           }
         },
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontoen er låst og slettes etter 30 dager hvis ikke en forelder godkjenner på nytt."
+            "value" : "Kontoen er låst og slettes %1$@ hvis ikke en forelder godkjenner på nytt."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Het account is vergrendeld en wordt na 30 dagen verwijderd, tenzij een ouder opnieuw goedkeurt."
+            "value" : "Het account is vergrendeld en wordt op %1$@ verwijderd, tenzij een ouder opnieuw goedkeurt."
           }
         },
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆକାଉଣ୍ଟ ଲକ୍ ହୋଇଯାଇଛି, ଆଉ ଅଭିଭାବକ ପୁଣି ଅନୁମୋଦନ ନ କଲେ 30 ଦିନରେ ଡିଲିଟ୍ ହୋଇଯିବ।"
+            "value" : "ଆକାଉଣ୍ଟ ଲକ୍ ହୋଇଯାଇଛି, ଆଉ ଅଭିଭାବକ ପୁଣି ଅନୁମୋଦନ ନ କଲେ %1$@ ରେ ଡିଲିଟ୍ ହୋଇଯିବ।"
           }
         },
         "pa" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ਖਾਤਾ ਲੌਕ ਹੈ ਅਤੇ 30 ਦਿਨਾਂ ਵਿੱਚ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ, ਜਦੋਂ ਤੱਕ ਕੋਈ ਮਾਪਾ ਦੁਬਾਰਾ ਮਨਜ਼ੂਰੀ ਨਾ ਦੇਵੇ।"
+            "value" : "ਖਾਤਾ ਲੌਕ ਹੈ ਅਤੇ %1$@ ਨੂੰ ਮਿਟਾ ਦਿੱਤਾ ਜਾਵੇਗਾ, ਜਦੋਂ ਤੱਕ ਕੋਈ ਮਾਪਾ ਦੁਬਾਰਾ ਮਨਜ਼ੂਰੀ ਨਾ ਦੇਵੇ।"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konto jest zablokowane i zostanie usunięte po 30 dniach, jeśli rodzic nie zatwierdzi go ponownie."
+            "value" : "Konto jest zablokowane i zostanie usunięte %1$@, jeśli rodzic nie zatwierdzi go ponownie."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A conta está bloqueada e será excluída em 30 dias, a menos que um responsável aprove de novo."
+            "value" : "A conta está bloqueada e será excluída em %1$@, a menos que um responsável aprove de novo."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A conta está bloqueada e será apagada em 30 dias, a menos que um encarregado de educação volte a aprovar."
+            "value" : "A conta está bloqueada e será apagada em %1$@, a menos que um encarregado de educação volte a aprovar."
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Contul e blocat și va fi șters în 30 de zile, dacă un părinte nu aprobă din nou."
+            "value" : "Contul e blocat și va fi șters pe %1$@, dacă un părinte nu aprobă din nou."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Аккаунт заблокирован и будет удалён через 30 дней, если родитель не подтвердит его снова."
+            "value" : "Аккаунт заблокирован и будет удалён %1$@, если родитель не подтвердит его снова."
           }
         },
         "sk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Účet je zamknutý a o 30 dní sa zruší, ak ho rodič znova neschváli."
+            "value" : "Účet je zamknutý a zruší sa %1$@, ak ho rodič znova neschváli."
           }
         },
         "sl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Račun je zaklenjen in bo čez 30 dni izbrisan, razen če starš znova odobri."
+            "value" : "Račun je zaklenjen in bo %1$@ izbrisan, razen če starš znova odobri."
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kontot är låst och raderas om 30 dagar om inte en förälder godkänner igen."
+            "value" : "Kontot är låst och raderas den %1$@ om inte en förälder godkänner igen."
           }
         },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "கணக்கு பூட்டப்பட்டுள்ளது. பெற்றோர் மீண்டும் ஒப்புக்கொள்ளாவிட்டால் 30 நாட்களில் நீக்கப்படும்."
+            "value" : "கணக்கு பூட்டப்பட்டுள்ளது. பெற்றோர் மீண்டும் ஒப்புக்கொள்ளாவிட்டால் %1$@ அன்று நீக்கப்படும்."
           }
         },
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "అకౌంట్ లాక్ అయింది. తల్లిదండ్రులు మళ్లీ ఆమోదించకపోతే 30 రోజుల్లో డిలీట్ అవుతుంది."
+            "value" : "అకౌంట్ లాక్ అయింది. తల్లిదండ్రులు మళ్లీ ఆమోదించకపోతే %1$@న డిలీట్ అవుతుంది."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "บัญชีถูกล็อกและจะถูกลบใน 30 วัน เว้นแต่ผู้ปกครองจะอนุมัติอีกครั้ง"
+            "value" : "บัญชีถูกล็อกและจะถูกลบวันที่ %1$@ เว้นแต่ผู้ปกครองจะอนุมัติอีกครั้ง"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hesap kilitlendi; bir ebeveyn yeniden onaylamazsa 30 gün içinde silinecek."
+            "value" : "Hesap kilitlendi; bir ebeveyn yeniden onaylamazsa %1$@ tarihinde silinecek."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Акаунт заблоковано, його буде видалено за 30 днів, якщо хтось із батьків не схвалить знову."
+            "value" : "Акаунт заблоковано, його буде видалено %1$@, якщо хтось із батьків не схвалить знову."
           }
         },
         "ur" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اکاؤنٹ لاک ہے اور 30 دن میں حذف ہو جائے گا، جب تک والدین دوبارہ منظور نہ کریں۔"
+            "value" : "اکاؤنٹ لاک ہے اور %1$@ کو حذف ہو جائے گا، جب تک والدین دوبارہ منظور نہ کریں۔"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tài khoản đã bị khóa và sẽ bị xóa sau 30 ngày, trừ khi cha mẹ phê duyệt lại."
+            "value" : "Tài khoản đã bị khóa và sẽ bị xóa vào %1$@, trừ khi cha mẹ phê duyệt lại."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "账号已被锁定，除非家长重新批准，否则将在 30 天后删除。"
+            "value" : "账号已被锁定，除非家长重新批准，否则将在 %1$@ 删除。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "帳號已鎖定，除非家長重新核准，否則會在 30 天後刪除。"
+            "value" : "帳號已鎖定，除非家長重新核准，否則會在 %1$@ 刪除。"
           }
         }
       }
@@ -12098,7 +12374,7 @@
         "te" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "మీ తల్లిదండ్రులు తమ ఒప్పుకోలును వెనక్కి తీసుకున్నారు"
+            "value" : "మీ తల్లిదండ్రులు తమ సమ్మతిని వెనక్కి తీసుకున్నారు"
           }
         },
         "th" : {
@@ -12734,7 +13010,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ein Elternteil oder Vormund muss zustimmen"
+            "value" : "Ein Elternteil oder eine sorgeberechtigte Person muss zustimmen"
           }
         },
         "el" : {
@@ -13136,7 +13412,7 @@
         "or" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ଆପଣଙ୍କ ଅଭିଭାବକଙ୍କୁ ଅପେକ୍ଷା"
+            "value" : "ଆପଣଙ୍କ ଅଭିଭାବକଙ୍କ ଅପେକ୍ଷାରେ"
           }
         },
         "pa" : {
@@ -14114,7 +14390,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ist da, wo du wohnst, ab 18"
+            "value" : "Wo du wohnst, ist Judge erst ab 18"
           }
         },
         "el" : {
@@ -14258,13 +14534,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Judge é para maiores de 18 anos onde você mora"
+            "value" : "O Judge é para quem tem 18 anos ou mais onde você mora"
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Judge é para maiores de 18 anos onde vives"
+            "value" : "O Judge é para quem tem 18 anos ou mais onde vives"
           }
         },
         "ro" : {
@@ -92486,7 +92762,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Judge ist da, wo du wohnst, nur für Menschen ab 18."
+            "value" : "Wo du wohnst, ist Judge nur für Menschen ab 18."
           }
         },
         "el" : {
@@ -92630,13 +92906,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Judge é só para maiores de 18 anos onde você mora."
+            "value" : "O Judge é só para quem tem 18 anos ou mais onde você mora."
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "O Judge é só para maiores de 18 anos onde vives."
+            "value" : "O Judge é só para quem tem 18 anos ou mais onde vives."
           }
         },
         "ro" : {

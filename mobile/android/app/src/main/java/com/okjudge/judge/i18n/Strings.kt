@@ -612,14 +612,15 @@ class Strings(private val res: Resources) {
     val ageParentWaitTitle: String get() = res.getString(R.string.age_parent_wait_title)
     fun ageParentSentTo(email: String): String = res.getString(R.string.age_parent_sent_to, email)
     val ageParentExpired: String get() = res.getString(R.string.age_parent_expired)
+    fun ageParentResendAt(time: String): String = res.getString(R.string.age_parent_resend_at, time)
     val ageParentResend: String get() = res.getString(R.string.age_parent_resend)
     val ageParentChange: String get() = res.getString(R.string.age_parent_change)
     val ageParentCancel: String get() = res.getString(R.string.age_parent_cancel)
-    val ageParentDelete: String get() = res.getString(R.string.age_parent_delete)
+    fun ageParentDelete(date: String): String = res.getString(R.string.age_parent_delete, date)
     val ageParentDeclinedTitle: String get() = res.getString(R.string.age_parent_declined_title)
-    val ageParentDeclined: String get() = res.getString(R.string.age_parent_declined)
+    fun ageParentDeclined(date: String): String = res.getString(R.string.age_parent_declined, date)
     val ageParentRevokedTitle: String get() = res.getString(R.string.age_parent_revoked_title)
-    val ageParentRevoked: String get() = res.getString(R.string.age_parent_revoked)
+    fun ageParentRevoked(date: String): String = res.getString(R.string.age_parent_revoked, date)
     val ageRegionTitle: String get() = res.getString(R.string.age_region_title)
     val ageRegion: String get() = res.getString(R.string.age_region)
     fun ageRegionContact(email: String): String = res.getString(R.string.age_region_contact, email)
@@ -1270,11 +1271,8 @@ class Strings(private val res: Resources) {
             "age.parentResend" -> R.string.age_parent_resend
             "age.parentChange" -> R.string.age_parent_change
             "age.parentCancel" -> R.string.age_parent_cancel
-            "age.parentDelete" -> R.string.age_parent_delete
             "age.parentDeclinedTitle" -> R.string.age_parent_declined_title
-            "age.parentDeclined" -> R.string.age_parent_declined
             "age.parentRevokedTitle" -> R.string.age_parent_revoked_title
-            "age.parentRevoked" -> R.string.age_parent_revoked
             "age.regionTitle" -> R.string.age_region_title
             "age.region" -> R.string.age_region
             "error.password_wrong" -> R.string.error_password_wrong

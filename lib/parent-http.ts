@@ -11,7 +11,7 @@ import { isSameOrigin } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { clientIp } from "@/lib/client-ip";
 import { langFromRequest } from "@/lib/email";
-import { ensureParentRow, parentView, requestParent } from "@/lib/parent-consent";
+import { ensureParentRow, parentView, requestParent, sendBlocked } from "@/lib/parent-consent";
 import { checkIpLimits, checkUserLimits } from "@/lib/ratelimit";
 import { verifyTurnstile } from "@/lib/turnstile";
 
@@ -26,6 +26,12 @@ function fail(code: ApiErrorCode, message: string, retryAfterSec?: number): Next
 
 const SetBody = z.strictObject({ email: z.string().trim().max(254).pipe(z.email()), turnstileToken: z.string().optional() });
 const ResendBody = z.strictObject({ turnstileToken: z.string().optional() });
+
+function refusal(code: "parent_declined" | "parent_wait" | "parent_limit", retryAfterSec?: number): NextResponse {
+  if (code === "parent_declined") return fail(code, "The parent declined.");
+  if (code === "parent_wait") return fail(code, "Wait before sending it again.", retryAfterSec);
+  return fail(code, "No more sends or changes are left.");
+}
 
 /** GET /api/v1/me/parent: ParentView, the state of the request. */
 export async function parentGet(req: Request): Promise<NextResponse> {
@@ -67,6 +73,9 @@ export async function parentPost(req: Request, mode: "set" | "resend"): Promise<
   if (!viewer.age.parent) return fail("parent_conflict", "This account does not need a parent.");
   const ip = clientIp(req.headers);
   try {
+    // A send that would be refused anyway costs no bot check and no quota.
+    const blocked = await sendBlocked(viewer.user.id, mode === "set" ? (parsed.data as z.infer<typeof SetBody>).email : null);
+    if (blocked) return refusal(blocked.code, blocked.retryAfterSec);
     if (viewer.via !== "bearer") {
       const captcha = await verifyTurnstile(parsed.data.turnstileToken, ip);
       if (captcha === "invalid") return fail("captcha_failed", "Bot check failed. Reload the page and try again.");
@@ -89,11 +98,9 @@ export async function parentPost(req: Request, mode: "set" | "resend"): Promise<
       case "parent_email":
         return fail("parent_email", "Use a parent's own email address.");
       case "parent_declined":
-        return fail("parent_declined", "The parent declined.");
       case "parent_wait":
-        return fail("parent_wait", "Wait before sending it again.", result.retryAfterSec);
       case "parent_limit":
-        return fail("parent_limit", "No more sends or changes are left.");
+        return refusal(result.code, result.retryAfterSec);
       case "rate_limited":
         return fail("rate_limited", "Too many requests. Try again later.", result.retryAfterSec);
       case "unavailable":

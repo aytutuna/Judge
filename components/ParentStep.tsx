@@ -3,10 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import type { ParentView } from "@/lib/account-types";
-import { apiErrorMessage, t, type Lang } from "@/lib/i18n";
+import { apiErrorMessage, formatDate, t, type Lang } from "@/lib/i18n";
+import { langTag } from "@/lib/langs";
 import { refreshViewer } from "@/lib/use-viewer";
 import styles from "./account/AccountPages.module.css";
 import { Turnstile, TURNSTILE_SITE_KEY } from "./Turnstile";
+
+/** A stable ref callback: focus once, when the element appears. */
+function focusEl(el: HTMLElement | null): void {
+  el?.focus();
+}
 
 export type ParentStepProps = {
   lang: Lang;
@@ -20,6 +26,8 @@ export type ParentStepProps = {
   /** The bot check, shown with the buttons that send mail. */
   turnstile?: ReactNode;
   canSend: boolean;
+  /** The clock, in ms, so the resend wait is not read during render. */
+  now: number;
   onEmail: (v: string) => void;
   onSend: () => void;
   onResend: () => void;
@@ -39,6 +47,7 @@ export function ParentStepBody({
   error,
   turnstile,
   canSend,
+  now,
   onEmail,
   onSend,
   onResend,
@@ -55,6 +64,10 @@ export function ParentStepBody({
       </Link>
     </div>
   );
+  const deleteLine = (key: "age.parentDelete" | "age.parentDeclined" | "age.parentRevoked") => {
+    const date = formatDate(lang, view?.deleteAt);
+    return date ? t(lang, key, { date }) : null;
+  };
   const problem = error ? (
     <p className={styles.error} role="alert">
       {error}
@@ -64,32 +77,39 @@ export function ParentStepBody({
   if (status === "declined") {
     return (
       <>
-        <h2 id="age-title" className={styles.dialogTitle}>
+        <h2 id="age-title" className={styles.dialogTitle} tabIndex={-1} ref={focusEl}>
           {t(lang, "age.parentDeclinedTitle")}
         </h2>
-        <p className={styles.dialogText}>{t(lang, "age.parentDeclined")}</p>
+        {deleteLine("age.parentDeclined") ? <p className={styles.dialogText}>{deleteLine("age.parentDeclined")}</p> : null}
         {leave}
       </>
     );
   }
 
   const sent = status === "pending" && Boolean(view?.sent) && !editing;
+  const resendAt = view?.resendAt ? new Date(view.resendAt) : null;
+  const waitUntil = resendAt && resendAt.getTime() > now ? resendAt : null;
   if (sent && view) {
     return (
       <>
-        <h2 id="age-title" className={styles.dialogTitle}>
+        <h2 id="age-title" className={styles.dialogTitle} tabIndex={-1} ref={focusEl}>
           {t(lang, "age.parentWaitTitle")}
         </h2>
         <p className={styles.dialogText}>{t(lang, "age.parentSentTo", { email: view.emailHint ?? "" })}</p>
         {view.expired ? <p className={styles.dialogText}>{t(lang, "age.parentExpired")}</p> : null}
-        <p className={styles.dialogText}>{t(lang, "age.parentDelete")}</p>
+        {waitUntil ? (
+          <p className={styles.dialogText}>
+            {t(lang, "age.parentResendAt", { time: new Intl.DateTimeFormat(langTag(lang), { timeStyle: "short" }).format(waitUntil) })}
+          </p>
+        ) : null}
+        {deleteLine("age.parentDelete") ? <p className={styles.dialogText}>{deleteLine("age.parentDelete")}</p> : null}
         {problem}
         {turnstile}
         <div className={styles.row}>
           <button
             type="button"
             className={`${styles.btn} ${styles.primary}`}
-            disabled={busy || !canSend || view.resendsLeft === 0}
+            disabled={busy || !canSend || view.resendsLeft === 0 || waitUntil !== null}
             onClick={onResend}
           >
             {t(lang, "age.parentResend")}
@@ -118,7 +138,7 @@ export function ParentStepBody({
       <h2 id="age-title" className={styles.dialogTitle}>
         {t(lang, status === "revoked" ? "age.parentRevokedTitle" : "age.parentTitle")}
       </h2>
-      <p className={styles.dialogText}>{t(lang, status === "revoked" ? "age.parentRevoked" : "age.parentLead")}</p>
+      <p className={styles.dialogText}>{status === "revoked" ? deleteLine("age.parentRevoked") : t(lang, "age.parentLead")}</p>
       <div className={styles.field}>
         <label className={styles.label} htmlFor="parent-email">
           {t(lang, "age.parentEmail")}
@@ -135,7 +155,7 @@ export function ParentStepBody({
           onChange={(e) => onEmail(e.target.value)}
         />
       </div>
-      <p className={styles.dialogText}>{t(lang, "age.parentDelete")}</p>
+      {status === "pending" && deleteLine("age.parentDelete") ? <p className={styles.dialogText}>{deleteLine("age.parentDelete")}</p> : null}
       {problem}
       {turnstile}
       <div className={styles.row}>
@@ -163,6 +183,7 @@ export function ParentStep({ lang, status, onSignOut }: { lang: Lang; status: "p
   const [error, setError] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [checkKey, setCheckKey] = useState(0);
+  const [now, setNow] = useState(() => Date.now());
   const needsCheck = TURNSTILE_SITE_KEY !== "";
 
   useEffect(() => {
@@ -179,6 +200,8 @@ export function ParentStep({ lang, status, onSignOut }: { lang: Lang; status: "p
   // The parent answers on another device: look again every half minute and when the tab comes back.
   useEffect(() => {
     const look = () => {
+      // The tick also lets the resend button wake up when its hour is over.
+      setNow(Date.now());
       if (document.visibilityState !== "hidden") void refreshViewer();
     };
     const timer = setInterval(look, 30_000);
@@ -225,6 +248,7 @@ export function ParentStep({ lang, status, onSignOut }: { lang: Lang; status: "p
       busy={busy}
       error={error}
       canSend={!needsCheck || token !== null}
+      now={now}
       turnstile={needsCheck ? <Turnstile key={checkKey} siteKey={TURNSTILE_SITE_KEY} lang={lang} onToken={setToken} /> : undefined}
       onEmail={setEmail}
       onSend={send}

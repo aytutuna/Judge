@@ -640,3 +640,126 @@ describe("the proof record", () => {
     void token;
   });
 });
+
+describe("waiting time after a withdrawal", () => {
+  it("starts again with the new request, so the account is not deleted at once", async () => {
+    const s = await teenWaitingForParent();
+    const db = await getDb();
+    await postParent(s.token, pe());
+    await linkCall(lastToken(), { action: "approve", guardian: true });
+    // The hold began long ago.
+    const old = new Date(Date.now() - 90 * DAY).toISOString();
+    await db.execute({ sql: "UPDATE parent_consent SET created_at = ?, waiting_since = ? WHERE user_id = ?", args: [old, old, s.user.id] });
+    await linkCall(lastToken(), { action: "withdraw" });
+    expect((await postParent(s.token, pe())).status).toBe(200);
+    const view = await parentView(s.user.id);
+    expect(new Date(view.deleteAt!).getTime() - Date.now()).toBeGreaterThan(29 * DAY);
+    expect((await runCleanup(new Date(Date.now() + 5 * DAY))).parentless).toBe(0);
+    expect(await userRow(s.user.id)).toBeDefined();
+    expect((await runCleanup(new Date(Date.now() + 31 * DAY))).parentless).toBeGreaterThanOrEqual(1);
+    expect(await userRow(s.user.id)).toBeUndefined();
+  });
+});
+
+describe("a teen known only from the store's minor signal", () => {
+  it("is refused in Brazil even with an adult date typed", async () => {
+    const { token } = await newUser();
+    await postAge(token, { adult: false, source: "platform" });
+    const res = await postAge(token, { dob: ago(30) }, country("BR"));
+    expect(await res.json()).toMatchObject({ teen: true, restricted: true });
+    expect((await history(token)).status).toBe(403);
+  });
+
+  it("gets Brazil from a later store country", async () => {
+    const { token } = await newUser();
+    await postAge(token, { dob: ago(30) }, country("US"));
+    await postAge(token, { adult: false, source: "platform" });
+    expect(await (await postAge(token, { storeCountry: "BR" })).json()).toMatchObject({ teen: true, restricted: true });
+  });
+});
+
+describe("one write for a decision and the account", () => {
+  async function withTrigger(value: string, run: () => Promise<void>) {
+    const db = await getDb();
+    await db.execute(`CREATE TRIGGER fail_mirror BEFORE UPDATE OF age_parent ON "user" WHEN NEW.age_parent = '${value}' BEGIN SELECT RAISE(ABORT, 'boom'); END`);
+    try {
+      await run();
+    } finally {
+      await db.execute("DROP TRIGGER fail_mirror");
+    }
+  }
+
+  it("a withdrawal whose account write fails changes nothing and can be tried again", async () => {
+    const s = await teenWaitingForParent();
+    await postParent(s.token, pe());
+    await linkCall(lastToken(), { action: "approve", guardian: true });
+    const withdraw = lastToken();
+    await withTrigger("revoked", async () => {
+      expect((await linkCall(withdraw, { action: "withdraw" })).status).toBe(503);
+    });
+    expect(await row(s.user.id)).toMatchObject({ status: "approved" });
+    expect((await me(s.token)).age).not.toHaveProperty("parent");
+    expect((await linkCall(withdraw, { action: "withdraw" })).status).toBe(200);
+    expect((await me(s.token)).age.parent).toBe("revoked");
+  });
+
+  it("an approval whose account write fails keeps the request open, with the address still sealed", async () => {
+    const s = await teenWaitingForParent();
+    await postParent(s.token, pe());
+    const t = lastToken();
+    const before = sent.length;
+    await withTrigger("approved", async () => {
+      expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(503);
+    });
+    expect(sent).toHaveLength(before);
+    expect(await row(s.user.id)).toMatchObject({ status: "pending", withdraw_hash: null });
+    expect(String((await row(s.user.id)).parent_email_enc)).toMatch(/^v1\./);
+    expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(200);
+    expect(await row(s.user.id)).toMatchObject({ status: "approved", parent_email_enc: null, token_hash: null });
+  });
+
+  it("a mail that fails after the claim puts the address and link back", async () => {
+    const s = await teenWaitingForParent();
+    await postParent(s.token, pe());
+    const t = lastToken();
+    mailFails = true;
+    expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(503);
+    mailFails = false;
+    expect(String((await row(s.user.id)).parent_email_enc)).toMatch(/^v1\./);
+    expect((await me(s.token)).age.parent).toBe("pending");
+    expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(200);
+  });
+});
+
+describe("a refused resend", () => {
+  it("is answered before any limit counts it", async () => {
+    const { token } = await teenWaitingForParent();
+    await postParent(token, pe());
+    for (let i = 0; i < 6; i++) {
+      const res = await resendRoute.POST(request("POST", "/api/v1/me/parent/resend", bearer(token), {}));
+      expect(res.status, `try ${i}`).toBe(429);
+      expect((await res.json()).code).toBe("parent_wait");
+    }
+  });
+});
+
+describe("the address check", () => {
+  it("also refuses another Judge account's address under another spelling", async () => {
+    const s = await teenWaitingForParent();
+    const other = await newUser();
+    const [local, domain] = other.user.email.split("@");
+    expect((await postParent(s.token, `${local}+parent@${domain}`)).status).toBe(400);
+    expect(sent).toHaveLength(0);
+  });
+
+  it("does not let the teen approve from their own session", async () => {
+    const s = await teenWaitingForParent();
+    await postParent(s.token, pe());
+    const t = lastToken();
+    const res = await linkRoute.POST(request("POST", `/api/v1/parent/${t}`, { origin: BASE, ...bearer(s.token) }, { action: "approve", guardian: true }), {
+      params: Promise.resolve({ token: t }),
+    });
+    expect(res.status).toBe(404);
+    expect((await me(s.token)).age.parent).toBe("pending");
+  });
+});

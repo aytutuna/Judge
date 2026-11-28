@@ -679,14 +679,15 @@ enum L10n {
     static func ageParentWaitTitle(_ lang: AppLang) -> String { string("age.parentWaitTitle", lang) }
     static func ageParentSentTo(_ lang: AppLang, email: String) -> String { format("age.parentSentTo", lang, email) }
     static func ageParentExpired(_ lang: AppLang) -> String { string("age.parentExpired", lang) }
+    static func ageParentResendAt(_ lang: AppLang, time: String) -> String { format("age.parentResendAt", lang, time) }
     static func ageParentResend(_ lang: AppLang) -> String { string("age.parentResend", lang) }
     static func ageParentChange(_ lang: AppLang) -> String { string("age.parentChange", lang) }
     static func ageParentCancel(_ lang: AppLang) -> String { string("age.parentCancel", lang) }
-    static func ageParentDelete(_ lang: AppLang) -> String { string("age.parentDelete", lang) }
+    static func ageParentDelete(_ lang: AppLang, date: String) -> String { format("age.parentDelete", lang, date) }
     static func ageParentDeclinedTitle(_ lang: AppLang) -> String { string("age.parentDeclinedTitle", lang) }
-    static func ageParentDeclined(_ lang: AppLang) -> String { string("age.parentDeclined", lang) }
+    static func ageParentDeclined(_ lang: AppLang, date: String) -> String { format("age.parentDeclined", lang, date) }
     static func ageParentRevokedTitle(_ lang: AppLang) -> String { string("age.parentRevokedTitle", lang) }
-    static func ageParentRevoked(_ lang: AppLang) -> String { string("age.parentRevoked", lang) }
+    static func ageParentRevoked(_ lang: AppLang, date: String) -> String { format("age.parentRevoked", lang, date) }
     static func ageRegionTitle(_ lang: AppLang) -> String { string("age.regionTitle", lang) }
     static func ageRegion(_ lang: AppLang) -> String { string("age.region", lang) }
     static func ageRegionContact(_ lang: AppLang, email: String) -> String { format("age.regionContact", lang, email) }
@@ -1338,11 +1339,8 @@ enum L10n {
         "age.parentResend",
         "age.parentChange",
         "age.parentCancel",
-        "age.parentDelete",
         "age.parentDeclinedTitle",
-        "age.parentDeclined",
         "age.parentRevokedTitle",
-        "age.parentRevoked",
         "age.regionTitle",
         "age.region",
         "error.password_wrong",

@@ -24,9 +24,9 @@ import { createHash, randomBytes, randomUUID } from "node:crypto";
 import type { InStatement } from "@libsql/client";
 import type { ParentLink, ParentView } from "@/lib/account-types";
 import { ageStateOf } from "@/lib/age";
-import { canonicalEmail, parentEmailHash } from "@/lib/auth";
+import { canonicalEmail, legacyWelcomeClaim, parentEmailHash, welcomeClaim } from "@/lib/auth";
 import { getDb } from "@/lib/db";
-import { entitlementWriteBatch } from "@/lib/entitlements";
+import { ensureEntitlementTables, entitlementWriteBatch } from "@/lib/entitlements";
 import { sendParentApprovedEmail, sendParentRequestEmail } from "@/lib/email";
 import type { Lang } from "@/lib/langs";
 import { aad, openJson, sealJson } from "@/lib/originals/crypto";
@@ -54,6 +54,7 @@ const SCHEMA = [
     withdraw_hash     TEXT,
     lang              TEXT,
     created_at        TEXT NOT NULL,
+    waiting_since     TEXT,
     requested_at      TEXT,
     expires_at        TEXT,
     resend_count      INTEGER NOT NULL DEFAULT 0,
@@ -113,6 +114,7 @@ type Row = {
   withdraw_hash: string | null;
   lang: string | null;
   created_at: string;
+  waiting_since: string | null;
   requested_at: string | null;
   expires_at: string | null;
   resend_count: number;
@@ -132,8 +134,8 @@ export async function ensureParentRow(userId: string, now = new Date()): Promise
   await ensureParentTables();
   const db = await getDb();
   await db.execute({
-    sql: `INSERT OR IGNORE INTO parent_consent (id, user_id, status, created_at) VALUES (?, ?, 'pending', ?)`,
-    args: [randomUUID(), userId, now.toISOString()],
+    sql: `INSERT OR IGNORE INTO parent_consent (id, user_id, status, created_at, waiting_since) VALUES (?, ?, 'pending', ?, ?)`,
+    args: [randomUUID(), userId, now.toISOString(), now.toISOString()],
   });
 }
 
@@ -152,7 +154,7 @@ function viewOf(row: Row | null, now: Date): ParentView {
   const hint = sent && row.parent_email_enc ? openJson<string>(row.parent_email_enc, aad.parentEmail(row.user_id)) : null;
   const resendAt = sent && row.requested_at ? new Date(new Date(row.requested_at).getTime() + RESEND_WAIT_MS) : null;
   const deleteAt =
-    row.status === "pending" ? addDays(row.created_at, DELETE_DAYS) : row.status === "approved" ? null : row.decided_at ? addDays(row.decided_at, DELETE_DAYS) : null;
+    row.status === "pending" ? addDays(row.waiting_since ?? row.created_at, DELETE_DAYS) : row.status === "approved" ? null : row.decided_at ? addDays(row.decided_at, DELETE_DAYS) : null;
   return {
     status: row.status,
     sent,
@@ -177,6 +179,28 @@ export type RequestResult =
       code: "parent_email" | "parent_declined" | "parent_wait" | "parent_limit" | "conflict" | "rate_limited" | "unavailable";
       retryAfterSec?: number;
     };
+
+type SendBlock = { code: "parent_declined" | "parent_wait" | "parent_limit"; retryAfterSec?: number };
+
+/** Why a send would be refused before anything is mailed or counted: the
+ * request was declined, the hour since the last mail has not passed (same
+ * address) or the resends or changes are used up. `email` null means the
+ * current address. */
+export async function sendBlocked(userId: string, email: string | null, now = new Date()): Promise<SendBlock | null> {
+  const row = await readRow(userId);
+  if (!row) return null;
+  if (row.status === "declined") return { code: "parent_declined" };
+  const current = row.parent_email_enc ? openJson<string>(row.parent_email_enc, aad.parentEmail(userId)) : null;
+  const target = (email ?? current)?.trim() ?? null;
+  if (!target || current === null) return null;
+  if (parentEmailHash(current) === parentEmailHash(target)) {
+    if (row.resend_count >= MAX_RESENDS) return { code: "parent_limit" };
+    const next = new Date(row.requested_at ?? 0).getTime() + RESEND_WAIT_MS;
+    if (next > now.getTime()) return { code: "parent_wait", retryAfterSec: Math.ceil((next - now.getTime()) / 1000) };
+    return null;
+  }
+  return row.change_count >= MAX_CHANGES ? { code: "parent_limit" } : null;
+}
 
 /**
  * The teen's request: the first address, a different one (a change) or the
@@ -208,12 +232,8 @@ export async function requestParent(args: {
   if (canonicalEmail(email) === canonicalEmail(userEmail) || (await isJudgeAddress(email))) return { ok: false, code: "parent_email" };
   const resending = current !== null && parentEmailHash(current) === hash;
   const changing = !resending && current !== null;
-  if (resending) {
-    if (row.resend_count >= MAX_RESENDS) return { ok: false, code: "parent_limit" };
-    const next = new Date(row.requested_at ?? 0).getTime() + RESEND_WAIT_MS;
-    if (next > now.getTime()) return { ok: false, code: "parent_wait", retryAfterSec: Math.ceil((next - now.getTime()) / 1000) };
-  }
-  if (changing && row.change_count >= MAX_CHANGES) return { ok: false, code: "parent_limit" };
+  const blocked = await sendBlocked(userId, email, now);
+  if (blocked) return { ok: false, ...blocked };
 
   // Five mails a day to one address, whoever asks.
   const limit = await checkUserLimits(hash, "parent_address").catch(() => null);
@@ -234,7 +254,8 @@ export async function requestParent(args: {
   const db = await getDb();
   const done = await db.execute({
     sql: `UPDATE parent_consent SET status = 'pending', parent_email_hash = ?, parent_email_enc = ?, token_hash = ?, withdraw_hash = NULL,
-            lang = ?, requested_at = ?, expires_at = ?, decided_at = NULL, resend_count = ?, change_count = ?
+            lang = ?, requested_at = ?, expires_at = ?, decided_at = NULL, resend_count = ?, change_count = ?,
+            waiting_since = ?
           WHERE id = ? AND status = ? AND token_hash IS ?`,
     args: [
       hash,
@@ -245,6 +266,7 @@ export async function requestParent(args: {
       addDays(nowIso, LINK_DAYS),
       fresh ? 0 : row.resend_count + (resending ? 1 : 0),
       fresh ? 0 : row.change_count + (changing ? 1 : 0),
+      fresh ? nowIso : row.waiting_since,
       row.id,
       row.status,
       row.token_hash,
@@ -255,9 +277,20 @@ export async function requestParent(args: {
   return { ok: true, view: await parentView(userId, now) };
 }
 
+/** An address that belongs to a Judge account: exactly, or as the same
+ * mailbox under another spelling (dots, +tags), which the keyed claim of
+ * every account that got its welcome credit remembers. */
 async function isJudgeAddress(email: string): Promise<boolean> {
   const db = await getDb();
-  const rs = await db.execute({ sql: `SELECT 1 FROM "user" WHERE lower(email) = ? LIMIT 1`, args: [email.trim().toLowerCase()] });
+  const exact = await db.execute({ sql: `SELECT 1 FROM "user" WHERE lower(email) = ? LIMIT 1`, args: [email.trim().toLowerCase()] });
+  if (exact.rows.length > 0) return true;
+  const claims = [welcomeClaim(email), legacyWelcomeClaim(email)].filter((c): c is string => Boolean(c));
+  if (!claims.length) return false;
+  await ensureEntitlementTables();
+  const rs = await db.execute({
+    sql: `SELECT 1 FROM welcome_claims WHERE claim IN (${claims.map(() => "?").join(", ")}) LIMIT 1`,
+    args: claims,
+  });
   return rs.rows.length > 0;
 }
 
@@ -294,24 +327,37 @@ export async function linkInfo(token: string, now = new Date()): Promise<LinkInf
 
 export type DecideResult = "approved" | "declined" | "withdrawn" | "invalid" | "failed";
 
+/** One guarded write of a decision and its mirror on the account: both
+ * happen or neither. The mirror only applies while the row holds \`status\`
+ * with this decision time. */
+async function decideBatch(rowId: string, userId: string, update: InStatement, status: ParentStatus, mirror: string | null, at: string): Promise<boolean> {
+  const [done] = await entitlementWriteBatch([
+    update,
+    {
+      sql: `UPDATE "user" SET age_parent = ? WHERE id = ? AND EXISTS (SELECT 1 FROM parent_consent WHERE id = ? AND status = ? AND decided_at ${at === "" ? "IS NULL" : "= ?"})`,
+      args: at === "" ? [mirror, userId, rowId, status] : [mirror, userId, rowId, status, at],
+    },
+  ]);
+  return done.rowsAffected > 0;
+}
+
 /** Approve, decline or withdraw through a link. Approval needs the parent's
- * tick (`guardian`) and the confirmation mail going out; without it the
+ * tick (\`guardian\`) and the confirmation mail going out; without it the
  * approval is taken back and the link works again ("failed"). Single use: a
- * second try is "invalid". */
+ * second try is "invalid". \`sessionUserId\` is whoever is signed in on the
+ * browser: the teen cannot approve from their own session. */
 export async function decideParent(
   token: string,
   action: "approve" | "decline" | "withdraw",
   guardian: boolean,
   now = new Date(),
+  sessionUserId: string | null = null,
 ): Promise<DecideResult> {
   const found = await findByToken(token);
   if (!found) return "invalid";
   const { row, kind } = found;
   const nowIso = now.toISOString();
-  const mirror = (status: string): InStatement => ({
-    sql: `UPDATE "user" SET age_parent = ? WHERE id = ?`,
-    args: [status, row.user_id],
-  });
+  const th = tokenHash(token);
   const country = async () => {
     const db = await getDb();
     const rs = await db.execute({ sql: `SELECT age_country FROM "user" WHERE id = ?`, args: [row.user_id] });
@@ -319,45 +365,58 @@ export async function decideParent(
   };
   if (action === "withdraw") {
     if (kind !== "withdraw" || row.status !== "approved") return "invalid";
-    const [done] = await entitlementWriteBatch([
+    const ok = await decideBatch(
+      row.id,
+      row.user_id,
       {
         sql: `UPDATE parent_consent SET status = 'revoked', decided_at = ?, withdraw_hash = NULL, wording_key = 'parent.withdraw'
               WHERE id = ? AND status = 'approved' AND withdraw_hash = ?`,
-        args: [nowIso, row.id, tokenHash(token)],
+        args: [nowIso, row.id, th],
       },
-    ]);
-    if (done.rowsAffected === 0) return "invalid";
-    await entitlementWriteBatch([mirror("revoked")]);
-    return "withdrawn";
+      "revoked",
+      "revoked",
+      nowIso,
+    );
+    return ok ? "withdrawn" : "invalid";
   }
   if (kind !== "request" || row.status !== "pending" || !row.expires_at || row.expires_at <= nowIso) return "invalid";
   if (action === "decline") {
-    const [done] = await entitlementWriteBatch([
+    const ok = await decideBatch(
+      row.id,
+      row.user_id,
       {
         sql: `UPDATE parent_consent SET status = 'declined', decided_at = ?, parent_email_enc = NULL, token_hash = NULL,
                 policy_version = ?, wording_key = 'parent.decline', country = ?
               WHERE id = ? AND status = 'pending' AND token_hash = ?`,
-        args: [nowIso, POLICY_VERSION, await country(), row.id, tokenHash(token)],
+        args: [nowIso, POLICY_VERSION, await country(), row.id, th],
       },
-    ]);
-    if (done.rowsAffected === 0) return "invalid";
-    await entitlementWriteBatch([mirror("declined")]);
-    return "declined";
+      "declined",
+      "declined",
+      nowIso,
+    );
+    return ok ? "declined" : "invalid";
   }
-  if (!guardian) return "invalid";
+  if (!guardian || sessionUserId === row.user_id) return "invalid";
   const email = row.parent_email_enc ? openJson<string>(row.parent_email_enc, aad.parentEmail(row.user_id)) : null;
   if (!email) return "invalid";
   const withdraw = newToken();
-  // Claim the approval first so two clicks cannot both send a withdraw link.
-  const [done] = await entitlementWriteBatch([
+  // The claim clears the sealed address and the token and flips the account
+  // in one batch, so two clicks cannot both send a withdraw link and nothing
+  // is left half done.
+  const claimed = await decideBatch(
+    row.id,
+    row.user_id,
     {
       sql: `UPDATE parent_consent SET status = 'approved', decided_at = ?, withdraw_hash = ?, policy_version = ?,
-              wording_key = 'parent.tick', country = ?
+              wording_key = 'parent.tick', country = ?, parent_email_enc = NULL, token_hash = NULL
             WHERE id = ? AND status = 'pending' AND token_hash = ?`,
-      args: [nowIso, tokenHash(withdraw), POLICY_VERSION, await country(), row.id, tokenHash(token)],
+      args: [nowIso, tokenHash(withdraw), POLICY_VERSION, await country(), row.id, th],
     },
-  ]);
-  if (done.rowsAffected === 0) return "invalid";
+    "approved",
+    "approved",
+    nowIso,
+  );
+  if (!claimed) return "invalid";
   try {
     await sendParentApprovedEmail({
       to: email,
@@ -367,19 +426,21 @@ export async function decideParent(
     });
   } catch (e) {
     console.error("[parent] confirmation email failed:", e instanceof Error ? e.message : String(e));
+    // Without the second step the approval does not stand: the link works again.
     await entitlementWriteBatch([
       {
-        sql: `UPDATE parent_consent SET status = 'pending', decided_at = NULL, withdraw_hash = NULL, wording_key = NULL
+        sql: `UPDATE parent_consent SET status = 'pending', decided_at = NULL, withdraw_hash = NULL, wording_key = NULL,
+                parent_email_enc = ?, token_hash = ?
               WHERE id = ? AND status = 'approved' AND withdraw_hash = ?`,
-        args: [row.id, tokenHash(withdraw)],
+        args: [row.parent_email_enc, th, row.id, tokenHash(withdraw)],
+      },
+      {
+        sql: `UPDATE "user" SET age_parent = NULL WHERE id = ? AND EXISTS (SELECT 1 FROM parent_consent WHERE id = ? AND status = 'pending')`,
+        args: [row.user_id, row.id],
       },
     ]);
     return "failed";
   }
-  await entitlementWriteBatch([
-    { sql: `UPDATE parent_consent SET parent_email_enc = NULL, token_hash = NULL WHERE id = ? AND status = 'approved'`, args: [row.id] },
-    mirror("approved"),
-  ]);
   return "approved";
 }
 
@@ -424,7 +485,7 @@ export async function dueParentAccounts(now = new Date()): Promise<{ id: string;
                    u.age_signal_at, u.age_country, u.age_quebec, u.age_region_lifted_at, u.age_parent
             FROM parent_consent p JOIN "user" u ON u.id = p.user_id
             WHERE p.user_deleted_at IS NULL AND p.status <> 'approved'
-              AND ((p.status = 'pending' AND p.created_at <= ?) OR (p.status <> 'pending' AND p.decided_at <= ?))`,
+              AND ((p.status = 'pending' AND COALESCE(p.waiting_since, p.created_at) <= ?) OR (p.status <> 'pending' AND p.decided_at <= ?))`,
       args: [cutoff, cutoff],
     });
   } catch (e) {
