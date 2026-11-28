@@ -24,6 +24,7 @@ export class JobRunner extends DurableObject<Env> {
     const job = this.job;
     this.job = undefined;
     if (!job) return;
+    const started = Date.now();
     try {
       const res = await this.env.WORKER_SELF_REFERENCE.fetch("https://judge.internal/api/internal/job", {
         method: "POST",
@@ -31,6 +32,7 @@ export class JobRunner extends DurableObject<Env> {
         body: JSON.stringify(job),
       });
       if (!res.ok) console.error(`[job-runner] ${job.name} answered HTTP ${res.status}`);
+      else console.info(`[job-runner] ${job.name} finished in ${Date.now() - started} ms`);
     } catch (e) {
       console.error(`[job-runner] ${job.name} failed:`, e instanceof Error ? e.message : String(e));
     }
