@@ -24,9 +24,9 @@ import { createHash, randomBytes, randomUUID } from "node:crypto";
 import type { InStatement } from "@libsql/client";
 import type { ParentLink, ParentView } from "@/lib/account-types";
 import { ageStateOf } from "@/lib/age";
-import { canonicalEmail, legacyWelcomeClaim, parentEmailHash, welcomeClaim } from "@/lib/auth";
+import { canonicalEmail, parentEmailHash } from "@/lib/auth";
 import { getDb } from "@/lib/db";
-import { ensureEntitlementTables, entitlementWriteBatch } from "@/lib/entitlements";
+import { entitlementWriteBatch } from "@/lib/entitlements";
 import { sendParentApprovedEmail, sendParentRequestEmail } from "@/lib/email";
 import type { Lang } from "@/lib/langs";
 import { aad, openJson, sealJson } from "@/lib/originals/crypto";
@@ -130,13 +130,43 @@ async function readRow(userId: string): Promise<Row | null> {
 }
 
 /** Makes the account's row if it has none, so its 30 days start. */
-export async function ensureParentRow(userId: string, now = new Date()): Promise<void> {
+export async function ensureParentRow(userId: string, now = new Date(), restart = false): Promise<void> {
   await ensureParentTables();
   const db = await getDb();
   await db.execute({
     sql: `INSERT OR IGNORE INTO parent_consent (id, user_id, status, created_at, waiting_since) VALUES (?, ?, 'pending', ?, ?)`,
     args: [randomUUID(), userId, now.toISOString(), now.toISOString()],
   });
+  // A hold that begins again on an old pending row waits 30 days from now,
+  // not from the first time.
+  if (restart) {
+    await db.execute({
+      sql: `UPDATE parent_consent SET waiting_since = ? WHERE user_id = ? AND status = 'pending' AND user_deleted_at IS NULL`,
+      args: [now.toISOString(), userId],
+    });
+  }
+}
+
+/** An approval whose mail went out but whose account write did not stays
+ * approved on the row (the parent holds the withdraw link). After 5 minutes
+ * the account follows it. One account, or all. */
+export async function healApprovals(now = new Date(), userId?: string): Promise<number> {
+  await ensureParentTables();
+  const db = await getDb();
+  const cutoff = new Date(now.getTime() - 5 * 60_000).toISOString();
+  try {
+    const rs = await db.execute({
+      sql: `UPDATE "user" SET age_parent = 'approved'
+            WHERE age_parent IS NOT 'approved'${userId ? " AND id = ?" : ""}
+              AND id IN (SELECT user_id FROM parent_consent WHERE status = 'approved' AND decided_at <= ? AND user_deleted_at IS NULL)`,
+      args: userId ? [userId, cutoff] : [cutoff],
+    });
+    return rs.rowsAffected;
+  } catch (e) {
+    // Startup cleanup can run before the sign-in migration made the table.
+    if (/no such (column|table)/i.test(e instanceof Error ? e.message : String(e))) return 0;
+    throw e;
+  }
 }
 
 function mask(email: string): string {
@@ -251,47 +281,57 @@ export async function requestParent(args: {
     lang,
   });
   const fresh = row.status === "revoked";
-  const db = await getDb();
-  const done = await db.execute({
-    sql: `UPDATE parent_consent SET status = 'pending', parent_email_hash = ?, parent_email_enc = ?, token_hash = ?, withdraw_hash = NULL,
-            lang = ?, requested_at = ?, expires_at = ?, decided_at = NULL, resend_count = ?, change_count = ?,
-            waiting_since = ?
-          WHERE id = ? AND status = ? AND token_hash IS ?`,
-    args: [
-      hash,
-      sealed.sealed,
-      tokenHash(token),
-      lang,
-      nowIso,
-      addDays(nowIso, LINK_DAYS),
-      fresh ? 0 : row.resend_count + (resending ? 1 : 0),
-      fresh ? 0 : row.change_count + (changing ? 1 : 0),
-      fresh ? nowIso : row.waiting_since,
-      row.id,
-      row.status,
-      row.token_hash,
-    ],
-  });
+  // After a withdrawal the row and the account's mirror change together.
+  const [done] = await entitlementWriteBatch([
+    {
+      sql: `UPDATE parent_consent SET status = 'pending', parent_email_hash = ?, parent_email_enc = ?, token_hash = ?, withdraw_hash = NULL,
+              lang = ?, requested_at = ?, expires_at = ?, decided_at = NULL, resend_count = ?, change_count = ?,
+              waiting_since = ?
+            WHERE id = ? AND status = ? AND token_hash IS ?`,
+      args: [
+        hash,
+        sealed.sealed,
+        tokenHash(token),
+        lang,
+        nowIso,
+        addDays(nowIso, LINK_DAYS),
+        fresh ? 0 : row.resend_count + (resending ? 1 : 0),
+        fresh ? 0 : row.change_count + (changing ? 1 : 0),
+        fresh ? nowIso : row.waiting_since,
+        row.id,
+        row.status,
+        row.token_hash,
+      ],
+    },
+    {
+      sql: `UPDATE "user" SET age_parent = NULL WHERE id = ? AND age_parent IS NOT NULL
+            AND EXISTS (SELECT 1 FROM parent_consent WHERE id = ? AND status = 'pending' AND token_hash = ?)`,
+      args: [userId, row.id, tokenHash(token)],
+    },
+  ]);
   if (done.rowsAffected === 0) return { ok: false, code: "conflict" };
-  if (fresh) await db.execute({ sql: `UPDATE "user" SET age_parent = NULL WHERE id = ?`, args: [userId] });
   return { ok: true, view: await parentView(userId, now) };
 }
 
-/** An address that belongs to a Judge account: exactly, or as the same
- * mailbox under another spelling (dots, +tags), which the keyed claim of
- * every account that got its welcome credit remembers. */
+/** An address that belongs to a live Judge account: exactly, or as the same
+ * mailbox under another spelling (dots, +tags, googlemail). Candidates are
+ * the accounts with the same first letter at the same mail domain, compared
+ * by canonical address; deleted accounts are not in the table. */
 async function isJudgeAddress(email: string): Promise<boolean> {
+  const target = canonicalEmail(email);
+  const [local = "", domain = ""] = target.split("@");
+  if (!local || !domain) return false;
+  const domains = domain === "gmail.com" ? ["gmail.com", "googlemail.com"] : [domain];
+  const esc = (v: string) => v.replace(/[\\%_]/g, "\\$&");
   const db = await getDb();
-  const exact = await db.execute({ sql: `SELECT 1 FROM "user" WHERE lower(email) = ? LIMIT 1`, args: [email.trim().toLowerCase()] });
-  if (exact.rows.length > 0) return true;
-  const claims = [welcomeClaim(email), legacyWelcomeClaim(email)].filter((c): c is string => Boolean(c));
-  if (!claims.length) return false;
-  await ensureEntitlementTables();
-  const rs = await db.execute({
-    sql: `SELECT 1 FROM welcome_claims WHERE claim IN (${claims.map(() => "?").join(", ")}) LIMIT 1`,
-    args: claims,
-  });
-  return rs.rows.length > 0;
+  for (const d of domains) {
+    const rs = await db.execute({
+      sql: `SELECT email FROM "user" WHERE lower(email) LIKE ? ESCAPE '\\'`,
+      args: [`${esc(local[0])}%@${esc(d)}`],
+    });
+    if (rs.rows.some((r) => canonicalEmail(String(r.email)) === target)) return true;
+  }
+  return false;
 }
 
 /** What a parent's link shows. `usable` is false for a request link past its 14 days. */
@@ -400,23 +440,18 @@ export async function decideParent(
   const email = row.parent_email_enc ? openJson<string>(row.parent_email_enc, aad.parentEmail(row.user_id)) : null;
   if (!email) return "invalid";
   const withdraw = newToken();
-  // The claim clears the sealed address and the token and flips the account
-  // in one batch, so two clicks cannot both send a withdraw link and nothing
-  // is left half done.
-  const claimed = await decideBatch(
-    row.id,
-    row.user_id,
+  // The claim clears the sealed address and the token in one statement, so
+  // two clicks cannot both send a withdraw link. The account is only marked
+  // approved once the confirmation mail has gone out.
+  const [claimed] = await entitlementWriteBatch([
     {
       sql: `UPDATE parent_consent SET status = 'approved', decided_at = ?, withdraw_hash = ?, policy_version = ?,
               wording_key = 'parent.tick', country = ?, parent_email_enc = NULL, token_hash = NULL
             WHERE id = ? AND status = 'pending' AND token_hash = ?`,
       args: [nowIso, tokenHash(withdraw), POLICY_VERSION, await country(), row.id, th],
     },
-    "approved",
-    "approved",
-    nowIso,
-  );
-  if (!claimed) return "invalid";
+  ]);
+  if (claimed.rowsAffected === 0) return "invalid";
   try {
     await sendParentApprovedEmail({
       to: email,
@@ -426,7 +461,9 @@ export async function decideParent(
     });
   } catch (e) {
     console.error("[parent] confirmation email failed:", e instanceof Error ? e.message : String(e));
-    // Without the second step the approval does not stand: the link works again.
+    // Without the second step the approval does not stand: the sealed address
+    // and the link come back, so the parent clicks the same link again (or
+    // the teen sends it again). The account was never marked approved.
     await entitlementWriteBatch([
       {
         sql: `UPDATE parent_consent SET status = 'pending', decided_at = NULL, withdraw_hash = NULL, wording_key = NULL,
@@ -434,12 +471,21 @@ export async function decideParent(
               WHERE id = ? AND status = 'approved' AND withdraw_hash = ?`,
         args: [row.parent_email_enc, th, row.id, tokenHash(withdraw)],
       },
-      {
-        sql: `UPDATE "user" SET age_parent = NULL WHERE id = ? AND EXISTS (SELECT 1 FROM parent_consent WHERE id = ? AND status = 'pending')`,
-        args: [row.user_id, row.id],
-      },
     ]);
     return "failed";
+  }
+  try {
+    await entitlementWriteBatch([
+      {
+        sql: `UPDATE "user" SET age_parent = 'approved' WHERE id = ?
+              AND EXISTS (SELECT 1 FROM parent_consent WHERE id = ? AND status = 'approved' AND withdraw_hash = ?)`,
+        args: [row.user_id, row.id, tokenHash(withdraw)],
+      },
+    ]);
+  } catch (e) {
+    // The parent has the withdraw link and the row says approved; the account
+    // follows within minutes (healApprovals).
+    console.error("[parent] marking the account approved failed:", e instanceof Error ? e.message : String(e));
   }
   return "approved";
 }

@@ -441,7 +441,7 @@ export async function submitDob(
   ]);
   if (done.rowsAffected === 0) return null;
   const age = await readAge(userId, now);
-  if (age.parent) await (await import("./parent-consent")).ensureParentRow(userId, now);
+  if (age.parent) await (await import("./parent-consent")).ensureParentRow(userId, now, true);
   return age;
 }
 
@@ -452,6 +452,7 @@ export async function submitDob(
  * country is a request to support, which clears the stored places).
  */
 export async function recordStoreCountry(userId: string, country: string, now = new Date()): Promise<AgeState> {
+  const held = (await readAge(userId, now)).parent !== undefined;
   const db = await getDb();
   for (let tries = 0; tries < 3; tries++) {
     const rs = await db.execute({ sql: `SELECT age_country, age_quebec FROM "user" WHERE id = ?`, args: [userId] });
@@ -468,7 +469,8 @@ export async function recordStoreCountry(userId: string, country: string, now = 
     if (done.rowsAffected > 0) break;
   }
   const age = await readAge(userId, now);
-  if (age.parent) await (await import("./parent-consent")).ensureParentRow(userId, now);
+  // A hold that begins now starts its 30 days now.
+  if (age.parent) await (await import("./parent-consent")).ensureParentRow(userId, now, !held);
   return age;
 }
 

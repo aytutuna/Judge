@@ -18,7 +18,7 @@ process.env.BETTER_AUTH_URL = "http://localhost:3600";
 const { createDevSession } = await import("../lib/auth");
 const { getDb } = await import("../lib/db");
 const { runCleanup } = await import("../lib/cleanup");
-const { requestParent, decideParent, parentView, MAX_CHANGES, MAX_RESENDS } = await import("../lib/parent-consent");
+const { requestParent, decideParent, healApprovals, parentView, MAX_CHANGES, MAX_RESENDS } = await import("../lib/parent-consent");
 const ageRoute = await import("../app/api/v1/me/age/route");
 const meRoute = await import("../app/api/v1/me/route");
 const exportRoute = await import("../app/api/v1/me/export/route");
@@ -703,19 +703,31 @@ describe("one write for a decision and the account", () => {
     expect((await me(s.token)).age.parent).toBe("revoked");
   });
 
-  it("an approval whose account write fails keeps the request open, with the address still sealed", async () => {
+  it("an approval is marked on the account only after the mail, and a failed mark is healed later", async () => {
     const s = await teenWaitingForParent();
     await postParent(s.token, pe());
     const t = lastToken();
-    const before = sent.length;
     await withTrigger("approved", async () => {
-      expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(503);
+      expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(200);
     });
-    expect(sent).toHaveLength(before);
-    expect(await row(s.user.id)).toMatchObject({ status: "pending", withdraw_hash: null });
-    expect(String((await row(s.user.id)).parent_email_enc)).toMatch(/^v1\./);
-    expect((await linkCall(t, { action: "approve", guardian: true })).status).toBe(200);
+    // The parent has the withdraw mail and the row stands approved, the account is still held.
+    expect(sent.at(-1)!.subject).toContain("approved");
     expect(await row(s.user.id)).toMatchObject({ status: "approved", parent_email_enc: null, token_hash: null });
+    expect((await me(s.token)).age.parent).toBe("pending");
+    expect(await healApprovals(new Date(Date.now() + 60_000), s.user.id)).toBe(0);
+    expect(await healApprovals(new Date(Date.now() + 6 * 60_000), s.user.id)).toBe(1);
+    expect((await me(s.token)).age).not.toHaveProperty("parent");
+    // and the withdraw link still works
+    expect((await linkCall(lastToken(), { action: "withdraw" })).status).toBe(200);
+  });
+
+  it("a mail failure never marks the account approved", async () => {
+    const s = await teenWaitingForParent();
+    await postParent(s.token, pe());
+    mailFails = true;
+    await linkCall(lastToken(), { action: "approve", guardian: true });
+    mailFails = false;
+    expect((await userRow(s.user.id)).age_parent).toBeNull();
   });
 
   it("a mail that fails after the claim puts the address and link back", async () => {
@@ -760,6 +772,64 @@ describe("the address check", () => {
       params: Promise.resolve({ token: t }),
     });
     expect(res.status).toBe(404);
+    expect((await me(s.token)).age.parent).toBe("pending");
+  });
+});
+
+describe("a hold that starts again", () => {
+  it("waits 30 days from the new hold, not from the old pending row", async () => {
+    const s = await teenWaitingForParent();
+    const db = await getDb();
+    const old = new Date(Date.now() - 90 * DAY).toISOString();
+    await db.execute({ sql: "UPDATE parent_consent SET waiting_since = ? WHERE user_id = ?", args: [old, s.user.id] });
+    // The hold ended (the places changed), then a store country brings it back.
+    await db.execute({ sql: 'UPDATE "user" SET age_country = ? WHERE id = ?', args: ["US", s.user.id] });
+    expect((await me(s.token)).age).not.toHaveProperty("parent");
+    expect((await postAge(s.token, { storeCountry: "DE" })).status).toBe(200);
+    expect((await me(s.token)).age.parent).toBe("pending");
+    expect((await runCleanup(new Date(Date.now() + 5 * DAY))).parentless).toBe(0);
+    expect(await userRow(s.user.id)).toBeDefined();
+    expect((await runCleanup(new Date(Date.now() + 31 * DAY))).parentless).toBeGreaterThanOrEqual(1);
+  });
+
+  it("keeps the clock while the same hold goes on", async () => {
+    const s = await teenWaitingForParent();
+    const db = await getDb();
+    const old = new Date(Date.now() - 20 * DAY).toISOString();
+    await db.execute({ sql: "UPDATE parent_consent SET waiting_since = ? WHERE user_id = ?", args: [old, s.user.id] });
+    await postAge(s.token, { storeCountry: "DE" });
+    expect((await row(s.user.id)).waiting_since).toBe(old);
+  });
+});
+
+describe("the other-account check and deleted accounts", () => {
+  it("lets an address through whose account is gone, and refuses a live one under another spelling", async () => {
+    const gone = await newUser();
+    const live = await newUser();
+    expect((await meRoute.DELETE(request("DELETE", "/api/v1/me", bearer(gone.token), { confirm: "delete" }))).status).toBe(200);
+    const s = await teenWaitingForParent();
+    expect((await postParent(s.token, gone.user.email)).status).toBe(200);
+    const [local, domain] = live.user.email.split("@");
+    expect((await postParent(s.token, `${local.toUpperCase()}+x@${domain}`)).status).toBe(400);
+  });
+});
+
+describe("a new request after a withdrawal", () => {
+  it("changes the row and the account together, or neither", async () => {
+    const s = await teenWaitingForParent();
+    await postParent(s.token, pe());
+    await linkCall(lastToken(), { action: "approve", guardian: true });
+    await linkCall(lastToken(), { action: "withdraw" });
+    const db = await getDb();
+    await db.execute(`CREATE TRIGGER fail_clear BEFORE UPDATE OF age_parent ON "user" WHEN NEW.age_parent IS NULL BEGIN SELECT RAISE(ABORT, 'boom'); END`);
+    try {
+      expect((await postParent(s.token, pe())).status).toBe(503);
+    } finally {
+      await db.execute("DROP TRIGGER fail_clear");
+    }
+    expect(await row(s.user.id)).toMatchObject({ status: "revoked" });
+    expect((await me(s.token)).age.parent).toBe("revoked");
+    expect((await postParent(s.token, pe())).status).toBe(200);
     expect((await me(s.token)).age.parent).toBe("pending");
   });
 });

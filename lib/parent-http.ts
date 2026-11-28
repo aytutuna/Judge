@@ -11,7 +11,7 @@ import { isSameOrigin } from "@/lib/auth";
 import { deadBearerResponse, lookupViewer } from "@/lib/bearer-guard";
 import { clientIp } from "@/lib/client-ip";
 import { langFromRequest } from "@/lib/email";
-import { ensureParentRow, parentView, requestParent, sendBlocked } from "@/lib/parent-consent";
+import { ensureParentRow, healApprovals, parentView, requestParent, sendBlocked } from "@/lib/parent-consent";
 import { checkIpLimits, checkUserLimits } from "@/lib/ratelimit";
 import { verifyTurnstile } from "@/lib/turnstile";
 
@@ -42,6 +42,7 @@ export async function parentGet(req: Request): Promise<NextResponse> {
   try {
     // A teen who has to ask a parent gets the row (and its 30 days) here at the latest.
     if (viewer.age.parent) await ensureParentRow(viewer.user.id);
+    await healApprovals(new Date(), viewer.user.id);
     return NextResponse.json(await parentView(viewer.user.id), { headers: NO_STORE });
   } catch (e) {
     console.error("[parent] read failed:", e instanceof Error ? e.message : String(e));

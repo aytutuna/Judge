@@ -129,7 +129,8 @@ export async function deleteBlockedAccounts(now: Date = new Date()): Promise<num
 export async function deleteParentAccounts(now: Date = new Date()): Promise<number> {
   await ensureOriginalsTables();
   await ensureCaseTables();
-  const { dueParentAccounts } = await import("@/lib/parent-consent");
+  const { dueParentAccounts, healApprovals } = await import("@/lib/parent-consent");
+  await healApprovals(now);
   let deleted = 0;
   for (const { id, email } of await dueParentAccounts(now)) {
     try {
