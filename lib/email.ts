@@ -10,7 +10,8 @@ import { contactEmail } from "../app/site";
 import { acceptLanguageTags, isLang, langDir, langTag, matchLang } from "./langs";
 import { PALETTE as P } from "./palette";
 
-const RESEND_URL = "https://api.resend.com/emails";
+/** RESEND_API_URL points the local smoke tests at a fake sender. */
+const resendUrl = () => process.env.RESEND_API_URL?.trim() || "https://api.resend.com/emails";
 const SEND_TIMEOUT_MS = 10_000;
 const SUPPORT_EMAIL = "support@okjudge.com";
 
@@ -68,7 +69,7 @@ async function deliver(to: string, content: EmailContent, label: string, unconfi
   if (!key || !from) throw new Error(unconfigured);
   let res: Response;
   try {
-    res = await fetch(RESEND_URL, {
+    res = await fetch(resendUrl(), {
       method: "POST",
       headers: { authorization: `Bearer ${key}`, "content-type": "application/json" },
       body: JSON.stringify({ from, to: [to], ...content }),

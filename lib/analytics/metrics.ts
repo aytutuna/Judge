@@ -3,6 +3,8 @@
  * the server itself (GET /api/internal/metrics). Server only.
  */
 
+import { sameSecret } from "../internal-auth";
+import { workerEnv } from "../worker-env";
 import { analyticsDb } from "./db";
 import { CLIENT_EVENTS, SERVER_EVENTS } from "./validate";
 
@@ -18,12 +20,18 @@ const LOOPBACK = new Set(["127.0.0.1", "::1", "::ffff:127.0.0.1"]);
 const LOOPBACK_HOST = /^(127\.0\.0\.1|localhost|\[::1\])(:\d{1,5})?$/i;
 
 /**
- * True only for a request made on this machine straight to the app. Next
+ * On Workers, true only for a request carrying METRICS_TOKEN as a bearer
+ * token (Grafana Cloud's scrape job sends it). Otherwise true only for a
+ * request made on this machine straight to the app. Next
  * fills X-Forwarded-For with the socket's address when the request has none,
  * and Caddy always sets it to the visitor's address and passes the site's
  * Host on, so a request through Caddy never passes both checks.
  */
 export function isLocalRequest(headers: Headers): boolean {
+  if (workerEnv()) {
+    const given = /^Bearer (.+)$/.exec(headers.get("authorization")?.trim() ?? "")?.[1] ?? "";
+    return sameSecret(given, process.env.METRICS_TOKEN?.trim() ?? "");
+  }
   const forwarded = headers.get("x-forwarded-for")?.trim() ?? "";
   const host = headers.get("host")?.trim() ?? "";
   return LOOPBACK.has(forwarded) && LOOPBACK_HOST.test(host);
