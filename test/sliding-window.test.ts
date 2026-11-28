@@ -40,7 +40,35 @@ describe("slideCheck", () => {
   it("reports the end of the window that refused", () => {
     const first = slideCheck([], [{ limit: 1, windowMs: 10 * MIN }], 5 * MIN);
     if (!first.ok) throw new Error("expected ok");
-    expect(slideCheck(first.counters, [{ limit: 1, windowMs: 10 * MIN }], 6 * MIN)).toEqual({ ok: false, resetAtMs: 10 * MIN });
+    expect(slideCheck(first.counters, [{ limit: 1, windowMs: 10 * MIN }], 6 * MIN)).toEqual({ ok: false, resetAtMs: 10 * MIN + 1 });
+  });
+});
+
+describe("the retry time", () => {
+  /** The first time after `from` that a request passes, found by trying. */
+  function firstPassAfter(windows: { limit: number; windowMs: number }[], counters: Counter[], from: number): number {
+    for (let t = from; t < from + 3 * windows[0].windowMs; t += 1000) if (slideCheck(counters, windows, t).ok) return t;
+    return -1;
+  }
+
+  it("is when the request really passes, not just the end of the window", () => {
+    const w = [{ limit: 10, windowMs: 10 * MIN }];
+    // 10 requests late in window 0, the 11th early in window 1: the old window still weighs on it.
+    let counters: Counter[] = [];
+    for (let i = 0; i < 10; i++) {
+      const r = slideCheck(counters, w, 9 * MIN + i);
+      if (r.ok) counters = r.counters;
+    }
+    const first = slideCheck(counters, w, 10 * MIN + 1000);
+    if (!first.ok) throw new Error("expected the first request of the new window to pass");
+    counters = first.counters;
+    const at = 10 * MIN + 2000;
+    const refused = slideCheck(counters, w, at);
+    expect(refused.ok).toBe(false);
+    if (refused.ok) return;
+    expect(slideCheck(counters, w, refused.resetAtMs).ok).toBe(true);
+    expect(refused.resetAtMs).toBeGreaterThan(at);
+    expect(refused.resetAtMs - firstPassAfter(w, counters, at)).toBeLessThan(2000);
   });
 });
 
