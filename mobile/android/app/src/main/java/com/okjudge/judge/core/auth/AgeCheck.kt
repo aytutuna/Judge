@@ -79,13 +79,12 @@ object AgeCheck {
     }
 
     /**
-     * The store's full answer as one result. A clear "not shared", or a shared answer without a usable
-     * range, is [PlatformAge.NO_SIGNAL]: Play answered, so any earlier hold ends. Verification still
-     * required, unspecified or missing is [PlatformAge.UNKNOWN] (nothing is known). A minor whose
+     * The store's full answer as one result. A shared answer without a usable range is
+     * [PlatformAge.NO_SIGNAL]: Play answered, so any earlier hold ends. Anything not shared (the person's own choice
+     * to decline, verification still required, unspecified, missing) is [PlatformAge.UNKNOWN]: it says nothing about age. A minor whose
      * significant change is pending or declined is [PlatformAge.MINOR_UNAPPROVED] until the store shows approval.
      */
     fun fromSignals(accessStatus: Int?, lower: Int?, upper: Int?, changeStatus: Int?): PlatformAge {
-        if (accessStatus == SIGNALS_NOT_SHARED) return PlatformAge.NO_SIGNAL
         if (accessStatus != SIGNALS_SHARED) return PlatformAge.UNKNOWN
         val range = fromRange(lower, upper)
         val held = changeStatus == CHANGE_PENDING || changeStatus == CHANGE_DECLINED
@@ -98,7 +97,6 @@ object AgeCheck {
 
     // Values of AgeSignalsStatus.SHARED and SignificantChangeStatus.PENDING / DECLINED (age-signals 0.0.6).
     const val SIGNALS_SHARED = 1
-    const val SIGNALS_NOT_SHARED = 2
     const val CHANGE_PENDING = 2
     const val CHANGE_DECLINED = 3
 

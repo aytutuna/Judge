@@ -179,7 +179,7 @@ class AccountAgeTest {
     }
 
     @Test
-    fun heldMinor_isReleasedByAClearNotShared() = runBlocking<Unit> {
+    fun heldMinor_staysHeld_whenThePersonDeclinesToShare() = runBlocking<Unit> {
         phone = PlatformAge.MINOR_UNAPPROVED
         routes.always(ME, finished)
         routes.always(AGE, json(200, age(confirmed = true, teen = true)))
@@ -188,7 +188,23 @@ class AccountAgeTest {
         account.refresh()
         account.checkPlatformAge(context)
         account.awaitGate(AgeGate.APPROVAL)
-        phone = PlatformAge.NO_SIGNAL
+        phone = AgeCheck.fromSignals(accessStatus = 2, lower = null, upper = null, changeStatus = null)
+        account.recheck()
+        assertEquals(AgeGate.APPROVAL, account.ageGate.value)
+        assertTrue(hold.held)
+    }
+
+    @Test
+    fun heldMinor_isReleasedBySharedWithoutARange_andByAnApprovedMinor() = runBlocking<Unit> {
+        phone = PlatformAge.MINOR_UNAPPROVED
+        routes.always(ME, finished)
+        routes.always(AGE, json(200, age(confirmed = true, teen = true)))
+        val hold = AgeHoldStore.Memory()
+        val (account, _) = account(hold = hold)
+        account.refresh()
+        account.checkPlatformAge(context)
+        account.awaitGate(AgeGate.APPROVAL)
+        phone = AgeCheck.fromSignals(accessStatus = 1, lower = 16, upper = 17, changeStatus = 1)
         account.recheck()
         account.awaitGate(AgeGate.NONE)
         assertFalse(hold.held)

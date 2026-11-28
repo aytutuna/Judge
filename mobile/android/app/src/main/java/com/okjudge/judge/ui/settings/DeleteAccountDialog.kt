@@ -2,7 +2,8 @@ package com.okjudge.judge.ui.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialogDefaults
@@ -67,6 +68,7 @@ fun DeleteAccountDialog(
  * What the delete dialog says, with a password box for an account that has one. A session too old to delete
  * without a password gets the "sign out" step in place of Delete.
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun DeleteAccountForm(
     ui: DeleteUi,
@@ -110,7 +112,8 @@ fun DeleteAccountForm(
                 modifier = Modifier.padding(top = 12.dp).testTag(DeleteTags.ERROR),
             )
         }
-        Row(Modifier.fillMaxWidth().padding(top = 16.dp), horizontalArrangement = Arrangement.End) {
+        // Up to four buttons: they wrap instead of squeezing in longer languages.
+        FlowRow(Modifier.fillMaxWidth().padding(top = 16.dp), horizontalArrangement = Arrangement.End) {
             if (onManageSubscription != null) {
                 TextButton(onClick = onManageSubscription) { Text(s.appAccountManageSubscription, color = Palette.ink) }
             }

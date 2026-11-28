@@ -286,7 +286,10 @@ class Account(
         askPlatformAge(host)
     }
 
-    /** Asks again while the approval cover is up; the hold stays until Play gives a shared answer that is not a held minor. */
+    /**
+     * Asks again while the approval cover is up. The hold ends only on a shared answer that is not a held minor;
+     * declining to share, errors, timeouts and dismissed prompts leave it up.
+     */
     fun recheckPlatformAge(host: Context) {
         if (_held.value) askPlatformAge(host)
     }

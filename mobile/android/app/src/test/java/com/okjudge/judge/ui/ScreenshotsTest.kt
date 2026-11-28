@@ -326,10 +326,10 @@ class ScreenshotsTest {
     }
 
     /** The sheet's content on its paper surface; the dialog window itself is not drawn by the screenshot rule. */
-    private fun deleteSheet(name: String, dark: Boolean, ui: DeleteUi) = capture(name) {
-        Themed(AppLang.EN, dark = dark) {
+    private fun deleteSheet(name: String, dark: Boolean, ui: DeleteUi, lang: AppLang = AppLang.EN, billing: Boolean = false) = capture(name) {
+        Themed(lang, dark = dark) {
             androidx.compose.material3.Surface(color = Palette.paper) {
-                DeleteAccountForm(ui, busy = false, billing = false, onDelete = {}, onManageSubscription = null, onDismiss = {}, modifier = Modifier.padding(24.dp))
+                DeleteAccountForm(ui, busy = false, billing = billing, onDelete = {}, onManageSubscription = if (billing) ({}) else null, onDismiss = {}, modifier = Modifier.padding(24.dp))
             }
         }
     }
@@ -339,6 +339,12 @@ class ScreenshotsTest {
 
     @Test
     fun account_delete_password_en_dark() = deleteSheet("account_delete_password_en_dark", true, DeleteUi(hasPassword = true, problem = DeleteProblem.PASSWORD_WRONG))
+
+    @Test
+    fun account_delete_four_buttons_de() = deleteSheet(
+        "account_delete_four_buttons_de", false,
+        DeleteUi(hasPassword = true, problem = DeleteProblem.REAUTH_REQUIRED), lang = AppLang.DE, billing = true,
+    )
 
     @Test
     fun account_delete_reauth_en() = deleteSheet("account_delete_reauth_en", false, DeleteUi(problem = DeleteProblem.REAUTH_REQUIRED))
