@@ -191,8 +191,11 @@ async function withBusyRetry<T>(fn: () => Promise<T>): Promise<T> {
   }
 }
 
-/** Runs one write at a time in this process. */
+/** Runs one write at a time in this process. Not on Workers: D1 orders
+ * writes itself, and a write waiting behind one from a request that was
+ * cancelled would wait for nothing. */
 function serialized<T>(fn: () => Promise<T>): Promise<T> {
+  if (schemaManaged()) return fn();
   const prev = globalForEntitlements.__verdictEntitlementsChain ?? Promise.resolve();
   const run = prev.then(fn, fn);
   globalForEntitlements.__verdictEntitlementsChain = run.catch(() => undefined);

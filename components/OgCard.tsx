@@ -60,17 +60,14 @@ async function loadFonts(): Promise<OgFont[]> {
   ];
 }
 
-let fontsPromise: Promise<OgFont[]> | null = null;
+let fonts: OgFont[] | null = null;
 
-/** The three faces the card uses (and the mark), read once per server process. */
-export function ogFonts(): Promise<OgFont[]> {
-  if (!fontsPromise) {
-    fontsPromise = loadFonts().catch((err: unknown) => {
-      fontsPromise = null; // let the next request try again
-      throw err;
-    });
-  }
-  return fontsPromise;
+/** The three faces the card uses (and the mark), read once per server process.
+ * Only the loaded faces are kept, never the pending read: on Workers it
+ * belongs to one request, which may be cancelled. */
+export async function ogFonts(): Promise<OgFont[]> {
+  fonts ??= await loadFonts();
+  return fonts;
 }
 
 // What Inter and Inter Tight can draw. Anything else would come out as empty

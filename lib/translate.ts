@@ -18,6 +18,7 @@
 import { claudeJson, LITE_MODEL, type ClaudeJsonResult, type Effort } from "./claude";
 import { verdictLang } from "./content-lang";
 import { getTranslation, getVerdict, saveTranslation } from "./db";
+import { workerEnv } from "./worker-env";
 import { contentLang, loadLocales, t, voiceNote, type Lang } from "./i18n";
 import { LANGS, PARTY_LABELS } from "./langs";
 import { z } from "zod";
@@ -713,6 +714,9 @@ const globalForTranslate = globalThis as unknown as {
   __verdictTranslations?: Map<string, Promise<VerdictResult | null>>;
 };
 function pending(): Map<string, Promise<VerdictResult | null>> {
+  // On Workers a request must not wait on another request's model call (it may
+  // be cancelled); a duplicate translation loses to the stored first writer.
+  if (workerEnv()) return new Map();
   return (globalForTranslate.__verdictTranslations ??= new Map());
 }
 
