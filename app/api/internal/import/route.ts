@@ -1,4 +1,4 @@
-import { importBatch, parseBatch, tableCounts } from "@/lib/d1-import";
+import { importBatch, parseBatch, tableCounts, wipeAll } from "@/lib/d1-import";
 import { getDb } from "@/lib/db";
 import { internalAuthorized } from "@/lib/internal-auth";
 
@@ -24,4 +24,10 @@ export async function POST(req: Request): Promise<Response> {
 export async function GET(req: Request): Promise<Response> {
   if (!open(req)) return new Response("Not found\n", { status: 404 });
   return Response.json(await tableCounts(await getDb()));
+}
+
+/** DELETE: empties every table, for a rehearsal copy into staging. */
+export async function DELETE(req: Request): Promise<Response> {
+  if (!open(req)) return new Response("Not found\n", { status: 404 });
+  return Response.json({ tables: await wipeAll(await getDb()) });
 }

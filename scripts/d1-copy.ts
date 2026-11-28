@@ -4,9 +4,9 @@
  * the row counts. Run it against a copy of the database (a restored backup or
  * a sqlite3 .backup file), never the live file.
  *
- *   JOB_SECRET=... npx tsx scripts/d1-copy.ts <sqlite file> <https://worker-url>
+ *   JOB_SECRET=... npx tsx scripts/d1-copy.ts <sqlite file> <https://worker-url> [--wipe]
  *
- * The Worker needs IMPORT_ENABLED=1 for the run. Running it again is safe:
+ * The Worker needs IMPORT_ENABLED=1 for the run. --wipe empties the target's tables first. Running it again is safe:
  * rows are replaced by key, so the copy ends equal to the file.
  */
 import { createClient } from "@libsql/client";
@@ -41,7 +41,18 @@ async function post(base: string, secret: string, body: unknown): Promise<Respon
   });
 }
 
-export async function copyDatabase(file: string, base: string, secret: string, log: (s: string) => void = console.log): Promise<boolean> {
+export async function copyDatabase(
+  file: string,
+  base: string,
+  secret: string,
+  log: (s: string) => void = console.log,
+  wipe = false,
+): Promise<boolean> {
+  if (wipe) {
+    const res = await fetch(`${base}/api/internal/import`, { method: "DELETE", headers: { "x-internal-secret": secret } });
+    if (!res.ok) throw new Error(`wipe: HTTP ${res.status}`);
+    log("target tables emptied");
+  }
   const db = createClient({ url: `file:${file.replaceAll("\\", "/")}` });
   const sent: Record<string, number> = {};
   for (const table of await copyOrder(db)) {
@@ -91,7 +102,7 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     console.error("Usage: JOB_SECRET=... npx tsx scripts/d1-copy.ts <sqlite file> <worker url>");
     process.exit(2);
   }
-  copyDatabase(file, base.replace(/\/$/, ""), secret).then(
+  copyDatabase(file, base.replace(/\/$/, ""), secret, console.log, process.argv.includes("--wipe")).then(
     (ok) => {
       console.log(ok ? "row counts match" : "ROW COUNTS DIFFER");
       process.exit(ok ? 0 : 1);

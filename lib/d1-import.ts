@@ -53,3 +53,11 @@ export async function tableCounts(db: Db): Promise<Record<string, number>> {
   }
   return counts;
 }
+
+/** Empties every table (a rehearsal copy starts clean). Foreign keys are
+ * checked at the end of the batch, so the order does not matter. */
+export async function wipeAll(db: Db): Promise<number> {
+  const names = Object.keys(await tableCounts(db));
+  await db.batch(["PRAGMA defer_foreign_keys = on", ...names.map((n) => `DELETE FROM "${n}"`)], "write");
+  return names.length;
+}

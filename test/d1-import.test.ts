@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { createClient } from "@libsql/client";
-import { importBatch, MAX_ROWS_PER_REQUEST, parseBatch, tableCounts } from "../lib/d1-import";
+import { importBatch, MAX_ROWS_PER_REQUEST, parseBatch, tableCounts, wipeAll } from "../lib/d1-import";
 
 function scratchDb() {
   const dir = mkdtempSync(path.join(tmpdir(), "judge-import-"));
@@ -43,5 +43,15 @@ describe("importBatch", () => {
     await db.execute("CREATE TABLE t (id TEXT PRIMARY KEY)");
     await expect(importBatch(db, { table: "nope", columns: ["id"], rows: [["a"]] })).rejects.toThrow(/no table/);
     await expect(importBatch(db, { table: "t", columns: ["id", "zzz"], rows: [["a", "b"]] })).rejects.toThrow(/no column/);
+  });
+
+  it("empties every table for a rehearsal copy", async () => {
+    const db = scratch();
+    await db.execute("CREATE TABLE a (id TEXT PRIMARY KEY)");
+    await db.execute("CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id))");
+    await db.execute("INSERT INTO a VALUES ('1')");
+    await db.execute("INSERT INTO b VALUES ('x', '1')");
+    expect(await wipeAll(db)).toBe(2);
+    expect(await tableCounts(db)).toEqual({ a: 0, b: 0 });
   });
 });
