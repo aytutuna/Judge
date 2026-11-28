@@ -11,6 +11,8 @@ import { runCleanup } from "@/lib/cleanup";
 import { sweepStaleReservations } from "@/lib/entitlements";
 import { sweepErasures } from "@/lib/erasure";
 import { backupConfigured, runBackup, type BackupEnv } from "@/lib/backup";
+import { readRemovalBucket } from "@/lib/originals/removal-log";
+import { replayEntries } from "@/lib/originals/removal-replay";
 import { sweepVerdictJobs } from "@/lib/verdict-jobs";
 import { workerEnv } from "@/lib/worker-env";
 
@@ -37,6 +39,11 @@ export const CRON_TASKS = {
     }
     const done = await runBackup(env);
     console.info(`[backup] wrote ${done.key} (${done.bytes} bytes), deleted ${done.deleted} old`);
+  },
+  /** By hand after a restore (not in the crons): applies every removal in the R2 log again. */
+  "replay-removals": async () => {
+    const log = await readRemovalBucket();
+    console.info(`[cron] replay-removals ${JSON.stringify(await replayEntries(log.entries))} skipped=${log.skipped}`);
   },
   daily: () => each({ events: pruneEvents, erasure: sweepErasures, cleanup: runCleanup }),
 } satisfies Record<string, () => Promise<void>>;

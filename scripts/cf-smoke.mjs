@@ -256,6 +256,8 @@ async function run() {
   check("job route is closed without the secret", job.status === 404, `${job.status}`);
   const cron = await api("POST", "/api/internal/cron?task=sweep", { headers: { "x-internal-secret": secrets.JOB_SECRET } });
   check("cron route runs a task with the secret", cron.status === 200, `${cron.status} ${cron.text.slice(0, 100)}`);
+  const replay = await api("POST", "/api/internal/cron?task=replay-removals", { headers: { "x-internal-secret": secrets.JOB_SECRET } });
+  check("the removal log replays after a restore", replay.status === 200, `${replay.status} ${replay.text.slice(0, 100)}`);
   const noMetrics = await api("GET", "/api/internal/metrics");
   check("metrics are closed without the token", noMetrics.status === 404, `${noMetrics.status}`);
   const metrics = await api("GET", "/api/internal/metrics", { headers: { authorization: `Bearer ${secrets.METRICS_TOKEN}` } });
