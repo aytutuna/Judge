@@ -46,7 +46,7 @@ describe("importBatch", () => {
   });
 
   it("empties every table for a rehearsal copy", async () => {
-    const db = scratch();
+    const db = scratchDb();
     await db.execute("CREATE TABLE a (id TEXT PRIMARY KEY)");
     await db.execute("CREATE TABLE b (id TEXT PRIMARY KEY, a_id TEXT REFERENCES a(id))");
     await db.execute("INSERT INTO a VALUES ('1')");
