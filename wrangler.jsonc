@@ -24,6 +24,8 @@
   // only counts while code runs, not while it waits for the AI service.
   "limits": { "cpu_ms": 300000 },
   "observability": { "enabled": true, "logs": { "invocation_logs": false } },
+  // A deploy replaces the variables with these. ALLOW_SANDBOX_PURCHASES stays
+  // "1" only while App Review is pending; remove it in the deploy after approval.
   "vars": {
     "CLOUDFLARE_PROXY": "1",
     "DO_JURISDICTION": "eu",

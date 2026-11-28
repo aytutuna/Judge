@@ -52,7 +52,30 @@ database in the account. The nightly backup reads the database through the
 binding (`lib/backup-dump.ts`).
 
 `IMPORT_ENABLED=1` opens `/api/internal/import` for the data copy; remove it
-afterwards.
+afterwards. `WIPE_ENABLED=1` also lets the copy script empty the tables first
+(`--wipe`, for rehearsals on staging); never set it on production.
+
+## Production resources
+
+Everything is created in the EU, as the privacy text says. Staging has been
+made this way (names with `-staging`); production is the same without it:
+
+    npx wrangler d1 create judge --jurisdiction eu
+    npx wrangler r2 bucket create judge-backups --jurisdiction eu
+    # put the new D1 database_id into wrangler.jsonc (top level), then
+    npx wrangler d1 migrations apply DB --remote
+    npx wrangler secret put <NAME>          # each secret above, new JOB_SECRET, METRICS_TOKEN, BACKUP_PASSPHRASE
+    npm run cf:build && npx wrangler deploy
+
+Plain variables are in `wrangler.jsonc` and are rewritten on every deploy.
+`ALLOW_SANDBOX_PURCHASES` is "1" only while App Review is pending (README.md,
+"Sandbox purchases"); drop it from `vars` in the deploy that follows approval.
+
+Backups: set an R2 lifecycle rule on `judge-backups` that deletes objects under
+`db/` after 30 days, as a hard cap in case the nightly pruning ever fails
+(Dashboard > R2 > judge-backups > Settings > Object lifecycle rules, or
+`npx wrangler r2 bucket lifecycle add judge-backups ... --jurisdiction eu`).
+Objects under `removals/` are the removal log: expire them after 100 days at most.
 
 ## Local checks
 
@@ -63,9 +86,16 @@ The smoke test needs no Cloudflare account. `cloudflare.yml` runs both.
 
 ## Restore
 
-`npx wrangler d1 time-travel restore judge --timestamp <iso> --remote` for the
-last 30 days. For an off-platform copy: download from R2, then
-`BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts <file> --drill`.
+`npx wrangler d1 time-travel restore judge --timestamp <iso>` for the last 30
+days. For an off-platform copy: download it, then check it with the drill:
+
+    npx wrangler r2 object get judge-backups/db/<name> --remote --jurisdiction eu --file copy.jbk
+    BACKUP_PASSPHRASE=... npx tsx scripts/backup-open.ts copy.jbk --drill
+
+To load a copy into a new D1 database, make a SQLite file
+(`... backup-open.ts copy.jbk --sqlite copy.db`) and run `scripts/d1-copy.ts`
+on it. `wrangler d1 execute --file` cannot load rows over about 100 KB (long
+verdicts, sealed originals); d1-copy sends values as bound parameters.
 After any restore, replay the removal log, 50 entries a call; repeat with
 `&cursor=<next>` from the answer until `next` is null:
 `curl -X POST -H "x-internal-secret: $JOB_SECRET" "https://<host>/api/internal/cron?task=replay-removals"`.
